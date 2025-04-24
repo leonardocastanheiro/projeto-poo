@@ -1,0 +1,30 @@
+package projeto_sistema_produtos.classes.person;
+
+import projeto_sistema_produtos.classes.address.Address;
+
+public class User extends Person{
+    private String login;
+    private String password;
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public User(String login, String password, Role role, String name, String phone, String email, Address address) {
+        super(role, name, phone, email, address);
+        this.login = login;
+        this.password = password;
+    }
+}
