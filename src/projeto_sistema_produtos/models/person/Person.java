@@ -1,6 +1,6 @@
-package projeto_sistema_produtos.classes.person;
+package projeto_sistema_produtos.models.person;
 
-import projeto_sistema_produtos.classes.address.Address;
+import projeto_sistema_produtos.models.address.Address;
 
 public abstract class Person {
     private Role role;
@@ -48,5 +48,17 @@ public abstract class Person {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public Person() {
+
     }
 }

@@ -1,4 +1,4 @@
-package projeto_sistema_produtos.classes.address;
+package projeto_sistema_produtos.models.address;
 
 public class Address {
     private String street;
