@@ -17,4 +17,9 @@ public class Client extends User{
         super(login, password, role, name, phone, email, address);
         this.creditCard = creditCard;
     }
+
+    public Client(User user, String creditCard) {
+        super(user.getLogin(), user.getPassword(), user.getRole(), user.getName(), user.getPhone(), user.getEmail(), user.getAddress());
+        this.creditCard = creditCard;
+    }
 }

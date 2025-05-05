@@ -16,7 +16,7 @@ public class UserController {
     public UserController() throws Exception {
     }
 
-    public void createUser() throws Exception {
+    public User createUser() throws Exception {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Choose the role of the user that you want to create (1 - ADMIN, 2 - CLIENT): ");
 
@@ -73,9 +73,10 @@ public class UserController {
 
         User user = new User(login,password,role,name,phone,email,address);
 
-        userRepository.create(user);
-
         scanner.close();
+
+        userRepository.create(user);
+        return user;
     }
 
     public User getUserByLogin(String login) throws Exception {
@@ -86,7 +87,4 @@ public class UserController {
         userRepository.save();
     }
 
-    public static void main(String[] args) throws Exception {
-        UserController controller = new UserController();
-    }
 }
