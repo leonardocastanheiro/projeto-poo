@@ -1,7 +1,6 @@
-package projeto_sistema_produtos.models.collections;
+package projeto_sistema_produtos.collections;
 
 import projeto_sistema_produtos.models.itens.Product;
-import projeto_sistema_produtos.models.person.User;
 
 import java.util.Arrays;
 
