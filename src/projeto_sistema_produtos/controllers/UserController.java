@@ -75,6 +75,7 @@ public class UserController {
 
         userRepository.create(user);
 
+        scanner.close();
     }
 
     public User getUserByLogin(String login) throws Exception {
