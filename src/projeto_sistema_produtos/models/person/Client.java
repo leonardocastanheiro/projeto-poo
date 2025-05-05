@@ -2,7 +2,7 @@ package projeto_sistema_produtos.models.person;
 
 import projeto_sistema_produtos.models.address.Address;
 
-public class Client extends User{
+public class Client extends User {
     private String creditCard;
 
     public String getCreditCard() {

@@ -10,19 +10,11 @@ public class Order {
     private Date dataDeliver;
     private Situation situation;
 
-    public Order(Integer id, Date dateOrder, Date dataDeliver, Situation situation) {
-        this.id = id;
+    public Order(Date dateOrder, Date dataDeliver, Situation situation) {
+        this.id = lastId++;
         this.dateOrder = dateOrder;
         this.dataDeliver = dataDeliver;
         this.situation = situation;
-    }
-
-    public static Integer getLastId() {
-        return lastId;
-    }
-
-    public static void setLastId(Integer lastId) {
-        Order.lastId = lastId;
     }
 
     public Integer getId() {

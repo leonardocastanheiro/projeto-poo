@@ -2,11 +2,7 @@ package projeto_sistema_produtos.models.person;
 
 import projeto_sistema_produtos.models.address.Address;
 
-import java.io.Serializable;
-
-public class User extends Person implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class User extends Person {
 
     private String login;
     private String password;
@@ -31,8 +27,5 @@ public class User extends Person implements Serializable {
         super(role, name, phone, email, address);
         this.login = login;
         this.password = password;
-    }
-    public User() {
-        super();
     }
 }

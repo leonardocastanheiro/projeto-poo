@@ -5,8 +5,12 @@ public class Product {
     private String description;
     private Byte [] photo;
     private Stock stock;
+    private Integer id;
+
+    private static Integer lastId = 1;
 
     public Product(String name, String description, Byte[] photo, Stock stock) {
+        this.id = lastId++;
         this.name = name;
         this.description = description;
         this.photo = photo;
@@ -43,5 +47,9 @@ public class Product {
 
     public void setStock(Stock stock) {
         this.stock = stock;
+    }
+
+    public Integer getId() {
+        return id;
     }
 }

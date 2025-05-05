@@ -8,9 +8,12 @@ public abstract class Person {
     private String phone;
     private String email;
     private Address address;
+    private Integer id;
 
+    private static Integer lastId = 1;;
 
     public Person(Role role, String name, String phone, String email, Address address) {
+        this.id = lastId++;
         this.role = role;
         this.name = name;
         this.phone = phone;
@@ -58,7 +61,8 @@ public abstract class Person {
         this.address = address;
     }
 
-    public Person() {
-
+    public Integer getId() {
+        return id;
     }
+
 }
