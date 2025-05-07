@@ -10,8 +10,10 @@ public abstract class Person {
     private Address address;
     private Integer id;
 
-    private static Integer lastId = 1;;
-
+    private static Integer lastId = 1;
+    
+    public Person() {
+    }
     public Person(Role role, String name, String phone, String email, Address address) {
         this.id = lastId++;
         this.role = role;
@@ -21,6 +23,9 @@ public abstract class Person {
         this.address = address;
     }
 
+    public String getRoleString() {
+    	return role.toString();
+    }
     public Role getRole() {
         return role;
     }

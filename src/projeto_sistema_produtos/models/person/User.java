@@ -22,7 +22,7 @@ public class User extends Person {
     public void setPassword(String password) {
         this.password = password;
     }
-
+    
     public User(String login, String password, Role role, String name, String phone, String email, Address address) {
         super(role, name, phone, email, address);
         this.login = login;

@@ -8,7 +8,7 @@ public class DynamicProductArray {
     private Product [] products;
     private Integer count;
 
-    private DynamicProductArray(Integer initialCapacity) {
+    public DynamicProductArray(Integer initialCapacity) {
         products = new Product[initialCapacity];
         count = 0;
     }

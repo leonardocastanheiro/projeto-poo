@@ -9,6 +9,12 @@ public class Product {
 
     private static Integer lastId = 1;
 
+    public Product(String name, String description, Stock stock) {
+        this.id = lastId++;
+        this.name = name;
+        this.description = description;
+        this.stock = stock;
+    }
     public Product(String name, String description, Byte[] photo, Stock stock) {
         this.id = lastId++;
         this.name = name;
