@@ -3,8 +3,12 @@ package projeto_sistema_produtos.models.itens;
 public class Stock {
     private Integer quantity;
     private Double price;
-
+    private Integer id;
+    
+    private static Integer lastId = 1;
+    
     public Stock(Integer quantity, Double price) {
+    	this.id = lastId++;
         this.quantity = quantity;
         this.price = price;
     }
@@ -23,5 +27,9 @@ public class Stock {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+    
+    public Integer getId() {
+        return id;
     }
 }
