@@ -11,3 +11,5 @@ Controladores -> Fazer o controle da nossa aplicação
 Visualizações -> Separação de Menus (Também chama os controladores)
 
 Main -> Inicia o LoginView
+
+Precisamos criar um objeto classe, que contém todos os vetores
