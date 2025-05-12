@@ -1,6 +1,7 @@
 package projeto_sistema_produtos.collections;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 import projeto_sistema_produtos.models.person.User;
 
@@ -13,11 +14,24 @@ public class DynamicUserArray {
         count = 0;
     }
 
-    public void add(User user) {
+    public void add(User user) throws Exception {
         if(count == users.length) {
             int newCapacity = users.length * 2;
             users = Arrays.copyOf(users, newCapacity);
         }
+
+        for (User userAux : users) {
+            if(userAux == user) {
+                throw new Exception("User already exists.");
+            }
+            else if(Objects.equals(userAux.getLogin(), user.getLogin())) {
+                throw new Exception("Login already exists.");
+            }
+            else if(Objects.equals(userAux.getEmail(), user.getEmail())) {
+                throw new Exception("E-mail already exists.");
+            }
+        }
+
         users[count++] = user;
     }
 
@@ -58,5 +72,27 @@ public class DynamicUserArray {
             }
         }
         throw new Exception("Invalid user ID.");
+    }
+
+    public User getByLogin(String login) throws Exception {
+        for(User user : users) {
+            if(user != null) {
+                if (user.getLogin().equals(login)) {
+                    return user;
+                }
+            }
+        }
+        throw new Exception("Invalid user login.");
+    }
+
+    public User getByEmail(String email) throws Exception {
+        for(User user : users) {
+            if(user != null) {
+                if (user.getEmail().equals(email)) {
+                    return user;
+                }
+            }
+        }
+        throw new Exception("Invalid user email.");
     }
 }

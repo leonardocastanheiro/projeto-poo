@@ -2,7 +2,7 @@ package projeto_sistema_produtos.models.person;
 
 import projeto_sistema_produtos.models.address.Address;
 
-public class User extends Person {
+public abstract class User extends Person {
 
     private String login;
     private String password;

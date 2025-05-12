@@ -1,4 +1,4 @@
-package Controllers;
+package projeto_sistema_produtos.controllers;
 
 public class SupplierController {
 	

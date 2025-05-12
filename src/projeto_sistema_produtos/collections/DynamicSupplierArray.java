@@ -8,7 +8,7 @@ public class DynamicSupplierArray {
 	private Supplier [] suppliers;
     private Integer count;
 
-    private DynamicSupplierArray(Integer initialCapacity) {
+    public DynamicSupplierArray(Integer initialCapacity) {
         suppliers = new Supplier[initialCapacity];
         count = 0;
     }

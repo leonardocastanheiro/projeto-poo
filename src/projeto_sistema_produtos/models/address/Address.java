@@ -1,5 +1,8 @@
 package projeto_sistema_produtos.models.address;
 
+import projeto_sistema_produtos.controllers.users.ClientController;
+import projeto_sistema_produtos.models.itens.Store;
+
 public class Address {
     private String street;
     private String number;
@@ -74,4 +77,5 @@ public class Address {
     public void setState(String state) {
         this.state = state;
     }
+
 }
