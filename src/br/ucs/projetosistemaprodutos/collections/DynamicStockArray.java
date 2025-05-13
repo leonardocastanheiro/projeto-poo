@@ -1,8 +1,8 @@
-package projeto_sistema_produtos.collections;
+package br.ucs.projetosistemaprodutos.collections;
 
 import java.util.Arrays;
 
-import projeto_sistema_produtos.models.itens.Stock;
+import br.ucs.projetosistemaprodutos.models.itens.Stock;
 
 public class DynamicStockArray {
     private Stock [] stocks;

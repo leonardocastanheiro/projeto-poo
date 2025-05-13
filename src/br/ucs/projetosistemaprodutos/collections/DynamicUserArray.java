@@ -1,9 +1,9 @@
-package projeto_sistema_produtos.collections;
+package br.ucs.projetosistemaprodutos.collections;
 
 import java.util.Arrays;
 import java.util.Objects;
 
-import projeto_sistema_produtos.models.person.User;
+import br.ucs.projetosistemaprodutos.models.person.User;
 
 public class DynamicUserArray {
     private User [] users;

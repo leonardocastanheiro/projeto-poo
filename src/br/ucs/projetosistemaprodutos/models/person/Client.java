@@ -1,6 +1,6 @@
-package projeto_sistema_produtos.models.person;
+package br.ucs.projetosistemaprodutos.models.person;
 
-import projeto_sistema_produtos.models.address.Address;
+import br.ucs.projetosistemaprodutos.models.address.Address;
 
 public class Client extends User {
     private String creditCard;

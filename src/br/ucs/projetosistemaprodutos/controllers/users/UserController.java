@@ -1,8 +1,8 @@
-package projeto_sistema_produtos.controllers.users;
+package br.ucs.projetosistemaprodutos.controllers.users;
 
-import projeto_sistema_produtos.collections.DynamicUserArray;
-import projeto_sistema_produtos.models.itens.Store;
-import projeto_sistema_produtos.models.person.User;
+import br.ucs.projetosistemaprodutos.collections.DynamicUserArray;
+import br.ucs.projetosistemaprodutos.models.itens.Store;
+import br.ucs.projetosistemaprodutos.models.person.User;
 
 public class UserController {
     private DynamicUserArray userArray;

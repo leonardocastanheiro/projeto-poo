@@ -1,8 +1,8 @@
-package projeto_sistema_produtos.collections;
+package br.ucs.projetosistemaprodutos.collections;
 
 import java.util.Arrays;
 
-import projeto_sistema_produtos.models.person.Supplier;
+import br.ucs.projetosistemaprodutos.models.person.Supplier;
 
 public class DynamicSupplierArray {
 	private Supplier [] suppliers;

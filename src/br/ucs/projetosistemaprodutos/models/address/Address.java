@@ -1,7 +1,7 @@
-package projeto_sistema_produtos.models.address;
+package br.ucs.projetosistemaprodutos.models.address;
 
-import projeto_sistema_produtos.controllers.users.ClientController;
-import projeto_sistema_produtos.models.itens.Store;
+import br.ucs.projetosistemaprodutos.models.itens.Store;
+import br.ucs.projetosistemaprodutos.controllers.users.ClientController;
 
 public class Address {
     private String street;

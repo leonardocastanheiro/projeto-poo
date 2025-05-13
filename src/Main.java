@@ -1,9 +1,9 @@
 import java.util.Scanner;
 
-import projeto_sistema_produtos.collections.DynamicSupplierArray;
-import projeto_sistema_produtos.collections.DynamicProductArray;
-import projeto_sistema_produtos.models.itens.Product;
-import projeto_sistema_produtos.models.itens.Stock;
+import br.ucs.projetosistemaprodutos.collections.DynamicProductArray;
+import br.ucs.projetosistemaprodutos.collections.DynamicSupplierArray;
+import br.ucs.projetosistemaprodutos.models.itens.Product;
+import br.ucs.projetosistemaprodutos.models.itens.Stock;
 
 public class Main {
 	private static Scanner sc;
@@ -19,7 +19,7 @@ public class Main {
     public void showLogin() {
     	Scanner inicialSc = new Scanner(System.in);
 
-		System.out.println("---WELCOME TO THE LIBRARY---");
+		System.out.println("---WELCOME TO THE SYSTEM---");
 		System.out.println("USER:");
 		String user = inicialSc.nextLine();
 		System.out.println("PASSWORD:");

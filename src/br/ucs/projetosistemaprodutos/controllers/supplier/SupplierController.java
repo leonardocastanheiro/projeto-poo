@@ -1,4 +1,4 @@
-package projeto_sistema_produtos.controllers;
+package br.ucs.projetosistemaprodutos.controllers.supplier;
 
 public class SupplierController {
 	

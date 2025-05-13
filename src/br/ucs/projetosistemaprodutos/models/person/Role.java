@@ -1,4 +1,4 @@
-package projeto_sistema_produtos.models.person;
+package br.ucs.projetosistemaprodutos.models.person;
 
 public enum Role {
     ADMIN,

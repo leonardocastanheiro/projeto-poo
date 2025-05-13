@@ -1,4 +1,4 @@
-package projeto_sistema_produtos.models.itens;
+package br.ucs.projetosistemaprodutos.models.itens;
 
 public class ItemOrder {
     private Integer quantity;

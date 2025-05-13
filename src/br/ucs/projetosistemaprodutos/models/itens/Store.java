@@ -1,9 +1,9 @@
-package projeto_sistema_produtos.models.itens;
+package br.ucs.projetosistemaprodutos.models.itens;
 
-import projeto_sistema_produtos.collections.DynamicProductArray;
-import projeto_sistema_produtos.collections.DynamicStockArray;
-import projeto_sistema_produtos.collections.DynamicSupplierArray;
-import projeto_sistema_produtos.collections.DynamicUserArray;
+import br.ucs.projetosistemaprodutos.collections.DynamicProductArray;
+import br.ucs.projetosistemaprodutos.collections.DynamicStockArray;
+import br.ucs.projetosistemaprodutos.collections.DynamicSupplierArray;
+import br.ucs.projetosistemaprodutos.collections.DynamicUserArray;
 
 public class Store {
     private final DynamicProductArray productArray = new DynamicProductArray(10);

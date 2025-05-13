@@ -1,8 +1,8 @@
-package projeto_sistema_produtos.collections;
-
-import projeto_sistema_produtos.models.itens.Product;
+package br.ucs.projetosistemaprodutos.collections;
 
 import java.util.Arrays;
+
+import br.ucs.projetosistemaprodutos.models.itens.Product;
 
 public class DynamicProductArray {
     private Product [] products;

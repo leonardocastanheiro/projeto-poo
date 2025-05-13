@@ -1,8 +1,8 @@
-package projeto_sistema_produtos.controllers.users;
+package br.ucs.projetosistemaprodutos.controllers.users;
 
-import projeto_sistema_produtos.models.itens.Store;
-import projeto_sistema_produtos.models.person.Client;
-import projeto_sistema_produtos.models.person.Role;
+import br.ucs.projetosistemaprodutos.models.itens.Store;
+import br.ucs.projetosistemaprodutos.models.person.Client;
+import br.ucs.projetosistemaprodutos.models.person.Role;
 
 public class ClientController extends UserController{
 
