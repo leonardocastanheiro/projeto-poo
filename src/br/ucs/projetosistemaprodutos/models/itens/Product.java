@@ -3,19 +3,22 @@ package br.ucs.projetosistemaprodutos.models.itens;
 public class Product {
     private String name;
     private String description;
-    private Byte [] photo;
+    //private Byte [] photo;
+    private byte photo;
     private Stock stock;
     private Integer id;
 
     private static Integer lastId = 1;
 
-    public Product(String name, String description, Stock stock) {
-        this.id = lastId++;
+    public Product() {
+    }
+    public Product(String name, String description, byte photo) {
+    	this.id = lastId++;
         this.name = name;
         this.description = description;
-        this.stock = stock;
+        this.photo = photo;
     }
-    public Product(String name, String description, Byte[] photo, Stock stock) {
+    public Product(String name, String description, byte photo, Stock stock) {
         this.id = lastId++;
         this.name = name;
         this.description = description;
@@ -39,11 +42,11 @@ public class Product {
         this.description = description;
     }
 
-    public Byte[] getPhoto() {
+    public byte getPhoto() {
         return photo;
     }
 
-    public void setPhoto(Byte[] photo) {
+    public void setPhoto(byte photo) {
         this.photo = photo;
     }
 

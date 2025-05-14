@@ -7,19 +7,19 @@ import br.ucs.projetosistemaprodutos.models.itens.Store;
 public class ProductController {
 	private DynamicProductArray productArray;
 	
-	ProductController(Store store){
+	public ProductController(Store store){
 		this.productArray = store.getProductArray();
 	}
 	
-	 protected void create(Product product) throws Exception {
-	        productArray.add(product);
-	    }
+	public void create(Product product) throws Exception {
+		productArray.add(product);
+	}
 	 
-	 protected void delete(Product product) throws Exception {
-		 productArray.delete(product);
-	 }
+	public void delete(Product product) throws Exception {
+		productArray.delete(product);
+	}
 	 
-	 public Product getById(int id) throws Exception{
-		 return productArray.getById(id);
-	 }
+	public Product getById(int id) throws Exception{
+		return productArray.getById(id);
+	}
 }

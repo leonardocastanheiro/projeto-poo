@@ -8,23 +8,23 @@ import br.ucs.projetosistemaprodutos.models.person.User;
 public class SupplierController {
 	private DynamicSupplierArray supplierArray;
 	
-	SupplierController(Store store){
+	public SupplierController(Store store){
 		this.supplierArray = store.getSupplierArray();
 	}
 	
-	 protected void create(Supplier supplier) throws Exception {
-	        supplierArray.add(supplier);
-	    }
+	public void create(Supplier supplier) throws Exception {
+	    supplierArray.add(supplier);
+	}
 	 
-	 protected void delete(Supplier Supplier) throws Exception {
+	public void delete(Supplier Supplier) throws Exception {
 		 supplierArray.delete(Supplier);
-	 }
+	}
 	 
 	 public Supplier getById(int id) throws Exception{
 		 return supplierArray.getById(id);
 	 }
 	 
 	 public Supplier getByEmail(String email) throws Exception {
-	        return supplierArray.getByEmail(email);
-	    }
+	     return supplierArray.getByEmail(email);
+	 }
 }
