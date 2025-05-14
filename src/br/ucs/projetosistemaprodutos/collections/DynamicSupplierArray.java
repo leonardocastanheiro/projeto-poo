@@ -3,6 +3,7 @@ package br.ucs.projetosistemaprodutos.collections;
 import java.util.Arrays;
 
 import br.ucs.projetosistemaprodutos.models.person.Supplier;
+import br.ucs.projetosistemaprodutos.models.person.User;
 
 public class DynamicSupplierArray {
 	private Supplier [] suppliers;
@@ -41,7 +42,7 @@ public class DynamicSupplierArray {
         suppliers[count - 1] = null;
         count--;
     }
-
+    
     public Supplier getByIndex(int index) throws Exception {
         if (index >= 0 && index < count) {
             return suppliers[index];
@@ -58,5 +59,16 @@ public class DynamicSupplierArray {
             }
         }
         throw new Exception("Invalid supplier ID.");
+    }
+    
+    public Supplier getByEmail(String email) throws Exception {
+        for(Supplier supplier : suppliers) {
+            if(supplier != null) {
+                if (supplier.getEmail().equals(email)) {
+                    return supplier;
+                }
+            }
+        }
+        throw new Exception("Invalid user email.");
     }
 }
