@@ -2,7 +2,8 @@ import java.util.Scanner;
 
 public class LoginView {
 
-	public LoginView(){
+	public LoginView(Store store){
+		this.store = store;
 	}
 	
 	public void show() throws Exception {
