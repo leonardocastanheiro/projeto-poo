@@ -1,12 +1,14 @@
+package br.ucs.projetosistemaprodutos.views;
 import java.util.Scanner;
+
+import br.ucs.projetosistemaprodutos.models.itens.Store;
 
 public class ClientView {
 	private static Scanner sc;
-	public ClientView() {
+	public ClientView(Store store) {
 	}
 	
-	public void show() {
-		sc = new Scanner(System.in);
+	public void show(Scanner sc, Store store) {
 		int option = 0;
 		do {
 			System.out.println("---------------------------------------------");

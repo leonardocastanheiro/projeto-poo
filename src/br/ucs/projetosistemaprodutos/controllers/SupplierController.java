@@ -27,4 +27,8 @@ public class SupplierController {
 	 public Supplier getByEmail(String email) throws Exception {
 	     return supplierArray.getByEmail(email);
 	 }
+	 
+	 public Supplier getByName(String name) throws Exception{
+		 return supplierArray.getByName(name);
+	 }
 }

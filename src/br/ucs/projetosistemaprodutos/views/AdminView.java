@@ -1,3 +1,4 @@
+package br.ucs.projetosistemaprodutos.views;
 import java.util.Scanner;
 
 import br.ucs.projetosistemaprodutos.controllers.*;
@@ -10,11 +11,9 @@ import br.ucs.projetosistemaprodutos.models.person.Supplier;
 public class AdminView {
 	private static Scanner sc;
 	public AdminView(Store store) {
-		this.store = store;
 	}
 	
-	public void show() throws Exception {
-		sc = new Scanner(System.in);
+	public void show(Scanner sc, Store store) throws Exception {
 		int option = 0;
     	
 		do {
@@ -30,25 +29,25 @@ public class AdminView {
 			
 			option= sc.nextInt();
 			sc.nextLine();
-			AdminView submenu = new AdminView();
+			AdminView submenu = new AdminView(store);
 			switch (option) {
 				case 1:
 					startData();
 					break;
 				case 2:
-					submenu.subClients();
+					submenu.subClients(store);
 					break;
 				case 3:
-					submenu.subSuppliers();
+					submenu.subSuppliers(store);
 					break;
 				case 4:
-					submenu.subProducts();
+					submenu.subProducts(store);
 					break;
 				case 5:
-					submenu.subStock();
+					submenu.subStock(store);
 					break;
 				case 6:
-					submenu.subOrders();
+					submenu.subOrders(store);
 					break;
 				case 0:
 					System.out.println("Saindo...");
@@ -68,7 +67,7 @@ public class AdminView {
     	System.out.println("---------------------------------------------");
     }
     
-    public void subClients() throws Exception {
+    public void subClients(Store store) throws Exception {
     	int subOption = 0;
     	ClientController newClient = new ClientController(store);
     	do {
@@ -137,9 +136,8 @@ public class AdminView {
 		System.out.println("---------------------------------------------");
     }
     
-    public void subSuppliers() throws Exception {
+    public void subSuppliers(Store store) throws Exception {
     	int subOption = 0;
-    	Store store = new Store("suppliers");
     	SupplierController newSupplier = new SupplierController(store);
     	do {
 			System.out.println("---------------------------------------------");
@@ -204,9 +202,8 @@ public class AdminView {
 		
 	}
     
-    public void subProducts() throws Exception {
+    public void subProducts(Store store) throws Exception {
     	int subOption = 0;
-    	Store store = new Store("products");
     	ProductController newProduct = new ProductController(store);
     	do {
 			System.out.println("---------------------------------------------");
@@ -226,10 +223,11 @@ public class AdminView {
 			    	String name = sc.nextLine();
 			    	System.out.println("Descrição: ");
 			    	String description = sc.nextLine();
-			    	System.out.println("Foto: ");
-			    	byte photo = sc.nextByte();
-			    		    
-					Product product = new Product(name, description, photo);
+			    	System.out.println("Nome do fornecedor: ");
+			    	String nameSupplier = sc.nextLine();
+			    	
+			    	SupplierController supplier = new SupplierController(store);
+					Product product = new Product(name, description, supplier.getByName(nameSupplier));
 					newProduct.create(product);
 					break;
 				case 2:
@@ -253,7 +251,7 @@ public class AdminView {
 		System.out.println("---------------------------------------------");  	
 	}
     
-    public void subStock() {
+    public void subStock(Store store) {
     	int subOption = 0;
     	    	
     	do {
@@ -304,7 +302,7 @@ public class AdminView {
 		
 	}
     
-    public void subOrders() {
+    public void subOrders(Store store) {
     	System.out.println("---------------------------------------------");
 		System.out.println("EM PRODUÇÃO");
 		System.out.println("---------------------------------------------");

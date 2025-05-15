@@ -47,7 +47,7 @@ public class DynamicSupplierArray {
         if (index >= 0 && index < count) {
             return suppliers[index];
         }
-        throw new Exception("Invalid index");
+        throw new Exception("Index inválido");
     }
 
     public Supplier getById(int id) throws Exception {
@@ -58,7 +58,7 @@ public class DynamicSupplierArray {
                 }
             }
         }
-        throw new Exception("Invalid supplier ID.");
+        throw new Exception("ID de fornecedor inválido.");
     }
     
     public Supplier getByEmail(String email) throws Exception {
@@ -69,6 +69,17 @@ public class DynamicSupplierArray {
                 }
             }
         }
-        throw new Exception("Invalid user email.");
+        throw new Exception("Email inválido.");
+    }
+    
+    public Supplier getByName(String name) throws Exception {
+        for(Supplier supplier : suppliers) {
+            if(supplier != null) {
+                if (supplier.getName().equals(name)) {
+                    return supplier;
+                }
+            }
+        }
+        throw new Exception("Fornecedor não encontrado.");
     }
 }

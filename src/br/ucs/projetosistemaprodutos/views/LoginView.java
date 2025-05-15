@@ -1,12 +1,14 @@
+package br.ucs.projetosistemaprodutos.views;
 import java.util.Scanner;
 
-public class LoginView {
+import br.ucs.projetosistemaprodutos.models.itens.Store;
 
+public class LoginView {
+	
 	public LoginView(Store store){
-		this.store = store;
 	}
 	
-	public void show(Scanner sc) throws Exception {
+	public void show(Scanner sc, Store store) throws Exception {
 		
 
 		System.out.println("------");
@@ -21,11 +23,11 @@ public class LoginView {
 		//Depois que tiver a permission certo, colocar dentro do .equals()
 		if("ADMIN".equals("ADMIN")) {
 			AdminView admin = new AdminView(store);
-			admin.show(sc);
+			admin.show(sc, store);
 		}
 		else {
-			ClientView client = new ClientView();
-			client.show(sc);
+			ClientView client = new ClientView(store);
+			client.show(sc, store);
 		}
 		
 	}
