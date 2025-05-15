@@ -3,6 +3,8 @@ package br.ucs.projetosistemaprodutos.collections;
 import java.util.Arrays;
 import java.util.Objects;
 
+import br.ucs.projetosistemaprodutos.models.address.Address;
+import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.User;
 
 public class DynamicUserArray {
@@ -12,7 +14,7 @@ public class DynamicUserArray {
     public DynamicUserArray(Integer initialCapacity) {
         users = new User[initialCapacity];
         count = 0;
-        users.add(new User("admin","admin",Role.ADMIN,"admin","admin","admin", new Address("admin","admin","admin","admin","admin","admin","admin")));
+        users[count++] = new User("admin","admin",Role.ADMIN,"admin","admin","admin", new Address("admin","admin","admin","admin","admin","admin","admin"));
     }
 
     public void add(User user) throws Exception {
@@ -22,15 +24,17 @@ public class DynamicUserArray {
         }
 
         for (User userAux : users) {
-            if(userAux == user) {
-                throw new Exception("User already exists.");
-            }
-            else if(Objects.equals(userAux.getLogin(), user.getLogin())) {
-                throw new Exception("Login already exists.");
-            }
-            else if(Objects.equals(userAux.getEmail(), user.getEmail())) {
-                throw new Exception("E-mail already exists.");
-            }
+        	if(userAux != null) {
+                if(userAux == user) {
+                    throw new Exception("Usuário já existe.");
+                }
+                else if(Objects.equals(userAux.getLogin(), user.getLogin())) {
+                    throw new Exception("Esse login já existe.");
+                }
+                else if(Objects.equals(userAux.getEmail(), user.getEmail())) {
+                    throw new Exception("Esse endereço de e-mail já está sendo utilizado.");
+                }
+        	}
         }
 
         users[count++] = user;
@@ -46,7 +50,7 @@ public class DynamicUserArray {
         }
 
         if (indexToRemove == -1) {
-            throw new Exception("User not found.");
+            throw new Exception("Usuário não encontrado.");
         }
 
         for (int i = indexToRemove; i < count - 1; i++) {
@@ -61,7 +65,7 @@ public class DynamicUserArray {
         if (index >= 0 && index < count) {
             return users[index];
         }
-        throw new Exception("Invalid index");
+        throw new Exception("Index inválido");
     }
 
     public User getById(int id) throws Exception {
@@ -72,7 +76,7 @@ public class DynamicUserArray {
                 }
             }
         }
-        throw new Exception("Invalid user ID.");
+        throw new Exception("ID de usuário inválido.");
     }
 
     public User getByLogin(String login) throws Exception {
@@ -83,7 +87,7 @@ public class DynamicUserArray {
                 }
             }
         }
-        throw new Exception("Invalid user login.");
+        throw new Exception("Login de usuário não encontrado.");
     }
 
     public User getByEmail(String email) throws Exception {
@@ -94,6 +98,6 @@ public class DynamicUserArray {
                 }
             }
         }
-        throw new Exception("Invalid user email.");
+        throw new Exception("Email não encontrado.");
     }
 }

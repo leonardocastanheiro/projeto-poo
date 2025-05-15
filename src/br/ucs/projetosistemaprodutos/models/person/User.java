@@ -2,7 +2,7 @@ package br.ucs.projetosistemaprodutos.models.person;
 
 import br.ucs.projetosistemaprodutos.models.address.Address;
 
-public abstract class User extends Person {
+public class User extends Person {
 
     private String login;
     private String password;
