@@ -20,7 +20,7 @@ public class LoginView {
 		//FALTA PEGAR O VETOR DO USUÁRIOS, ENCONTRAR ESSE LOGIN E VERIFICAR A SENHA
 		//Depois que tiver a permission certo, colocar dentro do .equals()
 		if("ADMIN".equals("ADMIN")) {
-			AdminView admin = new AdminView();
+			AdminView admin = new AdminView(store);
 			admin.show();
 		}
 		else {
