@@ -3,6 +3,7 @@ package br.ucs.projetosistemaprodutos.models.person;
 import br.ucs.projetosistemaprodutos.models.address.Address;
 
 public class Supplier extends Person{
+    private DynamicProductArray products;
     private String description;
 
     public Supplier(Role role, String name, String phone, String email, Address address) {
