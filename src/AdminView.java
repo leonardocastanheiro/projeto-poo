@@ -70,7 +70,6 @@ public class AdminView {
     
     public void subClients() throws Exception {
     	int subOption = 0;
-    	Store store = new Store("clients");
     	ClientController newClient = new ClientController(store);
     	do {
 			System.out.println("---------------------------------------------");
