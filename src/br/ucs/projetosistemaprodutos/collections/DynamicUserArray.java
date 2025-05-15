@@ -12,6 +12,7 @@ public class DynamicUserArray {
     public DynamicUserArray(Integer initialCapacity) {
         users = new User[initialCapacity];
         count = 0;
+        users.add(new User("admin","admin",Role.ADMIN,"admin","admin","admin", new Address("admin","admin","admin","admin","admin","admin","admin")));
     }
 
     public void add(User user) throws Exception {
