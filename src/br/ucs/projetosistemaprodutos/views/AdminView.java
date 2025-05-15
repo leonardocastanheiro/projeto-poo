@@ -9,7 +9,6 @@ import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.Supplier;
 
 public class AdminView {
-	private static Scanner sc;
 	public AdminView(Store store) {
 	}
 	
@@ -35,19 +34,19 @@ public class AdminView {
 					startData();
 					break;
 				case 2:
-					submenu.subClients(store);
+					submenu.subClients(sc, store);
 					break;
 				case 3:
-					submenu.subSuppliers(store);
+					submenu.subSuppliers(sc, store);
 					break;
 				case 4:
-					submenu.subProducts(store);
+					submenu.subProducts(sc, store);
 					break;
 				case 5:
-					submenu.subStock(store);
+					submenu.subStock(sc, store);
 					break;
 				case 6:
-					submenu.subOrders(store);
+					submenu.subOrders(sc, store);
 					break;
 				case 0:
 					System.out.println("Saindo...");
@@ -67,7 +66,7 @@ public class AdminView {
     	System.out.println("---------------------------------------------");
     }
     
-    public void subClients(Store store) throws Exception {
+    public void subClients(Scanner sc, Store store) throws Exception {
     	int subOption = 0;
     	ClientController newClient = new ClientController(store);
     	do {
@@ -136,7 +135,7 @@ public class AdminView {
 		System.out.println("---------------------------------------------");
     }
     
-    public void subSuppliers(Store store) throws Exception {
+    public void subSuppliers(Scanner sc, Store store) throws Exception {
     	int subOption = 0;
     	SupplierController newSupplier = new SupplierController(store);
     	do {
@@ -202,7 +201,7 @@ public class AdminView {
 		
 	}
     
-    public void subProducts(Store store) throws Exception {
+    public void subProducts(Scanner sc, Store store) throws Exception {
     	int subOption = 0;
     	ProductController newProduct = new ProductController(store);
     	do {
@@ -251,7 +250,7 @@ public class AdminView {
 		System.out.println("---------------------------------------------");  	
 	}
     
-    public void subStock(Store store) {
+    public void subStock(Scanner sc, Store store) {
     	int subOption = 0;
     	    	
     	do {
@@ -302,7 +301,7 @@ public class AdminView {
 		
 	}
     
-    public void subOrders(Store store) {
+    public void subOrders(Scanner sc, Store store) {
     	System.out.println("---------------------------------------------");
 		System.out.println("EM PRODUÇÃO");
 		System.out.println("---------------------------------------------");
