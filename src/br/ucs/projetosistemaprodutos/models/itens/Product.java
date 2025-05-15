@@ -7,6 +7,7 @@ public class Product {
     private byte photo;
     private Stock stock;
     private Integer id;
+    private Supplier supplier;
 
     private static Integer lastId = 1;
 
