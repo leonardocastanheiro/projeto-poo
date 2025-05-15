@@ -6,8 +6,8 @@ public class LoginView {
 		this.store = store;
 	}
 	
-	public void show() throws Exception {
-		Scanner sc = new Scanner(System.in);
+	public void show(Scanner sc) throws Exception {
+		
 
 		System.out.println("------");
 		System.out.println("USUÁRIO:");
@@ -21,12 +21,12 @@ public class LoginView {
 		//Depois que tiver a permission certo, colocar dentro do .equals()
 		if("ADMIN".equals("ADMIN")) {
 			AdminView admin = new AdminView(store);
-			admin.show();
+			admin.show(sc);
 		}
 		else {
 			ClientView client = new ClientView();
-			client.show();
+			client.show(sc);
 		}
-		sc.close();
+		
 	}
 }
