@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import br.ucs.projetosistemaprodutos.models.address.Address;
+import br.ucs.projetosistemaprodutos.models.person.Admin;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.User;
 
@@ -14,7 +15,7 @@ public class DynamicUserArray {
     public DynamicUserArray(Integer initialCapacity) {
         users = new User[initialCapacity];
         count = 0;
-        users[count++] = new User("admin","admin",Role.ADMIN,"admin","admin","admin", new Address("admin","admin","admin","admin","admin","admin","admin"));
+        users[count++] = new Admin("admin","admin",Role.ADMIN,"admin","admin","admin", new Address("admin","admin","admin","admin","admin","admin","admin"));
     }
 
     public void add(User user) throws Exception {
