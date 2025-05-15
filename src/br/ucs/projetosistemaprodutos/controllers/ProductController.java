@@ -19,6 +19,10 @@ public class ProductController {
 		productArray.delete(product);
 	}
 	 
+	public void update(Product copy, Product original) throws Exception{
+		productArray.update(copy, original);
+	}
+
 	public Product getById(int id) throws Exception{
 		return productArray.getById(id);
 	}

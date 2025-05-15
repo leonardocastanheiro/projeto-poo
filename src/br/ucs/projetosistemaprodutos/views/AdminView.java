@@ -233,7 +233,69 @@ public class AdminView {
 					//MOSTRAR LISTA
 					break;
 				case 3:
-					//ATUALIZAR
+					//LISTA PRODUTOS (newProduct.read());
+					newProduct.getById(1); 
+					System.out.println("Qual produto você deseja editar?");
+					
+					int id = sc.nextInt();
+					Product updateProduct = newProduct.getById(id);
+					if(updateProduct != null) {		    	
+				    	int updateOp = 0;
+				    	Product updateProductCopy = new Product();
+				    	do {
+					    	System.out.println("EDITAR PRODUTO: ");
+							System.out.println("1. Nome: " + updateProduct.getName());
+					    	System.out.println("2. Descrição: " + updateProduct.getDescription());
+					    	System.out.println("3. Nome do fornecedor: " + updateProduct.getSupplier().getName());
+					    	System.out.println("4. Estoque: \n"
+					    			+ "Quantidade - " + updateProduct.getStock().getQuantity() + "\n"
+					    			+ "Preço - R$ " + updateProduct.getStock().getPrice());
+					    	System.out.println("5. Salvar");
+					    	System.out.println("0. Cancelar");
+					    	System.out.println("Escolha o campo que deseja editar: ");
+					    	updateOp = sc.nextInt();
+					    	sc.nextLine();
+					    	
+					    	switch(updateOp) {
+					    		case 1:
+					    			System.out.println("Novo nome: ");
+					    			updateProductCopy.setName(sc.nextLine());
+					    			break;
+					    		case 2:
+					    			System.out.println("Nova descrição: ");
+					    			updateProductCopy.setDescription(sc.nextLine());
+					    			break;
+					    		case 3: 
+					    			SupplierController newSupplier = new SupplierController(store);
+					    			System.out.println("Nome do novo fornecedor: ");
+					    			Supplier foundSupplier = newSupplier.getByName(sc.nextLine());
+					    			if(foundSupplier != null) {
+						    			updateProductCopy.setSupplier(foundSupplier);
+					    			}else {
+					    				System.out.println("Fornecedor não encontrado");
+					    			}
+					    			break;
+					    		case 4: 
+					    			System.out.println("Nova quantidade em estoque: ");
+					    			int newQuantity = sc.nextInt();
+					    			System.out.println("Novo preço: ");
+					    			double newPrice = sc.nextDouble();
+					    			Stock newStock = new Stock(newQuantity, newPrice);
+					    			updateProductCopy.setStock(newStock);
+					    			break;
+					    		case 5:
+					    			newProduct.update(updateProductCopy, updateProduct);
+					    		case 0:
+					    			System.out.println("Saindo de 'Atualizar produto'...");
+					    			break;
+								default:
+									System.out.println("Opção inválida");
+					    	}
+					  		
+				    	}while(updateOp != 0);
+					}else {
+						System.out.println("Produto não encontrado");
+					}
 					break;
 				case 4:
 					//MOSTRAR LISTA E ESCOLHER QUAL APAGAR
@@ -241,10 +303,9 @@ public class AdminView {
 					break;
 				case 0:
 					System.out.println("Saindo de 'Produtos'...");
-					System.exit(0);
+					break;
 				default:
 					System.out.println("Erro...");
-					System.exit(0);
 			}
     	}while(subOption != 0);
 		System.out.println("---------------------------------------------");  	

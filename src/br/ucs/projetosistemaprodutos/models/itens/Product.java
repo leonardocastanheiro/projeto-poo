@@ -14,6 +14,11 @@ public class Product {
 
     public Product() {
     }
+    public Product(String name, String description) {
+    	this.id = lastId++;
+        this.name = name;
+        this.description = description;
+    }
     public Product(String name, String description, Supplier supplier) {
     	this.id = lastId++;
         this.name = name;

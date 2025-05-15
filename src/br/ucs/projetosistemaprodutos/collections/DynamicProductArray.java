@@ -42,6 +42,10 @@ public class DynamicProductArray {
         count--;
     }
 
+    public void update(Product copy, Product original) throws Exception{
+    	
+    }
+    
     public Product getByIndex(int index) throws Exception {
         if (index >= 0 && index < count) {
             return products[index];
