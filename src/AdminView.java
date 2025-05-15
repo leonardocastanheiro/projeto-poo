@@ -9,7 +9,8 @@ import br.ucs.projetosistemaprodutos.models.person.Supplier;
 
 public class AdminView {
 	private static Scanner sc;
-	public AdminView() {
+	public AdminView(Store store) {
+		this.store = store;
 	}
 	
 	public void show() throws Exception {
