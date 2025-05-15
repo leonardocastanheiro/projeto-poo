@@ -1,10 +1,11 @@
 package br.ucs.projetosistemaprodutos.models.itens;
 
+import br.ucs.projetosistemaprodutos.models.person.Supplier;
+
 public class Product {
     private String name;
     private String description;
-    //private Byte [] photo;
-    private byte photo;
+    private Byte [] photo;
     private Stock stock;
     private Integer id;
     private Supplier supplier;
@@ -13,13 +14,20 @@ public class Product {
 
     public Product() {
     }
-    public Product(String name, String description, byte photo) {
+    public Product(String name, String description, Supplier supplier) {
     	this.id = lastId++;
         this.name = name;
         this.description = description;
-        this.photo = photo;
+        this.supplier = supplier;
     }
-    public Product(String name, String description, byte photo, Stock stock) {
+    public Product(String name, String description, Stock stock, Supplier supplier) {
+        this.id = lastId++;
+        this.name = name;
+        this.description = description;
+        this.stock = stock;
+        this.supplier = supplier;
+    }
+    public Product(String name, String description, Byte[] photo, Stock stock) {
         this.id = lastId++;
         this.name = name;
         this.description = description;
@@ -43,11 +51,11 @@ public class Product {
         this.description = description;
     }
 
-    public byte getPhoto() {
+    public Byte[] getPhoto() {
         return photo;
     }
 
-    public void setPhoto(byte photo) {
+    public void setPhoto(Byte[] photo) {
         this.photo = photo;
     }
 
@@ -62,4 +70,11 @@ public class Product {
     public Integer getId() {
         return id;
     }
+    
+	public Supplier getSupplier() {
+		return supplier;
+	}
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
+	}
 }
