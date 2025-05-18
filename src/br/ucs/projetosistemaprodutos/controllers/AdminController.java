@@ -2,7 +2,6 @@ package br.ucs.projetosistemaprodutos.controllers;
 
 import br.ucs.projetosistemaprodutos.models.itens.Store;
 import br.ucs.projetosistemaprodutos.models.person.Admin;
-import br.ucs.projetosistemaprodutos.models.person.Client;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 
 public class AdminController extends UserController {
@@ -18,5 +17,9 @@ public class AdminController extends UserController {
 
     public void delete(Admin admin) throws Exception {
         super.delete(admin);
+    }
+    
+    public void showList() throws Exception {
+    	super.showList(Role.ADMIN);
     }
 }
