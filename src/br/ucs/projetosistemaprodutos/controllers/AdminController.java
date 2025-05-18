@@ -6,7 +6,7 @@ import br.ucs.projetosistemaprodutos.models.person.Role;
 
 public class AdminController extends UserController {
 	
-    AdminController(Store store) {
+    public AdminController(Store store) {
         super(store);
     }
 

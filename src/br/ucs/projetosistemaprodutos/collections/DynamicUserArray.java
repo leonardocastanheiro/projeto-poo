@@ -63,16 +63,16 @@ public class DynamicUserArray {
     }
   //-----------------------------------------------------------------
     public void showArray(Role role) throws Exception {
-        boolean temUsuario = false;
+        boolean existsUser = false;
 
         for (User userAux : users) {
             if (userAux != null && userAux.getRole() == role) {
                 System.out.println(userAux.toString());
-                temUsuario = true;
+                existsUser = true;
             }
         }
 
-        if (!temUsuario) {
+        if (!existsUser) {
             throw new Exception("Ainda não há usuários cadastrados no sistema.");
         }
     }
@@ -116,6 +116,26 @@ public class DynamicUserArray {
             }
         }
         throw new Exception("Email não encontrado.");
+    }
+
+    public boolean isLoginExists(String login) {
+        for(User user : users) {
+            if(user.getLogin().equals(login)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean isEmailExists(String email) {
+        for(User user : users) {
+            if(user.getEmail().equals(email)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
   //-----------------------------------------------------------------

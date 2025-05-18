@@ -11,9 +11,7 @@ public abstract class Person {
     private Integer id;
 
     private static Integer lastId = 1;
-    
-    public Person() {
-    }
+
     public Person(Role role, String name, String phone, String email, Address address) {
         this.id = lastId++;
         this.role = role;
@@ -68,10 +66,6 @@ public abstract class Person {
 
     public Integer getId() {
         return id;
-    }
-    
-    public String toString() {
-    	return "Função: " + this.role + ", nome: " + this.name + ", telefone: " + this.email + ", e-mail: " + this.email + ", " + this.address.toString()
     }
 
 }

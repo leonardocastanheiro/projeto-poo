@@ -1,18 +1,29 @@
 package br.ucs.projetosistemaprodutos.views;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import br.ucs.projetosistemaprodutos.controllers.*;
 import br.ucs.projetosistemaprodutos.models.address.Address;
+import br.ucs.projetosistemaprodutos.models.copies.ClientCopy;
 import br.ucs.projetosistemaprodutos.models.itens.*;
 import br.ucs.projetosistemaprodutos.models.person.Client;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.Supplier;
+import br.ucs.projetosistemaprodutos.models.person.User;
 
 public class AdminView {
+
+	private Store store;
+	private AdminController adminController;
+	private ClientController clientController;
+
 	public AdminView(Store store) {
+		this.store = store;
+		this.adminController = new AdminController(store);
+		this.clientController = new ClientController(store);
 	}
 	
-	public void show(Scanner sc, Store store) throws Exception {
+	public void show(Scanner sc) throws Exception {
 		int option = 0;
     	
 		do {
@@ -66,7 +77,7 @@ public class AdminView {
     	System.out.println("---------------------------------------------");
     }
     
-    public void subClients(Scanner sc, Store store) throws Exception {
+    public void subClients(Scanner sc, Store store) {
     	int subOption = 0;
     	ClientController newClient = new ClientController(store);
     	do {
@@ -83,46 +94,116 @@ public class AdminView {
 			
 			switch (subOption) {
 				case 1:
-					System.out.println("Nome: ");
+					System.out.print("Nome: ");
 					String name = sc.nextLine();
-					System.out.println("Telefone: ");
+					System.out.print("Telefone: ");
 					String phone = sc.nextLine();
-					System.out.println("Email: ");
+					System.out.print("Email: ");
 					String email = sc.nextLine();
-					System.out.println("Usuário: ");
+					System.out.print("Usuário: ");
 					String login = sc.nextLine();
-					System.out.println("Senha: ");
+					System.out.print("Senha: ");
 					String password = sc.nextLine();
-					System.out.println("Cartão de crédito: ");
+					System.out.print("Cartão de crédito: ");
 					String creditCard = sc.nextLine();
-					System.out.println("ENDEREÇO ");
-					System.out.println("Rua: ");
+					System.out.println("ENDEREÇO");
+					System.out.print("Rua: ");
 					String street = sc.nextLine();
-					System.out.println("Número: ");
+					System.out.print("Número: ");
 					String number = sc.nextLine();
-					System.out.println("Complemento: ");
+					System.out.print("Complemento: ");
 					String complement = sc.nextLine();
-					System.out.println("Bairro: ");
+					System.out.print("Bairro: ");
 					String neighborhood = sc.nextLine();
-					System.out.println("CEP: ");
+					System.out.print("CEP: ");
 					String cep = sc.nextLine();
-					System.out.println("Cidade: ");
+					System.out.print("Cidade: ");
 					String city = sc.nextLine();
-					System.out.println("Estado: ");
+					System.out.print("Estado: ");
 					String state = sc.nextLine();
 					
 					Address address = new Address( street, number, complement, neighborhood, cep, city, state);
 					Client client = new Client(login, password, Role.CLIENT, name, phone, email, creditCard, address);
-					newClient.create(client);
+					try {
+						clientController.create(client);
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
 					break;
 				case 2:
-					//MOSTRAR LISTA
-					break;
+					try {
+						clientController.showArray();
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+                    }
+                    break;
 				case 3:
-					//ATUALIZAR
+					System.out.println("--------");
+					System.out.println("Digite o ID do cliente que deseja editar: ");
+
+					int id;
+					Client client1;
+
+					try {
+						id = sc.nextInt();
+
+						client1 = (Client) clientController.getById(id);
+
+					} catch (InputMismatchException e) {
+						System.out.println("Tipo digitado não corresponde a um ID.");
+						return;
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+						return;
+					}
+
+					ClientCopy clientCopy = new ClientCopy(client1);
+
+
+					//REALIZAR VIEWS DE MOSTRAR OS DADOS DO CLIENT (COPIA) E O QUE QUER EDITAR
+
+
+					try {
+						clientController.edit(client1,clientCopy);
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+						return;
+					}
+
 					break;
+
 				case 4:
-					newClient.delete(null);
+					System.out.println("--------");
+					System.out.println("Clientes: ");
+
+					try {
+						clientController.showArray(Role.CLIENT);
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+						return;
+					}
+
+					System.out.println("--------");
+					System.out.println("Selecione o ID do cliente que deseja excluir: ");
+
+					int id1;
+
+					try {
+						id1 = sc.nextInt();
+
+						User user = clientController.getById(id1);
+
+						newClient.delete((Client) user);
+					} catch (InputMismatchException e) {
+						System.out.println("Tipo digitado não corresponde a um ID.");
+						return;
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+						return;
+                    }
+
+					System.out.println("Cliente excluído com sucesso!");
+
 					break;
 				case 0:
 					System.out.println("Saindo de 'Clientes'...");

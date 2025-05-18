@@ -1,14 +1,20 @@
 package br.ucs.projetosistemaprodutos.views;
 import java.util.Scanner;
 
+import br.ucs.projetosistemaprodutos.controllers.ClientController;
 import br.ucs.projetosistemaprodutos.models.itens.Store;
 
 public class ClientView {
-	private static Scanner sc;
+
+	private Store store;
+	private ClientController controller;
+
 	public ClientView(Store store) {
+		this.store = store;
+		this.controller = new ClientController(store);
 	}
 	
-	public void show(Scanner sc, Store store) {
+	public void show(Scanner sc) {
 		int option = 0;
 		do {
 			System.out.println("---------------------------------------------");

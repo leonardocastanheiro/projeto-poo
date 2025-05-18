@@ -8,7 +8,7 @@ import br.ucs.projetosistemaprodutos.models.person.User;
 public class UserController {
     private DynamicUserArray userArray;
 
-    UserController(Store store) {
+    public UserController(Store store) {
         this.userArray = store.getUserArray();
     }
 
@@ -34,5 +34,15 @@ public class UserController {
     
     public void showArray(Role role) throws Exception {
     	userArray.showArray(role);
+    }
+
+    public User verifyLoginAndPassword(String login, String password) throws Exception {
+        User user = this.getByLogin(login);
+
+        if(user.getPassword().equals(password)) {
+            return user;
+        }
+
+        return null;
     }
 }

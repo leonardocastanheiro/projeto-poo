@@ -47,7 +47,7 @@ public class DynamicSupplierArray {
     public void showArray() throws Exception {
         boolean temUsuario = false;
 
-        for (User supplierAux : suppliers) {
+        for (Supplier supplierAux : suppliers) {
             if (supplierAux != null) {
                 System.out.println(supplierAux.toString());
                 temUsuario = true;

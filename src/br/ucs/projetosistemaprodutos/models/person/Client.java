@@ -22,9 +22,5 @@ public class Client extends User {
         super(user.getLogin(), user.getPassword(), user.getRole(), user.getName(), user.getPhone(), user.getEmail(), user.getAddress());
         this.creditCard = creditCard;
     }
-    
-    @Override
-    public String toString() {
-    	return super.toString() + ", Dados do Cartão de Crédito: " +this.creditCard;
-    }  
+
 }

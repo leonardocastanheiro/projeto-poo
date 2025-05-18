@@ -28,9 +28,10 @@ public abstract class User extends Person {
         this.login = login;
         this.password = password;
     }
-    
+
+
     @Override
     public String toString() {
-    	return  "Login: " + this.login + "Senha: " + this.password + ", " +super.toString();
+    	return  "ID: "+this.getId()+" | Login: "+this.getLogin();
     }
 }
