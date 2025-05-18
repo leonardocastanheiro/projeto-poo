@@ -19,7 +19,7 @@ public class AdminController extends UserController {
         super.delete(admin);
     }
     
-    public void showList() throws Exception {
-    	super.showList(Role.ADMIN);
+    public void showArray() throws Exception {
+    	super.showArray(Role.ADMIN);
     }
 }
