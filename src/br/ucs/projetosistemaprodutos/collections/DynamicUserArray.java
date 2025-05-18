@@ -11,13 +11,13 @@ import br.ucs.projetosistemaprodutos.models.person.User;
 public class DynamicUserArray {
     private User [] users;
     private Integer count;
-
+  //-----------------------------------------------------------------
     public DynamicUserArray(Integer initialCapacity) {
         users = new User[initialCapacity];
         count = 0;
         users[count++] = new Admin("admin","admin",Role.ADMIN,"admin","admin","admin", new Address("admin","admin","admin","admin","admin","admin","admin"));
     }
-
+  //-----------------------------------------------------------------
     public void add(User user) throws Exception {
         if(count == users.length) {
             int newCapacity = users.length * 2;
@@ -40,7 +40,7 @@ public class DynamicUserArray {
 
         users[count++] = user;
     }
-
+  //-----------------------------------------------------------------
     public void delete(User user) throws Exception {
         int indexToRemove = -1;
         for (int i = 0; i < count; i++) {
@@ -61,14 +61,30 @@ public class DynamicUserArray {
         users[count - 1] = null;
         count--;
     }
+  //-----------------------------------------------------------------
+    public void showArray(Role role) throws Exception {
+        boolean temUsuario = false;
 
+        for (User userAux : users) {
+            if (userAux != null && userAux.getRole() == role) {
+                System.out.println(userAux.toString());
+                temUsuario = true;
+            }
+        }
+
+        if (!temUsuario) {
+            throw new Exception("Ainda não há usuários cadastrados no sistema.");
+        }
+    }
+    
+  //-----------------------------------------------------------------
     public User getByIndex(int index) throws Exception {
         if (index >= 0 && index < count) {
             return users[index];
         }
         throw new Exception("Index inválido");
     }
-
+  //-----------------------------------------------------------------
     public User getById(int id) throws Exception {
         for(User user : users) {
             if(user != null) {
@@ -79,7 +95,7 @@ public class DynamicUserArray {
         }
         throw new Exception("ID de usuário inválido.");
     }
-
+  //-----------------------------------------------------------------
     public User getByLogin(String login) throws Exception {
         for(User user : users) {
             if(user != null) {
@@ -90,7 +106,7 @@ public class DynamicUserArray {
         }
         throw new Exception("Login de usuário não encontrado.");
     }
-
+  //----------------------------------------------------------------
     public User getByEmail(String email) throws Exception {
         for(User user : users) {
             if(user != null) {
@@ -102,3 +118,5 @@ public class DynamicUserArray {
         throw new Exception("Email não encontrado.");
     }
 }
+  //----------------------------------------------------------------
+
