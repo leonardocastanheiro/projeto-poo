@@ -12,6 +12,8 @@ public abstract class Person {
 
     private static Integer lastId = 1;
 
+    public Person() {
+    }
     public Person(Role role, String name, String phone, String email, Address address) {
         this.id = lastId++;
         this.role = role;

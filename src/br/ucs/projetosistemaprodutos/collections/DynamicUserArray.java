@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import br.ucs.projetosistemaprodutos.models.address.Address;
+import br.ucs.projetosistemaprodutos.models.copies.ClientCopy;
 import br.ucs.projetosistemaprodutos.models.person.Admin;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.User;
@@ -118,21 +119,25 @@ public class DynamicUserArray {
         throw new Exception("Email não encontrado.");
     }
 
-    public boolean isLoginExists(String login) {
+    public boolean isLoginExists(String login, User userLogin) {
         for(User user : users) {
-            if(user.getLogin().equals(login)) {
-                return true;
-            }
+        	if(user != null) {
+                if(user.getLogin().equals(login) && !user.equals(userLogin)) {
+                    return true;
+                }
+        	}
         }
 
         return false;
     }
 
-    public boolean isEmailExists(String email) {
+    public boolean isEmailExists(String email, User userEmail) {
         for(User user : users) {
-            if(user.getEmail().equals(email)) {
-                return true;
-            }
+        	if(user != null) {
+                if(user.getEmail().equals(email) && !user.equals(userEmail) ) {
+                    return true;
+                }
+        	}
         }
 
         return false;

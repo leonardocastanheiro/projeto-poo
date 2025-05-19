@@ -23,6 +23,8 @@ public abstract class User extends Person {
         this.password = password;
     }
     
+    public User() {
+    }
     public User(String login, String password, Role role, String name, String phone, String email, Address address) {
         super(role, name, phone, email, address);
         this.login = login;

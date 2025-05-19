@@ -36,11 +36,11 @@ public class ClientController extends UserController{
     }
 
     public void edit(Client client, ClientCopy copy) throws Exception {
-        if(userArray.isLoginExists(copy.getLogin())) {
+        if(userArray.isLoginExists(copy.getLogin(), client)) {
             throw new Exception("Login já cadastrado");
         }
 
-        if(userArray.isEmailExists(copy.getEmail())) {
+        if(userArray.isEmailExists(copy.getEmail(), client)) {
             throw new Exception("E-mail já cadastrado");
         }
 

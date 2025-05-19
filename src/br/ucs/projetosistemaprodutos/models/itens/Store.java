@@ -2,6 +2,7 @@ package br.ucs.projetosistemaprodutos.models.itens;
 
 import br.ucs.projetosistemaprodutos.collections.*;
 import br.ucs.projetosistemaprodutos.models.address.Address;
+import br.ucs.projetosistemaprodutos.models.person.Client;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.Supplier;
 
@@ -15,6 +16,7 @@ public class Store {
 
     public Store(String name) {
         this.name = name;
+        setUserArray(this.userArray);
         setSupplierArray(this.supplierArray);
         setProductArray(this.productArray);
     }
@@ -48,7 +50,16 @@ public class Store {
     public DynamicUserArray getUserArray() {
         return userArray;
     }
-
+    private void setUserArray(DynamicUserArray userArray) {
+    	Client user = new Client("joaosilva", "senha123", Role.CLIENT, "João Silva", "54999999999", "joao@gmail.com", "12345",
+    			new Address("Rua das Amoras", "10", "Apto 10", "Bairro Frutas", "12345-999", "Curitiba", "Paraná"));
+    	try {
+			userArray.add(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+    
     public String getName() {
         return name;
     }

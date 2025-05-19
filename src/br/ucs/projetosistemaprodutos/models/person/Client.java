@@ -13,6 +13,8 @@ public class Client extends User {
         this.creditCard = creditCard;
     }
 
+    public Client() {
+    }
     public Client(String login, String password, Role role, String name, String phone, String email, String creditCard, Address address) {
         super(login, password, role, name, phone, email, address);
         this.creditCard = creditCard;

@@ -32,19 +32,18 @@ public class AdminView {
     	
 		do {
 			System.out.println("Escolha uma opção:");
-			System.out.println("1  - Iniciar dados");
-			System.out.println("2  - Clientes");
-			System.out.println("3  - Fornecedores");
-			System.out.println("4  - Produtos");
-			System.out.println("5  - Estoque");
-			System.out.println("6  - Pedidos");
+			System.out.println("1  - Clientes");
+			System.out.println("2  - Fornecedores");
+			System.out.println("3  - Produtos");
+			System.out.println("4  - Estoque");
+			System.out.println("5  - Pedidos");
 			System.out.println("0  - Sair");
 
 			do {
 				try {
 					option = sc.nextInt();
 
-					if(option < 0 || option > 6) {
+					if(option < 0 || option > 5) {
 						throw new InputMismatchException("Entrada inválida");
 					}
 
@@ -52,25 +51,22 @@ public class AdminView {
 					System.out.print("Entrada inválida, digite novamente: ");
 				}
 				sc.nextLine();
-			} while (option<0 || option>6);
+			} while (option<0 || option>5);
 
 			switch (option) {
 				case 1:
-					startData();
-					break;
-				case 2:
 					this.subClients(sc, store);
 					break;
-				case 3:
+				case 2:
 					this.subSuppliers(sc, store);
 					break;
-				case 4:
+				case 3:
 					this.subProducts(sc, store);
 					break;
-				case 5:
+				case 4:
 					this.subStock(sc, store);
 					break;
-				case 6:
+				case 5:
 					this.subOrders(sc, store);
 					break;
 				case 0:
@@ -84,11 +80,6 @@ public class AdminView {
 		sc.close();
 	}
 
-	public void startData() {
-		System.out.println("------------------");
-    	System.out.println("INICIA OS DADOS");
-    }
-    
     public void subClients(Scanner sc, Store store) {
     	int subOption = -1;
     	ClientController newClient = new ClientController(store);
@@ -161,6 +152,11 @@ public class AdminView {
                     }
                     break;
 				case 3:
+					try {
+						clientController.showArray();
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+                    }
 					System.out.println("--------");
 					System.out.println("Digite o ID do cliente que deseja editar: ");
 
@@ -181,20 +177,131 @@ public class AdminView {
 					}
 
 					ClientCopy clientCopy = new ClientCopy(client1);
+					int editInfo = -1;
+					do {
+						System.out.println("1 - Nome: ");
+						System.out.println("2 - Telefone: ");
+						System.out.println("3 - Email: ");
+						System.out.println("4 - Usuário: ");
+						System.out.println("5 - Senha: ");
+						System.out.println("6 - Cartão de crédito: ");
+						System.out.println("7 - Rua: ");
+						System.out.println("8 - Número: ");
+						System.out.println("9 - Complemento: ");
+						System.out.println("10 - Bairro: ");
+						System.out.println("11 - CEP: ");
+						System.out.println("12 - Cidade: ");
+						System.out.println("13 - Estado: ");
+						System.out.println("14 - Salvar alterações");
+						System.out.println("0 - Cancelar");
+						System.out.println("Informe o campo que deseja editar: ");
+						
+						do {
+							try {
+								editInfo = sc.nextInt();
 
+								if(editInfo < 0 || editInfo > 14) {
+									throw new InputMismatchException("Entrada inválida");
+								}
 
-					//REALIZAR VIEWS DE MOSTRAR OS DADOS DO CLIENT (COPIA) E O QUE QUER EDITAR
-
-
-					try {
-						clientController.edit(client1,clientCopy);
-					} catch (Exception e) {
-						System.out.println(e.getMessage());
-						return;
-					}
-
+							} catch (InputMismatchException e) {
+								System.out.print("Entrada inválida, digite novamente: ");
+							}
+							sc.nextLine();
+						}while(editInfo<0 || editInfo>14);
+						
+						switch(editInfo) {
+							case 1:
+								System.out.println("Nome: " + client1.getName());
+								System.out.print("Novo nome: ");
+								String newName = sc.nextLine();
+								clientCopy.setName(newName);
+								break;
+							case 2:
+								System.out.println("Telefone: " + client1.getPhone());
+								System.out.print("Novo telefone: ");
+								String newPhone = sc.nextLine();
+								clientCopy.setPhone(newPhone);
+								break;
+							case 3:
+								System.out.println("Email: " + client1.getEmail());
+								System.out.print("Novo email: ");
+								String newEmail = sc.nextLine();
+								clientCopy.setEmail(newEmail);
+								break;
+							case 4:
+								System.out.println("Usuário: " + client1.getLogin());
+								System.out.print("Novo nome de usuário: ");
+								String newUsername = sc.nextLine();
+								clientCopy.setLogin(newUsername);
+								break;
+							case 5:
+								System.out.println("Senha: " + client1.getPassword());
+								System.out.print("Nova senha: ");
+								String newPassword = sc.nextLine();
+								clientCopy.setPassword(newPassword);
+								break;
+							case 6:
+								System.out.println("Cartão de crédito: " + client1.getCreditCard());
+								System.out.print("Novo cartão de crédito: ");
+								String newCreditCard = sc.nextLine();
+								clientCopy.setCreditCard(newCreditCard);
+								break;
+							case 7:
+								System.out.println("Rua: " + client1.getAddress().getStreet());
+								System.out.print("(Endereço) Nova rua: ");
+								String newStreet = sc.nextLine();
+								clientCopy.getAddress().setStreet(newStreet);
+								break;
+							case 8:
+								System.out.println("Número: " + client1.getAddress().getNumber());
+								System.out.print("(Endereço) Novo número: ");
+								String newNumber = sc.nextLine();
+								clientCopy.getAddress().setNumber(newNumber);
+								break;
+							case 9:
+								System.out.println("Complemento: " + client1.getAddress().getComplement());
+								System.out.print("(Endereço) Novo complemento: ");
+								String newComplement = sc.nextLine();
+								clientCopy.getAddress().setComplement(newComplement);
+								break;
+							case 10:
+								System.out.println("Bairro: " + client1.getAddress().getNeighborhood());
+								System.out.print("(Endereço) Novo bairro: ");
+								String newNeighborhood = sc.nextLine();
+								clientCopy.getAddress().setNeighborhood(newNeighborhood);
+								break;
+							case 11:
+								System.out.println("CEP: " + client1.getAddress().getCep());
+								System.out.print("(Endereço) Novo CEP: ");
+								String newCep = sc.nextLine();
+								clientCopy.getAddress().setCep(newCep);
+								break;
+							case 12:
+								System.out.println("Cidade: " + client1.getAddress().getCity());
+								System.out.print("(Endereço) Nova cidade: ");
+								String newCity = sc.nextLine();
+								clientCopy.getAddress().setCity(newCity);
+								break;
+							case 13:
+								System.out.println("Estado: " + client1.getAddress().getState());
+								System.out.print("(Endereço) Novo estado: ");
+								String newState = sc.nextLine();
+								clientCopy.getAddress().setState(newState);
+								break;
+							case 14:
+								try {
+									clientController.edit(client1,clientCopy);
+								} catch (Exception e) {
+									System.out.println(e.getMessage());
+									return;
+								}
+								break;
+							case 0:
+								System.out.println("Alterações não realizadas...");
+						}
+					}while(editInfo != 0 && editInfo != 14);
 					break;
-
 				case 4:
 					System.out.println("--------");
 					System.out.println("Clientes: ");
