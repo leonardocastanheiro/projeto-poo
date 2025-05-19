@@ -26,4 +26,9 @@ public class ProductController {
 	public Product getById(int id) throws Exception{
 		return productArray.getById(id);
 	}
+
+	@Override
+	public String toString() {
+		return productArray.toString();
+	}
 }

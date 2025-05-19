@@ -63,4 +63,18 @@ public class DynamicProductArray {
         }
         throw new Exception("Invalid product ID.");
     }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for(Product product : products) {
+            if(product != null) {
+                stringBuilder.append("ID: " + product.getId() + " | Nome: " + product.getName() + "\n");
+            }
+        }
+
+        return new String(stringBuilder);
+    }
+
 }

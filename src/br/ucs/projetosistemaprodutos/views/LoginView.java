@@ -17,7 +17,7 @@ public class LoginView {
 	}
 	
 	public void show(Scanner sc) throws Exception {
-		
+
 		User user = null;
 
 		do {
@@ -34,16 +34,15 @@ public class LoginView {
 				System.out.println(e.getMessage());
 			}
 
-		} while (user==null);
+		} while (user == null);
 
-		if(user.getRole() == Role.ADMIN) {
+		if (user.getRole() == Role.ADMIN) {
 			AdminView admin = new AdminView(store);
 			admin.show(sc);
-		}
-		else if(user.getRole() == Role.CLIENT){
+		} else if (user.getRole() == Role.CLIENT) {
 			ClientView client = new ClientView(store);
 			client.show(sc);
 		}
-		
+
 	}
 }

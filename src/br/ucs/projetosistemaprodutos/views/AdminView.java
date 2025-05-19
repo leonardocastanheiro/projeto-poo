@@ -13,21 +13,24 @@ import br.ucs.projetosistemaprodutos.models.person.User;
 
 public class AdminView {
 
-	private Store store;
+	private final Store store;
 	private AdminController adminController;
-	private ClientController clientController;
+	private final ClientController clientController;
+	private SupplierController supplierController;
+	private ProductController productController;
 
 	public AdminView(Store store) {
 		this.store = store;
 		this.adminController = new AdminController(store);
 		this.clientController = new ClientController(store);
+		this.supplierController = new SupplierController(store);
+		this.productController = new ProductController(store);
 	}
 	
 	public void show(Scanner sc) throws Exception {
-		int option = 0;
+		int option = -1;
     	
 		do {
-			System.out.println("---------------------------------------------");
 			System.out.println("Escolha uma opção:");
 			System.out.println("1  - Iniciar dados");
 			System.out.println("2  - Clientes");
@@ -36,61 +39,81 @@ public class AdminView {
 			System.out.println("5  - Estoque");
 			System.out.println("6  - Pedidos");
 			System.out.println("0  - Sair");
-			
-			option= sc.nextInt();
-			sc.nextLine();
-			AdminView submenu = new AdminView(store);
+
+			do {
+				try {
+					option = sc.nextInt();
+
+					if(option < 0 || option > 6) {
+						throw new InputMismatchException("Entrada inválida");
+					}
+
+				} catch (InputMismatchException e) {
+					System.out.print("Entrada inválida, digite novamente: ");
+				}
+				sc.nextLine();
+			} while (option<0 || option>6);
+
 			switch (option) {
 				case 1:
 					startData();
 					break;
 				case 2:
-					submenu.subClients(sc, store);
+					this.subClients(sc, store);
 					break;
 				case 3:
-					submenu.subSuppliers(sc, store);
+					this.subSuppliers(sc, store);
 					break;
 				case 4:
-					submenu.subProducts(sc, store);
+					this.subProducts(sc, store);
 					break;
 				case 5:
-					submenu.subStock(sc, store);
+					this.subStock(sc, store);
 					break;
 				case 6:
-					submenu.subOrders(sc, store);
+					this.subOrders(sc, store);
 					break;
 				case 0:
 					System.out.println("Saindo...");
-					System.exit(0);
+					break;
 				default:
 					System.out.println("Não encotrado...");
-					System.exit(0);
 			}
-			System.out.println("---------------------------------------------");
+			System.out.println("------------------");
 		} while (option != 0);
 		sc.close();
 	}
 
 	public void startData() {
-    	System.out.println("---------------------------------------------");
+		System.out.println("------------------");
     	System.out.println("INICIA OS DADOS");
-    	System.out.println("---------------------------------------------");
     }
     
     public void subClients(Scanner sc, Store store) {
-    	int subOption = 0;
+    	int subOption = -1;
     	ClientController newClient = new ClientController(store);
     	do {
-			System.out.println("---------------------------------------------");
+			System.out.println("------------------");
 			System.out.println("Escolha uma opção:");
     		System.out.println(" 1  - Adicionar cliente");
     		System.out.println(" 2  - Ver clientes");
     		System.out.println(" 3  - Atualizar cliente");
     		System.out.println(" 4  - Excluir cliente");
     		System.out.println(" 0  - Sair");
-    		
-    		subOption = sc.nextInt();
-			sc.nextLine();
+
+			do {
+				try {
+					subOption = sc.nextInt();
+
+					if(subOption < 0 || subOption > 4) {
+						throw new InputMismatchException("Entrada inválida");
+					}
+
+				} catch (InputMismatchException e) {
+					System.out.print("Entrada inválida, digite novamente: ");
+				}
+				sc.nextLine();
+			} while (subOption<0 || subOption>4);
 			
 			switch (subOption) {
 				case 1:
@@ -207,29 +230,38 @@ public class AdminView {
 					break;
 				case 0:
 					System.out.println("Saindo de 'Clientes'...");
-					System.exit(0);
+					break;
 				default:
 					System.out.println("Erro...");
-					System.exit(0);
 			}
     	}while(subOption != 0);
-		System.out.println("---------------------------------------------");
     }
     
     public void subSuppliers(Scanner sc, Store store) throws Exception {
-    	int subOption = 0;
+    	int subOption = -1;
     	SupplierController newSupplier = new SupplierController(store);
     	do {
-			System.out.println("---------------------------------------------");
+			System.out.println("------------------");
 			System.out.println("Escolha uma opção:");
     		System.out.println(" 1  - Adicionar fornecedor");
     		System.out.println(" 2  - Ver fornecedores");
     		System.out.println(" 3  - Atualizar fornecedor");
     		System.out.println(" 4  - Excluir fornecedor");
     		System.out.println(" 0  - Sair");
-    		
-    		subOption= sc.nextInt();
-			sc.nextLine();
+
+			do {
+				try {
+					subOption = sc.nextInt();
+
+					if(subOption < 0 || subOption > 4) {
+						throw new InputMismatchException("Entrada inválida");
+					}
+
+				} catch (InputMismatchException e) {
+					System.out.print("Entrada inválida, digite novamente: ");
+				}
+				sc.nextLine();
+			} while (subOption<0 || subOption>4);
 			
 			switch (subOption) {
 				case 1:
@@ -272,54 +304,80 @@ public class AdminView {
 					break;
 				case 0:
 					System.out.println("Saindo de 'Fornecedores'...");
-					System.exit(0);
+					break;
 				default:
 					System.out.println("Erro...");
-					System.exit(0);
 			}
     	}while(subOption != 0);
-		System.out.println("---------------------------------------------");
 		
 	}
     
-    public void subProducts(Scanner sc, Store store) throws Exception {
-    	int subOption = 0;
-    	ProductController newProduct = new ProductController(store);
+    public void subProducts(Scanner sc, Store store) {
+    	int subOption = -1;
     	do {
-			System.out.println("---------------------------------------------");
+			System.out.println("------------------");
 			System.out.println("Escolha uma opção:");
     		System.out.println(" 1  - Adicionar produto");
     		System.out.println(" 2  - Ver produtos");
     		System.out.println(" 3  - Atualizar produto");
     		System.out.println(" 4  - Excluir produto");
     		System.out.println(" 0  - Sair");
-    		
-    		subOption= sc.nextInt();
-			sc.nextLine();
+
+			do {
+				try {
+					subOption = sc.nextInt();
+
+					if(subOption < 0 || subOption > 4) {
+						throw new InputMismatchException("Entrada inválida");
+					}
+
+				} catch (InputMismatchException e) {
+					System.out.print("Entrada inválida, digite novamente: ");
+				}
+				sc.nextLine();
+			} while (subOption<0 || subOption>4);
 			
 			switch (subOption) {
 				case 1:
-			    	System.out.println("Nome: ");
+			    	System.out.print("Nome: ");
 			    	String name = sc.nextLine();
-			    	System.out.println("Descrição: ");
+			    	System.out.print("Descrição: ");
 			    	String description = sc.nextLine();
-			    	System.out.println("Nome do fornecedor: ");
+			    	System.out.print("Nome do fornecedor: ");
 			    	String nameSupplier = sc.nextLine();
-			    	
-			    	SupplierController supplier = new SupplierController(store);
-					Product product = new Product(name, description, supplier.getByName(nameSupplier));
-					newProduct.create(product);
+
+					try {
+						Product product = new Product(name, description, supplierController.getByName(nameSupplier));
+						productController.create(product);
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
 					break;
 				case 2:
-					//MOSTRAR LISTA
+					System.out.println(productController.toString());
 					break;
 				case 3:
-					//LISTA PRODUTOS (newProduct.read());
-					newProduct.getById(1); 
-					System.out.println("Qual produto você deseja editar?");
-					
-					int id = sc.nextInt();
-					Product updateProduct = newProduct.getById(id);
+					System.out.println(productController.toString());
+					System.out.print("Digite o ID do produto que deseja editar: ");
+
+					int id=-1;
+
+					do {
+						try {
+							id = sc.nextInt();
+						} catch (InputMismatchException e) {
+							System.out.print("Tipo digitado não corresponde a um ID, digite novamente: ");
+						}
+					}while (id == -1);
+
+					Product updateProduct = null;
+
+					try {
+						updateProduct = productController.getById(id);
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
+
 					if(updateProduct != null) {		    	
 				    	int updateOp = 0;
 				    	Product updateProductCopy = new Product();
@@ -333,23 +391,43 @@ public class AdminView {
 					    			+ "Preço - R$ " + updateProduct.getStock().getPrice());
 					    	System.out.println("5. Salvar");
 					    	System.out.println("0. Cancelar");
-					    	System.out.println("Escolha o campo que deseja editar: ");
-					    	updateOp = sc.nextInt();
-					    	sc.nextLine();
+					    	System.out.print("Escolha o campo que deseja editar: ");
+					    	updateOp = -1;
+
+							do {
+								try {
+									updateOp = sc.nextInt();
+
+									if(updateOp < 0 || updateOp > 5) {
+										throw new InputMismatchException("Entrada inválida");
+									}
+
+								} catch (InputMismatchException e) {
+									System.out.print("Entrada inválida, digite novamente: ");
+								}
+								sc.nextLine();
+							} while (updateOp<0 || updateOp>5);
 					    	
 					    	switch(updateOp) {
 					    		case 1:
-					    			System.out.println("Novo nome: ");
+					    			System.out.print("Novo nome: ");
 					    			updateProductCopy.setName(sc.nextLine());
 					    			break;
 					    		case 2:
-					    			System.out.println("Nova descrição: ");
+					    			System.out.print("Nova descrição: ");
 					    			updateProductCopy.setDescription(sc.nextLine());
 					    			break;
 					    		case 3: 
 					    			SupplierController newSupplier = new SupplierController(store);
-					    			System.out.println("Nome do novo fornecedor: ");
-					    			Supplier foundSupplier = newSupplier.getByName(sc.nextLine());
+					    			System.out.print("Nome do novo fornecedor: ");
+
+									Supplier foundSupplier = null;
+
+									try {
+										foundSupplier = newSupplier.getByName(sc.nextLine());
+									} catch (Exception e) {
+										System.out.println(e.getMessage());
+									}
 					    			if(foundSupplier != null) {
 						    			updateProductCopy.setSupplier(foundSupplier);
 					    			}else {
@@ -365,7 +443,11 @@ public class AdminView {
 					    			updateProductCopy.setStock(newStock);
 					    			break;
 					    		case 5:
-					    			newProduct.update(updateProductCopy, updateProduct);
+									try {
+										productController.update(updateProductCopy, updateProduct);
+									} catch (Exception e) {
+										System.out.println(e.getMessage());
+									}
 					    		case 0:
 					    			System.out.println("Saindo de 'Atualizar produto'...");
 					    			break;
@@ -379,8 +461,26 @@ public class AdminView {
 					}
 					break;
 				case 4:
-					//MOSTRAR LISTA E ESCOLHER QUAL APAGAR
-					newProduct.delete(null);
+					System.out.println(productController.toString());
+
+					System.out.print("Digite o ID do produto que deseja excluir: ");
+					int id1 = -1;
+
+					do {
+						try {
+							id1 = sc.nextInt();
+						} catch (InputMismatchException e) {
+							System.out.println("Tipo digitado não corresponde a um ID, digite novamente: ");
+						}
+					} while (id1 == -1);
+
+					try {
+						Product product = productController.getById(id1);
+						productController.delete(product);
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
+
 					break;
 				case 0:
 					System.out.println("Saindo de 'Produtos'...");
@@ -389,21 +489,31 @@ public class AdminView {
 					System.out.println("Erro...");
 			}
     	}while(subOption != 0);
-		System.out.println("---------------------------------------------");  	
 	}
     
     public void subStock(Scanner sc, Store store) {
-    	int subOption = 0;
+    	int subOption = -1;
     	    	
     	do {
-			System.out.println("---------------------------------------------");
+			System.out.println("------------------");
 			System.out.println("Escolha uma opção:");
     		System.out.println(" 1  - Adicionar estoque");
     		System.out.println(" 2  - Atualizar estoque");
     		System.out.println(" 0  - Sair");
-    		
-    		subOption= sc.nextInt();
-			sc.nextLine();
+
+			do {
+				try {
+					subOption = sc.nextInt();
+
+					if(subOption < 0 || subOption > 2) {
+						throw new InputMismatchException("Entrada inválida");
+					}
+
+				} catch (InputMismatchException e) {
+					System.out.print("Entrada inválida, digite novamente: ");
+				}
+				sc.nextLine();
+			} while (subOption<0 || subOption>2);
 			
 			switch (subOption) {
 				case 1:
@@ -433,19 +543,16 @@ public class AdminView {
 					break;
 				case 0:
 					System.out.println("Saindo de 'Estoque'...");
-					System.exit(0);
+					break;
 				default:
 					System.out.println("Erro...");
-					System.exit(0);
 			}
     	}while(subOption != 0);
-		System.out.println("---------------------------------------------");  
 		
 	}
     
     public void subOrders(Scanner sc, Store store) {
-    	System.out.println("---------------------------------------------");
+		System.out.println("------------------");
 		System.out.println("EM PRODUÇÃO");
-		System.out.println("---------------------------------------------");
 	}
 }
