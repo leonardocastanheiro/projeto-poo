@@ -5,6 +5,7 @@ import java.util.Scanner;
 import br.ucs.projetosistemaprodutos.controllers.*;
 import br.ucs.projetosistemaprodutos.models.address.Address;
 import br.ucs.projetosistemaprodutos.models.copies.ClientCopy;
+import br.ucs.projetosistemaprodutos.models.copies.ProductCopy;
 import br.ucs.projetosistemaprodutos.models.copies.SupplierCopy;
 import br.ucs.projetosistemaprodutos.models.itens.*;
 import br.ucs.projetosistemaprodutos.models.person.Client;
@@ -622,126 +623,158 @@ public class AdminView {
 			    	String name = sc.nextLine();
 			    	System.out.print("Descrição: ");
 			    	String description = sc.nextLine();
-			    	System.out.print("Nome do fornecedor: ");
-			    	String nameSupplier = sc.nextLine();
-
+			    	System.out.println("Fornecedores: ");
+			    	try {
+						supplierController.showArray(Role.SUPPLIER);
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+                    }
+			    	System.out.print("ID do fornecedor: ");
+			    	int idSupplier = sc.nextInt();
+			    	sc.nextLine();
+			    	
 					try {
-						Product product = new Product(name, description, supplierController.getByName(nameSupplier));
+						Product product = new Product(name, description, supplierController.getById(idSupplier));
 						productController.create(product);
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
 					}
 					break;
 				case 2:
-					System.out.println(productController.toString());
-					break;
-				case 3:
-					System.out.println(productController.toString());
-					System.out.print("Digite o ID do produto que deseja editar: ");
-
-					int id=-1;
-
-					do {
-						try {
-							id = sc.nextInt();
-						} catch (InputMismatchException e) {
-							System.out.print("Tipo digitado não corresponde a um ID, digite novamente: ");
-						}
-					}while (id == -1);
-
-					Product updateProduct = null;
-
 					try {
-						updateProduct = productController.getById(id);
+						productController.showArray();
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
-					}
+                    }
+					break;
+				case 3:
+					try {
+						productController.showArray();
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+	                }
+					
+					System.out.print("Digite o ID do produto que deseja editar: ");
 
-					if(updateProduct != null) {		    	
-				    	int updateOp = 0;
-				    	Product updateProductCopy = new Product();
+					int id;
+					Product product1;
+
+					try {
+						id = sc.nextInt();
+
+						product1 = (Product) productController.getById(id);
+
+					} catch (InputMismatchException e) {
+						System.out.println("Tipo digitado não corresponde a um ID.");
+						return;
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+						return;
+					}
+					
+					ProductCopy productCopy = new ProductCopy(product1);
+					int newQuantity = product1.getStock().getQuantity();
+					double newPrice = product1.getStock().getPrice();
+					Stock newStock = new Stock();
+					
+					int editInfo = -1;
+
+					do {
+						System.out.println("EDITAR PRODUTO: ");
+						System.out.println("1. Nome: " + product1.getName());
+				    	System.out.println("2. Descrição: " + product1.getDescription());
+				    	System.out.println("3. Fornecedor: " + product1.getSupplier().getName());
+				    	System.out.println("4. Quantidade em estoque: " + product1.getStock().getQuantity());
+				    	System.out.println("5. Preço: "+ product1.getStock().getPrice());
+				    	System.out.println("6. Salvar");
+				    	System.out.println("0. Cancelar");
+				    	System.out.print("Escolha o campo que deseja editar: ");
+				    	
 				    	do {
-					    	System.out.println("EDITAR PRODUTO: ");
-							System.out.println("1. Nome: " + updateProduct.getName());
-					    	System.out.println("2. Descrição: " + updateProduct.getDescription());
-					    	System.out.println("3. Nome do fornecedor: " + updateProduct.getSupplier().getName());
-					    	System.out.println("4. Estoque: \n"
-					    			+ "Quantidade - " + updateProduct.getStock().getQuantity() + "\n"
-					    			+ "Preço - R$ " + updateProduct.getStock().getPrice());
-					    	System.out.println("5. Salvar");
-					    	System.out.println("0. Cancelar");
-					    	System.out.print("Escolha o campo que deseja editar: ");
-					    	updateOp = -1;
+							try {
+								editInfo = sc.nextInt();
 
-							do {
-								try {
-									updateOp = sc.nextInt();
-
-									if(updateOp < 0 || updateOp > 5) {
-										throw new InputMismatchException("Entrada inválida");
-									}
-
-								} catch (InputMismatchException e) {
-									System.out.print("Entrada inválida, digite novamente: ");
+								if(editInfo < 0 || editInfo > 6) {
+									throw new InputMismatchException("Entrada inválida");
 								}
-								sc.nextLine();
-							} while (updateOp<0 || updateOp>5);
-					    	
-					    	switch(updateOp) {
-					    		case 1:
-					    			System.out.print("Novo nome: ");
-					    			updateProductCopy.setName(sc.nextLine());
-					    			break;
-					    		case 2:
-					    			System.out.print("Nova descrição: ");
-					    			updateProductCopy.setDescription(sc.nextLine());
-					    			break;
-					    		case 3: 
-					    			SupplierController newSupplier = new SupplierController(store);
-					    			System.out.print("Nome do novo fornecedor: ");
 
-									Supplier foundSupplier = null;
-
-									try {
-										foundSupplier = newSupplier.getByName(sc.nextLine());
-									} catch (Exception e) {
-										System.out.println(e.getMessage());
-									}
-					    			if(foundSupplier != null) {
-						    			updateProductCopy.setSupplier(foundSupplier);
-					    			}else {
-					    				System.out.println("Fornecedor não encontrado");
-					    			}
-					    			break;
-					    		case 4: 
-					    			System.out.println("Nova quantidade em estoque: ");
-					    			int newQuantity = sc.nextInt();
-					    			System.out.println("Novo preço: ");
-					    			double newPrice = sc.nextDouble();
-					    			Stock newStock = new Stock(newQuantity, newPrice);
-					    			updateProductCopy.setStock(newStock);
-					    			break;
-					    		case 5:
-									try {
-										productController.update(updateProductCopy, updateProduct);
-									} catch (Exception e) {
-										System.out.println(e.getMessage());
-									}
-					    		case 0:
-					    			System.out.println("Saindo de 'Atualizar produto'...");
-					    			break;
-								default:
-									System.out.println("Opção inválida");
-					    	}
-					  		
-				    	}while(updateOp != 0);
-					}else {
-						System.out.println("Produto não encontrado");
-					}
+							} catch (InputMismatchException e) {
+								System.out.print("Entrada inválida, digite novamente: ");
+							}
+							sc.nextLine();
+				    	}while(editInfo<0 || editInfo>6);
+				    	
+				    	switch(editInfo) {
+				    		case 1:
+				    			System.out.println("Nome: " + product1.getName());
+				    			System.out.print("Novo nome: ");
+				    			String newName = sc.nextLine();
+				    			productCopy.setName(newName);
+				    			break;
+				    		case 2:
+				    			System.out.println("Descrição: " + product1.getDescription());
+				    			System.out.print("Nova descrição: ");
+				    			String newDescription = sc.nextLine();
+				    			productCopy.setDescription(newDescription);
+				    			break;
+				    		case 3: 
+				    			System.out.println("ID: "+ product1.getSupplier().getId() +" | FORNECEDOR ATUAL: " + product1.getSupplier().getName());
+				    			try {
+									supplierController.showArray(Role.SUPPLIER);
+								} catch (Exception e) {
+									System.out.println(e.getMessage());
+			                    }
+						    	System.out.print("ID do novo fornecedor: ");
+						    	int idNewSupplier = sc.nextInt();
+						    	sc.nextLine();
+				    				
+								SupplierController findSupplier = new SupplierController(store);
+								Supplier newSupplier = new Supplier();
+								try {
+									newSupplier = findSupplier.getById(idNewSupplier);
+								} catch (Exception e) {
+									System.out.println(e.getMessage());
+									return;
+								}
+					    		productCopy.setSupplier(newSupplier);			
+				    			break;
+				    		case 4: 
+				    			System.out.println("Quantidade em estoque: " + product1.getStock().getQuantity());
+				    			System.out.println("Nova quantidade em estoque: ");
+				    			newQuantity = sc.nextInt();
+				    			sc.nextLine();
+				    			newStock = new Stock(newQuantity, newPrice);
+				    			productCopy.setStock(newStock);
+				    			break;
+				    		case 5:
+				    			System.out.println("Preço: " + product1.getStock().getPrice());
+				    			System.out.println("Novo preço: ");
+				    			newPrice = sc.nextDouble();
+				    			sc.nextLine();
+				    			newStock = new Stock(newQuantity, newPrice);
+				    			productCopy.setStock(newStock);
+								break;
+				    		case 6:
+								try {
+									productController.edit(product1, productCopy);
+								} catch (Exception e) {
+									System.out.println(e.getMessage());
+									return;
+								}
+								break;
+				    		case 0:
+				    			System.out.println("Alterações não realizadas...");
+					    }
+						
+					}while(editInfo != 0 && editInfo != 6);
 					break;
 				case 4:
-					System.out.println(productController.toString());
-
+					try {
+						productController.showArray();
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+                    }
+					
 					System.out.print("Digite o ID do produto que deseja excluir: ");
 					int id1 = -1;
 

@@ -7,6 +7,8 @@ public class Stock {
     
     private static Integer lastId = 1;
     
+    public Stock() {
+    }
     public Stock(Integer quantity, Double price) {
     	this.id = lastId++;
         this.quantity = quantity;

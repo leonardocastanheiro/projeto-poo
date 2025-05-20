@@ -24,6 +24,7 @@ public class Product {
         this.name = name;
         this.description = description;
         this.supplier = supplier;
+        this.stock = new Stock(0, 0.0);
     }
     public Product(String name, String description, Stock stock, Supplier supplier) {
         this.id = lastId++;
@@ -81,5 +82,9 @@ public class Product {
 	}
 	public void setSupplier(Supplier supplier) {
 		this.supplier = supplier;
+	}
+	
+	public String toString() {
+		return "ID: " + this.getId() + " | Produto: " + this.getName();
 	}
 }

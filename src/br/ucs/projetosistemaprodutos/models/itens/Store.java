@@ -21,15 +21,46 @@ public class Store {
         setProductArray(this.productArray);
     }
 
-    private void setProductArray(DynamicProductArray productArray){ 
-    	Product product = new Product();
-    	try {
-    		product = new Product("Livro", "Livro de colorir 50pg", new Stock(10, 49.9), supplierArray.getByIndex(0));
-    	}catch(Exception e) {
-    		product = new Product("Livro", "Livro de colorir 50pg");
-    	}	
-    	productArray.add(product);
+    private void setSupplierArray(DynamicSupplierArray supplierArray) {
+    	Supplier[] suppliers = new Supplier[] {
+    			new Supplier(Role.SUPPLIER, "Paralela", "54996853348", "livrosparalela@contato.com", "Livros e produtos de papelaria", 
+    	    			new Address("Rua das Laranjeiras", "92", "Bloco 2", "Bairro Limoeiro", "95010-260", "Caxias do Sul", "RS")),
+    			new Supplier(Role.SUPPLIER, "Estrela", "54995856646", "brinquedosestrela@contato.com", "Brinquedos", 
+    	    			new Address("Rua das Mimosas", "89", "", "Bairro Moreira", "98651-880", "Porto Alegre", "RS"))
+    	};
+    	
+    	for(Supplier supplier : suppliers) {
+        	supplierArray.add(supplier);
+    	}
     }
+    
+    private void setProductArray(DynamicProductArray productArray){ 
+    	Product[] products;
+    	
+    	try {
+  			products = new Product[] {
+  	    		new Product("Livro", "Livro de colorir 50pg", new Stock(10, 49.9), supplierArray.getByIndex(0)),
+  	    		new Product("Caderno", "Caderno rosa Hello Kitty", new Stock(50, 25.5), supplierArray.getByIndex(0)),
+  	    		new Product("Boneca", "Boneca Baby Alive", new Stock(15, 120.9), supplierArray.getByIndex(1)),
+  	    		new Product("Livro", "Livro infanto-juvenil", new Stock(15, 49.9), supplierArray.getByIndex(0)),
+  	    		new Product("Carrinho", "Hot Wheels", new Stock(100, 20.5), supplierArray.getByIndex(1)),
+  	    	};
+  	 
+    	}catch(Exception e) {
+    		products = new Product[] {
+      	    		new Product("Livro", "Livro de colorir 50pg"),
+      	    		new Product("Caderno", "Caderno rosa Hello Kitty"),
+      	    		new Product("Boneca", "Boneca Baby Alive"),
+      	    		new Product("Livro", "Livro infanto-juvenil"),
+      	    		new Product("Carrinho", "Hot Wheels"),
+      	    };
+    	}
+    			
+    	for(Product product : products) {
+        	productArray.add(product);
+    	}
+    }
+    
     public DynamicProductArray getProductArray() {
         return productArray;
     }
@@ -38,11 +69,7 @@ public class Store {
         return stockArray;
     }
 
-    private void setSupplierArray(DynamicSupplierArray supplierArray) {
-    	Supplier supplier = new Supplier(Role.SUPPLIER, "Paralela", "54996853348", "livrosparalela@contato.com", "Livros e produtos de papelaria", 
-    			new Address("Rua das Laranjeiras", "92", "Bloco 2", "Bairro Limoeiro", "95010-260", "Caxias do Sul", "RS"));
-    	supplierArray.add(supplier);
-    }
+
     public DynamicSupplierArray getSupplierArray() {
         return supplierArray;
     }

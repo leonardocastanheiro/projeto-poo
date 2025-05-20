@@ -3,6 +3,8 @@ package br.ucs.projetosistemaprodutos.collections;
 import java.util.Arrays;
 
 import br.ucs.projetosistemaprodutos.models.itens.Product;
+import br.ucs.projetosistemaprodutos.models.person.Role;
+import br.ucs.projetosistemaprodutos.models.person.Supplier;
 
 public class DynamicProductArray {
     private Product [] products;
@@ -41,9 +43,20 @@ public class DynamicProductArray {
         products[count - 1] = null;
         count--;
     }
+    
+    public void showArray() throws Exception {
+        boolean existsProduct = false;
 
-    public void update(Product copy, Product original) throws Exception{
-    	
+        for (Product productAux : products) {
+            if (productAux != null) {
+                System.out.println(productAux.toString());
+                existsProduct = true;
+            }
+        }
+
+        if (!existsProduct) {
+            throw new Exception("Ainda não há produtos cadastrados no sistema.");
+        }
     }
     
     public Product getByIndex(int index) throws Exception {
@@ -64,8 +77,7 @@ public class DynamicProductArray {
         throw new Exception("Invalid product ID.");
     }
 
-    @Override
-    public String toString() {
+    /* public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
 
         for(Product product : products) {
@@ -76,5 +88,5 @@ public class DynamicProductArray {
 
         return new String(stringBuilder);
     }
-
+*/
 }
