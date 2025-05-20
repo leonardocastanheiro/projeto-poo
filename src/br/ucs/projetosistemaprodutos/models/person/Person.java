@@ -69,5 +69,9 @@ public abstract class Person {
     public Integer getId() {
         return id;
     }
+    
+    public String toString() {
+    	return "ID: " +this.getId()+ "| Nome: " + this.getName();
+    }
 
 }

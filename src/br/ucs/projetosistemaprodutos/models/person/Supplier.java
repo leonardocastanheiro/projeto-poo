@@ -7,6 +7,8 @@ public class Supplier extends Person{
     private String description;
     private DynamicProductArray products;
 
+    public Supplier() {
+    }
     public Supplier(Role role, String name, String phone, String email, Address address) {
     	super(role, name, phone, email, address);
     }
@@ -35,7 +37,7 @@ public class Supplier extends Person{
 	}
 	
 	public String toString() {
-		return super.toString() + "Descrição: " + this.description;
+		return super.toString() + "| Descrição: " + this.description;
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.Scanner;
 import br.ucs.projetosistemaprodutos.controllers.*;
 import br.ucs.projetosistemaprodutos.models.address.Address;
 import br.ucs.projetosistemaprodutos.models.copies.ClientCopy;
+import br.ucs.projetosistemaprodutos.models.copies.SupplierCopy;
 import br.ucs.projetosistemaprodutos.models.itens.*;
 import br.ucs.projetosistemaprodutos.models.person.Client;
 import br.ucs.projetosistemaprodutos.models.person.Role;
@@ -401,13 +402,184 @@ public class AdminView {
 					newSupplier.create(supplier);
 					break;
 				case 2:
-					//MOSTRAR LISTA
+					try {
+						supplierController.showArray(Role.SUPPLIER);
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+                    }
 					break;
 				case 3:
-					//ATUALIZAR
+					try {
+						supplierController.showArray(Role.SUPPLIER);
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+                    }
+					System.out.println("--------");
+					System.out.println("Digite o ID do fornecedor que deseja editar: ");
+
+					int id;
+					Supplier supplier1;
+
+					try {
+						id = sc.nextInt();
+
+						supplier1 = (Supplier) supplierController.getById(id);
+
+					} catch (InputMismatchException e) {
+						System.out.println("Tipo digitado não corresponde a um ID.");
+						return;
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+						return;
+					}
+
+					SupplierCopy supplierCopy = new SupplierCopy(supplier1);
+					int editInfo = -1;
+					do {
+						System.out.println("1 - Nome: ");
+						System.out.println("2 - Telefone: ");
+						System.out.println("3 - Email: ");
+						System.out.println("4 - Descrição: ");
+						System.out.println("5 - Produtos: ");
+						System.out.println("6 - Rua: ");
+						System.out.println("7 - Número: ");
+						System.out.println("8 - Complemento: ");
+						System.out.println("9 - Bairro: ");
+						System.out.println("10 - CEP: ");
+						System.out.println("11 - Cidade: ");
+						System.out.println("12 - Estado: ");
+						System.out.println("13 - Salvar alterações");
+						System.out.println("0 - Cancelar");
+						System.out.println("Informe o campo que deseja editar: ");
+						
+						do {
+							try {
+								editInfo = sc.nextInt();
+
+								if(editInfo < 0 || editInfo > 13) {
+									throw new InputMismatchException("Entrada inválida");
+								}
+
+							} catch (InputMismatchException e) {
+								System.out.print("Entrada inválida, digite novamente: ");
+							}
+							sc.nextLine();
+						}while(editInfo<0 || editInfo>14);
+						
+						switch(editInfo) {
+							case 1:
+								System.out.println("Nome: " + supplier1.getName());
+								System.out.print("Novo nome: ");
+								String newName = sc.nextLine();
+								supplierCopy.setName(newName);
+								break;
+							case 2:
+								System.out.println("Telefone: " + supplier1.getPhone());
+								System.out.print("Novo telefone: ");
+								String newPhone = sc.nextLine();
+								supplierCopy.setPhone(newPhone);
+								break;
+							case 3:
+								System.out.println("Email: " + supplier1.getEmail());
+								System.out.print("Novo email: ");
+								String newEmail = sc.nextLine();
+								supplierCopy.setEmail(newEmail);
+								break;
+							case 4:
+								System.out.println("Descrição: " + supplier1.getDescription());
+								System.out.print("Nova descrição: ");
+								String newDescription = sc.nextLine();
+								supplierCopy.setDescription(newDescription);
+								break;
+							case 5:
+								//VETOR DE PRODUTOS
+								break;
+							case 6:
+								System.out.println("Rua: " + supplier1.getAddress().getStreet());
+								System.out.print("(Endereço) Nova rua: ");
+								String newStreet = sc.nextLine();
+								supplierCopy.getAddress().setStreet(newStreet);
+								break;
+							case 7:
+								System.out.println("Número: " + supplier1.getAddress().getNumber());
+								System.out.print("(Endereço) Novo número: ");
+								String newNumber = sc.nextLine();
+								supplierCopy.getAddress().setNumber(newNumber);
+								break;
+							case 8:
+								System.out.println("Complemento: " + supplier1.getAddress().getComplement());
+								System.out.print("(Endereço) Novo complemento: ");
+								String newComplement = sc.nextLine();
+								supplierCopy.getAddress().setComplement(newComplement);
+								break;
+							case 9:
+								System.out.println("Bairro: " + supplier1.getAddress().getNeighborhood());
+								System.out.print("(Endereço) Novo bairro: ");
+								String newNeighborhood = sc.nextLine();
+								supplierCopy.getAddress().setNeighborhood(newNeighborhood);
+								break;
+							case 10:
+								System.out.println("CEP: " + supplier1.getAddress().getCep());
+								System.out.print("(Endereço) Novo CEP: ");
+								String newCep = sc.nextLine();
+								supplierCopy.getAddress().setCep(newCep);
+								break;
+							case 11:
+								System.out.println("Cidade: " + supplier1.getAddress().getCity());
+								System.out.print("(Endereço) Nova cidade: ");
+								String newCity = sc.nextLine();
+								supplierCopy.getAddress().setCity(newCity);
+								break;
+							case 12:
+								System.out.println("Estado: " + supplier1.getAddress().getState());
+								System.out.print("(Endereço) Novo estado: ");
+								String newState = sc.nextLine();
+								supplierCopy.getAddress().setState(newState);
+								break;
+							case 13:
+								try {
+									supplierController.edit(supplier1,supplierCopy);
+								} catch (Exception e) {
+									System.out.println(e.getMessage());
+									return;
+								}
+								break;
+							case 0:
+								System.out.println("Alterações não realizadas...");
+						}
+					}while(editInfo != 0 && editInfo != 13);
 					break;
 				case 4:
-					newSupplier.delete(null);
+					System.out.println("--------");
+					System.out.println("Fornecedores: ");
+
+					try {
+						supplierController.showArray(Role.SUPPLIER);
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+						return;
+					}
+
+					System.out.println("--------");
+					System.out.println("Selecione o ID do fornecedor que deseja excluir: ");
+
+					int id1;
+
+					try {
+						id1 = sc.nextInt();
+
+						Supplier sup = supplierController.getById(id1);
+
+						newSupplier.delete((Supplier) sup);
+					} catch (InputMismatchException e) {
+						System.out.println("Tipo digitado não corresponde a um ID.");
+						return;
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+						return;
+                    }
+
+					System.out.println("Fornecedor excluído com sucesso!");
 					break;
 				case 0:
 					System.out.println("Saindo de 'Fornecedores'...");

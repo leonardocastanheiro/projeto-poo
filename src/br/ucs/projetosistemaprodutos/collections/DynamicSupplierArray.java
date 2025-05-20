@@ -44,17 +44,17 @@ public class DynamicSupplierArray {
         count--;
     }
     
-    public void showArray() throws Exception {
-        boolean temUsuario = false;
+    public void showArray(Role role) throws Exception {
+        boolean existsSupplier = false;
 
         for (Supplier supplierAux : suppliers) {
-            if (supplierAux != null) {
+            if (supplierAux != null && supplierAux.getRole() == role) {
                 System.out.println(supplierAux.toString());
-                temUsuario = true;
+                existsSupplier = true;
             }
         }
 
-        if (!temUsuario) {
+        if (!existsSupplier) {
             throw new Exception("Ainda não há fornecedores cadastrados no sistema.");
         }
     }
