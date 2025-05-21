@@ -2,6 +2,7 @@ package br.ucs.projetosistemaprodutos.models.itens;
 
 import br.ucs.projetosistemaprodutos.collections.*;
 import br.ucs.projetosistemaprodutos.models.address.Address;
+import br.ucs.projetosistemaprodutos.models.person.Admin;
 import br.ucs.projetosistemaprodutos.models.person.Client;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.Supplier;
@@ -39,7 +40,7 @@ public class Store {
     	
     	try {
   			products = new Product[] {
-  	    		new Product("Livro", "Livro de colorir 50pg", new Stock(10, 49.9), supplierArray.getByIndex(0)),
+  	    		new Product("Lápis de cor", "Conjunto 40 lápis", new Stock(10, 49.9), supplierArray.getByIndex(0)),
   	    		new Product("Caderno", "Caderno rosa Hello Kitty", new Stock(50, 25.5), supplierArray.getByIndex(0)),
   	    		new Product("Boneca", "Boneca Baby Alive", new Stock(15, 120.9), supplierArray.getByIndex(1)),
   	    		new Product("Livro", "Livro infanto-juvenil", new Stock(15, 49.9), supplierArray.getByIndex(0)),
@@ -48,7 +49,7 @@ public class Store {
   	 
     	}catch(Exception e) {
     		products = new Product[] {
-      	    		new Product("Livro", "Livro de colorir 50pg"),
+      	    		new Product("Lápis de cor", "Conjunto 40 lápis"),
       	    		new Product("Caderno", "Caderno rosa Hello Kitty"),
       	    		new Product("Boneca", "Boneca Baby Alive"),
       	    		new Product("Livro", "Livro infanto-juvenil"),
@@ -78,10 +79,28 @@ public class Store {
         return userArray;
     }
     private void setUserArray(DynamicUserArray userArray) {
-    	Client user = new Client("joaosilva", "senha123", Role.CLIENT, "João Silva", "54999999999", "joao@gmail.com", "12345",
-    			new Address("Rua das Amoras", "10", "Apto 10", "Bairro Frutas", "12345-999", "Curitiba", "Paraná"));
+    	Client[] clientUsers = new Client[] {
+    			new Client("joaosilva", "senha123", Role.CLIENT, "João Silva", "999999999", "joao@gmail.com", "12345",
+    					new Address("Rua das Amoras", "10", "Apto 10", "Bairro Frutas", "12345-999", "Curitiba", "Paraná")),
+    			new Client("mariaSousa", "senha123", Role.CLIENT, "Maria Sousa", "777777777", "masousa@gmail.com", "8569556",
+    					new Address("Rua das Bananas", "225", "", "Bairro Frutas", "78502-145", "Florianópolis", "Santa Catarina")),
+    			new Client("andressaCamargo", "senha123", Role.CLIENT, "Andressa Camargo", "865974485", "andressacamargo@gmail.com", "111111",
+    	    			new Address("Rua das Flores", "880", "Apto 105", "Bairro Petrópolis", "95025-690", "Curitiba", "Paraná")),
+    	};
+    	
+    	Admin[] adminUsers = new Admin[] {
+    			new Admin("melissa", "123senha", Role.ADMIN, "Melissa", "556669987", "melissa@gmail.com", 
+    					new Address("Avenida Brasil", "120", "", "Bairro América", "58963-002", "Porto Alegre", "RS")),
+    			new Admin("carlos", "123senha", Role.ADMIN, "Calros", "666666666", "carlos@gmail.com", 
+    					new Address("Rua Canário", "1000", "", "Bairro Pássaro", "87510-260", "Caxias do Sul", "RS")),
+    	};
     	try {
-			userArray.add(user);
+    		for(Client user : clientUsers) {
+    			userArray.add(user);
+    		}
+    		for(Admin user : adminUsers) {
+    			userArray.add(user);
+    		}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
