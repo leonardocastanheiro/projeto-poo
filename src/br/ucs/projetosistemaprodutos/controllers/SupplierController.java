@@ -61,7 +61,5 @@ public class SupplierController {
 		supplierArray.showArray(role);
 	}
 	
-	public void showProductsArray(int id) throws Exception{
-		supplierArray.showProductsArray(id);
-	}
+	
 }

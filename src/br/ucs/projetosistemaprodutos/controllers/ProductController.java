@@ -25,7 +25,6 @@ public class ProductController {
 	 
 	public void delete(Product product) throws Exception {
 		productArray.delete(product);
-		product.getSupplier().getProducts().delete(product);
 	}
 	 
 	public void edit(Product product, ProductCopy copy) throws Exception { 
@@ -45,10 +44,14 @@ public class ProductController {
 	    productArray.showArray();
 	}
 
+	public void showProductsArray(int id) throws Exception{
+		productArray.showProductsArray(id);
+	}
+	
 	public Product getById(int id) throws Exception{
 		return productArray.getById(id);
 	}
-
+	
 	@Override
 	public String toString() {
 		return productArray.toString();

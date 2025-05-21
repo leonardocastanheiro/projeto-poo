@@ -67,7 +67,7 @@ public class DynamicProductArray {
         if (index >= 0 && index < count) {
             return products[index];
         }
-        throw new Exception("Invalid index");
+        throw new Exception("Index inválido");
     }
 
     public Product getById(int id) throws Exception {
@@ -78,19 +78,21 @@ public class DynamicProductArray {
                 }
             }
         }
-        throw new Exception("Invalid product ID.");
+        throw new Exception("Id do produto inválido");
     }
 
-    /* public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
+    public void showProductsArray(int id) throws Exception{
+    	boolean existsProduct = false;
 
-        for(Product product : products) {
-            if(product != null) {
-                stringBuilder.append("ID: " + product.getId() + " | Nome: " + product.getName() + "\n");
+        for (Product productAux : products) {
+            if (productAux != null && productAux.getSupplier().getId() == id) {
+                System.out.println(productAux.toString());
+                existsProduct = true;
             }
         }
 
-        return new String(stringBuilder);
+        if (!existsProduct) {
+            throw new Exception("Ainda não há produtos cadastrados no sistema.");
+        }
     }
-*/
 }

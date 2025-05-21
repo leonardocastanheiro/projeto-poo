@@ -58,32 +58,7 @@ public class DynamicSupplierArray {
             throw new Exception("Ainda não há fornecedores cadastrados no sistema.");
         }
     }
-    
-    public void showProductsArray(int id) throws Exception {
-        Supplier supplier = getById(id);
         
-        if (supplier == null) {
-            throw new Exception("Fornecedor não encontrado com o ID: " + id);
-        }
-        
-        DynamicProductArray products = supplier.getProducts();
-        
-        if (products == null) {
-            throw new Exception("Fornecedor não tem produtos cadastrados.");
-        }
-        
-        int count = products.getCount();  
-        
-        for (int i = 0; i < count; i++) {
-            Product productAux = products.getByIndex(i);
-            
-            if (productAux != null) {
-                System.out.println(productAux.toString());
-            }
-        }
-    }
-
-    
     public Supplier getByIndex(int index) throws Exception {
         if (index >= 0 && index < count) {
             return suppliers[index];

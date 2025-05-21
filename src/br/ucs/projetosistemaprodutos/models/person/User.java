@@ -34,6 +34,6 @@ public abstract class User extends Person {
 
     @Override
     public String toString() {
-    	return  "ID: "+this.getId()+" | Login: "+this.getLogin();
+    	return  "ID: "+this.getId()+ " | Nome: " + this.getName() + " | Login: "+this.getLogin();
     }
 }

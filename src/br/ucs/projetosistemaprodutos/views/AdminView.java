@@ -38,15 +38,14 @@ public class AdminView {
 			System.out.println("1  - Clientes");
 			System.out.println("2  - Fornecedores");
 			System.out.println("3  - Produtos");
-			System.out.println("4  - Estoque");
-			System.out.println("5  - Pedidos");
+			System.out.println("4  - Pedidos");
 			System.out.println("0  - Sair");
 
 			do {
 				try {
 					option = sc.nextInt();
 
-					if(option < 0 || option > 5) {
+					if(option < 0 || option > 4) {
 						throw new InputMismatchException("Entrada inválida");
 					}
 
@@ -54,7 +53,7 @@ public class AdminView {
 					System.out.print("Entrada inválida, digite novamente: ");
 				}
 				sc.nextLine();
-			} while (option<0 || option>5);
+			} while (option<0 || option>4);
 
 			switch (option) {
 				case 1:
@@ -67,11 +66,8 @@ public class AdminView {
 					this.subProducts(sc, store);
 					break;
 				case 4:
-					this.subStock(sc, store);
-					break;
-				case 5:
 					this.subOrders(sc, store);
-					break;
+					break;					
 				case 0:
 					System.out.println("Saindo...");
 					break;
@@ -85,7 +81,7 @@ public class AdminView {
 
     public void subClients(Scanner sc, Store store) {
     	int subOption = -1;
-    	ClientController newClient = new ClientController(store);
+    	
     	do {
 			System.out.println("------------------");
 			System.out.println("Escolha uma opção:");
@@ -168,7 +164,7 @@ public class AdminView {
 
 					try {
 						id = sc.nextInt();
-
+						
 						client1 = (Client) clientController.getById(id);
 
 					} catch (InputMismatchException e) {
@@ -325,7 +321,7 @@ public class AdminView {
 
 						User user = clientController.getById(id1);
 
-						newClient.delete((Client) user);
+						clientController.delete((Client) user);
 					} catch (InputMismatchException e) {
 						System.out.println("Tipo digitado não corresponde a um ID.");
 						return;
@@ -348,7 +344,7 @@ public class AdminView {
     
     public void subSuppliers(Scanner sc, Store store) {
     	int subOption = -1;
-    	SupplierController newSupplier = new SupplierController(store);
+    	
     	do {
 			System.out.println("------------------");
 			System.out.println("Escolha uma opção:");
@@ -403,7 +399,7 @@ public class AdminView {
 					Supplier supplier = new Supplier(Role.SUPPLIER, name, phone, email, description, address);
 
 					try {
-						newSupplier.create(supplier);
+						supplierController.create(supplier);
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
 					}
@@ -429,7 +425,7 @@ public class AdminView {
 
 					try {
 						id = sc.nextInt();
-
+						
 						supplier1 = (Supplier) supplierController.getById(id);
 
 					} catch (InputMismatchException e) {
@@ -573,7 +569,7 @@ public class AdminView {
 
 						Supplier sup = supplierController.getById(id1);
 
-						newSupplier.delete((Supplier) sup);
+						supplierController.delete((Supplier) sup);
 					} catch (InputMismatchException e) {
 						System.out.println("Tipo digitado não corresponde a um ID.");
 						return;
@@ -604,7 +600,7 @@ public class AdminView {
 				    try {
 				        id2 = sc.nextInt();
 				        sc.nextLine(); 
-				        supplierController.showProductsArray(id2);
+				        productController.showProductsArray(id2);
 				    } catch (InputMismatchException e) {
 				        System.out.println("ID inválido. Operação cancelada.");
 				        sc.nextLine(); 
@@ -612,7 +608,6 @@ public class AdminView {
 				        System.out.println(e.getMessage());
 				    }
 				    break;
-				  
 				case 0:
 					System.out.println("Saindo de 'Fornecedores'...");
 					break;
@@ -661,11 +656,46 @@ public class AdminView {
 						System.out.println(e.getMessage());
                     }
 			    	System.out.print("ID do fornecedor: ");
-			    	int idSupplier = sc.nextInt();
-			    	sc.nextLine();
+			    	int idSupplier;
+			    	Supplier productSupplier;
+			    	try {
+			    		idSupplier = sc.nextInt();
+			    		productSupplier = supplierController.getById(idSupplier);
+					} catch (InputMismatchException e) {
+						System.out.println("Tipo digitado não corresponde a um ID.");
+						return;
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+						return;
+					}
+			    	 
+			    	System.out.print("Quantidade em estoque: ");
+			    	int quantity = -1;
+			    	do {
+				    	try {
+				    		quantity = sc.nextInt();
+						} catch (InputMismatchException e) {
+							System.out.print("Entrada inválida, digite novamente: ");
+							
+						}
+				    	sc.nextLine();
+			    	}while(quantity == -1);
 			    	
+				    System.out.print("Preço: ");
+				    double price = -1;
+				    do {
+					    try {
+					    	price = sc.nextDouble();
+						} catch (InputMismatchException e) {
+							System.out.print("Entrada inválida, digite novamente: ");
+						}
+				    	sc.nextLine();
+				    }while(price == -1);
+				    
+				    Stock stock = new Stock(quantity, price);
+				    	
 					try {
-						Product product = new Product(name, description, supplierController.getById(idSupplier));
+						Product product = new Product(name, description, stock, productSupplier);
 						productController.create(product);
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
@@ -760,10 +790,22 @@ public class AdminView {
 									System.out.println(e.getMessage());
 			                    }
 						    	System.out.print("ID do novo fornecedor: ");
-						    	int idNewSupplier = sc.nextInt();
-						    	sc.nextLine();
-
-								Supplier newSupplier = new Supplier();
+						    	int idNewSupplier;
+						    	Supplier newSupplier;
+						    	
+						    	try {
+						    		idNewSupplier = sc.nextInt();
+						    		sc.nextLine();
+								} catch (InputMismatchException e) {
+									System.out.println("Tipo digitado não corresponde a um ID.");
+									sc.nextLine();
+									return;
+								} catch (Exception e) {
+									System.out.println(e.getMessage());
+									sc.nextLine();
+									return;
+								}
+						    									
 								try {
 									newSupplier = supplierController.getById(idNewSupplier);
 								} catch (Exception e) {
@@ -775,7 +817,11 @@ public class AdminView {
 				    		case 4: 
 				    			System.out.println("Quantidade em estoque: " + productCopy.getStock().getQuantity());
 				    			System.out.println("Nova quantidade em estoque: ");
-				    			newQuantity = sc.nextInt();
+				    			try {
+				    				newQuantity = sc.nextInt();
+				    			}catch (InputMismatchException e) {
+									System.out.println("Entrada inválida. Quantidade não alterada. ");
+								}
 				    			sc.nextLine();
 				    			newStock = new Stock(newQuantity, newPrice);
 				    			productCopy.setStock(newStock);
@@ -803,7 +849,6 @@ public class AdminView {
 				    		case 0:
 				    			System.out.println("Alterações não realizadas...");
 					    }
-						
 					}while(editInfo != 0 && editInfo != 6);
 					break;
 				case 4:
@@ -840,67 +885,7 @@ public class AdminView {
 			}
     	}while(subOption != 0);
 	}
-    
-    public void subStock(Scanner sc, Store store) {
-    	int subOption = -1;
-    	    	
-    	do {
-			System.out.println("------------------");
-			System.out.println("Escolha uma opção:");
-    		System.out.println(" 1  - Adicionar estoque");
-    		System.out.println(" 2  - Atualizar estoque");
-    		System.out.println(" 0  - Sair");
-
-			do {
-				try {
-					subOption = sc.nextInt();
-
-					if(subOption < 0 || subOption > 2) {
-						throw new InputMismatchException("Entrada inválida");
-					}
-
-				} catch (InputMismatchException e) {
-					System.out.print("Entrada inválida, digite novamente: ");
-				}
-				sc.nextLine();
-			} while (subOption<0 || subOption>2);
-			
-			switch (subOption) {
-				case 1:
-					//SELECIONAR O PRODUTO
-					Product product = new Product();
-			    	System.out.println("Quantidade: ");
-			    	Integer quantity = sc.nextInt();
-			    	System.out.println("Preço: ");
-			    	Double price = sc.nextDouble();
-			    	
-			    	Stock stock = new Stock(quantity, price);
-			    	product.setStock(stock);
-					break;
-				case 2:
-					//ATUALIZAR
-					//SELECIONAR O PRODUTO
-					Product newProduct = new Product();
-					System.out.println("Quantidade atual: " + newProduct.getStock().getQuantity());
-			    	System.out.println("Nova quantidade: ");
-			    	Integer newQuantity = sc.nextInt();
-			    	System.out.println("Último preço: " + newProduct.getStock().getPrice());
-			    	System.out.println("Novo preço: ");
-			    	Double newPrice = sc.nextDouble();
-			    	
-			    	Stock updateStock = new Stock(newQuantity, newPrice);
-			    	newProduct.setStock(updateStock);
-					break;
-				case 0:
-					System.out.println("Saindo de 'Estoque'...");
-					break;
-				default:
-					System.out.println("Erro...");
-			}
-    	}while(subOption != 0);
-		
-	}
-    
+   
     public void subOrders(Scanner sc, Store store) {
 		System.out.println("------------------");
 		System.out.println("EM PRODUÇÃO");
