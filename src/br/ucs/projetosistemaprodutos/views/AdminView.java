@@ -21,6 +21,7 @@ public class AdminView {
 	private SupplierController supplierController;
 	private ProductController productController;
 
+
 	public AdminView(Store store) {
 		this.store = store;
 		this.adminController = new AdminController(store);
@@ -29,7 +30,7 @@ public class AdminView {
 		this.productController = new ProductController(store);
 	}
 	
-	public void show(Scanner sc) throws Exception {
+	public void show(Scanner sc) {
 		int option = -1;
     	
 		do {
@@ -181,19 +182,19 @@ public class AdminView {
 					ClientCopy clientCopy = new ClientCopy(client1);
 					int editInfo = -1;
 					do {
-						System.out.println("1 - Nome: ");
-						System.out.println("2 - Telefone: ");
-						System.out.println("3 - Email: ");
-						System.out.println("4 - Usuário: ");
-						System.out.println("5 - Senha: ");
-						System.out.println("6 - Cartão de crédito: ");
-						System.out.println("7 - Rua: ");
-						System.out.println("8 - Número: ");
-						System.out.println("9 - Complemento: ");
-						System.out.println("10 - Bairro: ");
-						System.out.println("11 - CEP: ");
-						System.out.println("12 - Cidade: ");
-						System.out.println("13 - Estado: ");
+						System.out.println("1 - Nome: "+clientCopy.getName());
+						System.out.println("2 - Telefone: "+clientCopy.getPhone());
+						System.out.println("3 - Email: "+clientCopy.getEmail());
+						System.out.println("4 - Usuário: "+clientCopy.getLogin());
+						System.out.println("5 - Senha");
+						System.out.println("6 - Cartão de crédito: "+clientCopy.getCreditCard());
+						System.out.println("7 - Rua: "+clientCopy.getAddress().getStreet());
+						System.out.println("8 - Número: "+clientCopy.getAddress().getNumber());
+						System.out.println("9 - Complemento: "+clientCopy.getAddress().getComplement());
+						System.out.println("10 - Bairro: "+clientCopy.getAddress().getNeighborhood());
+						System.out.println("11 - CEP: "+clientCopy.getAddress().getCep());
+						System.out.println("12 - Cidade: "+clientCopy.getAddress().getCity());
+						System.out.println("13 - Estado: "+clientCopy.getAddress().getState());
 						System.out.println("14 - Salvar alterações");
 						System.out.println("0 - Cancelar");
 						System.out.println("Informe o campo que deseja editar: ");
@@ -214,79 +215,78 @@ public class AdminView {
 						
 						switch(editInfo) {
 							case 1:
-								System.out.println("Nome: " + client1.getName());
+								System.out.println("Nome: " + clientCopy.getName());
 								System.out.print("Novo nome: ");
 								String newName = sc.nextLine();
 								clientCopy.setName(newName);
 								break;
 							case 2:
-								System.out.println("Telefone: " + client1.getPhone());
+								System.out.println("Telefone: " + clientCopy.getPhone());
 								System.out.print("Novo telefone: ");
 								String newPhone = sc.nextLine();
 								clientCopy.setPhone(newPhone);
 								break;
 							case 3:
-								System.out.println("Email: " + client1.getEmail());
+								System.out.println("Email: " + clientCopy.getEmail());
 								System.out.print("Novo email: ");
 								String newEmail = sc.nextLine();
 								clientCopy.setEmail(newEmail);
 								break;
 							case 4:
-								System.out.println("Usuário: " + client1.getLogin());
+								System.out.println("Usuário: " + clientCopy.getLogin());
 								System.out.print("Novo nome de usuário: ");
 								String newUsername = sc.nextLine();
 								clientCopy.setLogin(newUsername);
 								break;
 							case 5:
-								System.out.println("Senha: " + client1.getPassword());
 								System.out.print("Nova senha: ");
 								String newPassword = sc.nextLine();
 								clientCopy.setPassword(newPassword);
 								break;
 							case 6:
-								System.out.println("Cartão de crédito: " + client1.getCreditCard());
+								System.out.println("Cartão de crédito: " + clientCopy.getCreditCard());
 								System.out.print("Novo cartão de crédito: ");
 								String newCreditCard = sc.nextLine();
 								clientCopy.setCreditCard(newCreditCard);
 								break;
 							case 7:
-								System.out.println("Rua: " + client1.getAddress().getStreet());
+								System.out.println("Rua: " + clientCopy.getAddress().getStreet());
 								System.out.print("(Endereço) Nova rua: ");
 								String newStreet = sc.nextLine();
 								clientCopy.getAddress().setStreet(newStreet);
 								break;
 							case 8:
-								System.out.println("Número: " + client1.getAddress().getNumber());
+								System.out.println("Número: " + clientCopy.getAddress().getNumber());
 								System.out.print("(Endereço) Novo número: ");
 								String newNumber = sc.nextLine();
 								clientCopy.getAddress().setNumber(newNumber);
 								break;
 							case 9:
-								System.out.println("Complemento: " + client1.getAddress().getComplement());
+								System.out.println("Complemento: " + clientCopy.getAddress().getComplement());
 								System.out.print("(Endereço) Novo complemento: ");
 								String newComplement = sc.nextLine();
 								clientCopy.getAddress().setComplement(newComplement);
 								break;
 							case 10:
-								System.out.println("Bairro: " + client1.getAddress().getNeighborhood());
+								System.out.println("Bairro: " + clientCopy.getAddress().getNeighborhood());
 								System.out.print("(Endereço) Novo bairro: ");
 								String newNeighborhood = sc.nextLine();
 								clientCopy.getAddress().setNeighborhood(newNeighborhood);
 								break;
 							case 11:
-								System.out.println("CEP: " + client1.getAddress().getCep());
+								System.out.println("CEP: " + clientCopy.getAddress().getCep());
 								System.out.print("(Endereço) Novo CEP: ");
 								String newCep = sc.nextLine();
 								clientCopy.getAddress().setCep(newCep);
 								break;
 							case 12:
-								System.out.println("Cidade: " + client1.getAddress().getCity());
+								System.out.println("Cidade: " + clientCopy.getAddress().getCity());
 								System.out.print("(Endereço) Nova cidade: ");
 								String newCity = sc.nextLine();
 								clientCopy.getAddress().setCity(newCity);
 								break;
 							case 13:
-								System.out.println("Estado: " + client1.getAddress().getState());
+								System.out.println("Estado: " + clientCopy.getAddress().getState());
 								System.out.print("(Endereço) Novo estado: ");
 								String newState = sc.nextLine();
 								clientCopy.getAddress().setState(newState);
@@ -346,7 +346,7 @@ public class AdminView {
     	}while(subOption != 0);
     }
     
-    public void subSuppliers(Scanner sc, Store store) throws Exception {
+    public void subSuppliers(Scanner sc, Store store) {
     	int subOption = -1;
     	SupplierController newSupplier = new SupplierController(store);
     	do {
@@ -400,7 +400,12 @@ public class AdminView {
 					
 					Address address = new Address( street, number, complement, neighborhood, cep, city, state);
 					Supplier supplier = new Supplier(Role.SUPPLIER, name, phone, email, description, address);
-					newSupplier.create(supplier);
+
+					try {
+						newSupplier.create(supplier);
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
 					break;
 				case 2:
 					try {
@@ -437,19 +442,18 @@ public class AdminView {
 					SupplierCopy supplierCopy = new SupplierCopy(supplier1);
 					int editInfo = -1;
 					do {
-						System.out.println("1 - Nome: ");
-						System.out.println("2 - Telefone: ");
-						System.out.println("3 - Email: ");
-						System.out.println("4 - Descrição: ");
-						System.out.println("5 - Produtos: ");
-						System.out.println("6 - Rua: ");
-						System.out.println("7 - Número: ");
-						System.out.println("8 - Complemento: ");
-						System.out.println("9 - Bairro: ");
-						System.out.println("10 - CEP: ");
-						System.out.println("11 - Cidade: ");
-						System.out.println("12 - Estado: ");
-						System.out.println("13 - Salvar alterações");
+						System.out.println("1 - Nome: "+supplierCopy.getName());
+						System.out.println("2 - Telefone: "+supplierCopy.getPhone());
+						System.out.println("3 - Email: "+supplierCopy.getEmail());
+						System.out.println("4 - Descrição: "+supplierCopy.getDescription());
+						System.out.println("5 - Rua: "+supplierCopy.getAddress().getStreet());
+						System.out.println("6 - Número: "+supplierCopy.getAddress().getNumber());
+						System.out.println("7 - Complemento: "+supplierCopy.getAddress().getComplement());
+						System.out.println("8 - Bairro: "+supplierCopy.getAddress().getNeighborhood());
+						System.out.println("9 - CEP: "+supplierCopy.getAddress().getCep());
+						System.out.println("10 - Cidade: "+supplierCopy.getAddress().getCity());
+						System.out.println("11 - Estado: "+supplierCopy.getAddress().getState());
+						System.out.println("12 - Salvar alterações");
 						System.out.println("0 - Cancelar");
 						System.out.println("Informe o campo que deseja editar: ");
 						
@@ -457,7 +461,7 @@ public class AdminView {
 							try {
 								editInfo = sc.nextInt();
 
-								if(editInfo < 0 || editInfo > 13) {
+								if(editInfo < 0 || editInfo > 12) {
 									throw new InputMismatchException("Entrada inválida");
 								}
 
@@ -465,79 +469,76 @@ public class AdminView {
 								System.out.print("Entrada inválida, digite novamente: ");
 							}
 							sc.nextLine();
-						}while(editInfo<0 || editInfo>14);
+						}while(editInfo<0 || editInfo>12);
 						
 						switch(editInfo) {
 							case 1:
-								System.out.println("Nome: " + supplier1.getName());
+								System.out.println("Nome: " + supplierCopy.getName());
 								System.out.print("Novo nome: ");
 								String newName = sc.nextLine();
 								supplierCopy.setName(newName);
 								break;
 							case 2:
-								System.out.println("Telefone: " + supplier1.getPhone());
+								System.out.println("Telefone: " + supplierCopy.getPhone());
 								System.out.print("Novo telefone: ");
 								String newPhone = sc.nextLine();
 								supplierCopy.setPhone(newPhone);
 								break;
 							case 3:
-								System.out.println("Email: " + supplier1.getEmail());
+								System.out.println("Email: " + supplierCopy.getEmail());
 								System.out.print("Novo email: ");
 								String newEmail = sc.nextLine();
 								supplierCopy.setEmail(newEmail);
 								break;
 							case 4:
-								System.out.println("Descrição: " + supplier1.getDescription());
+								System.out.println("Descrição: " + supplierCopy.getDescription());
 								System.out.print("Nova descrição: ");
 								String newDescription = sc.nextLine();
 								supplierCopy.setDescription(newDescription);
 								break;
 							case 5:
-								//VETOR DE PRODUTOS
-								break;
-							case 6:
-								System.out.println("Rua: " + supplier1.getAddress().getStreet());
+								System.out.println("Rua: " + supplierCopy.getAddress().getStreet());
 								System.out.print("(Endereço) Nova rua: ");
 								String newStreet = sc.nextLine();
 								supplierCopy.getAddress().setStreet(newStreet);
 								break;
-							case 7:
-								System.out.println("Número: " + supplier1.getAddress().getNumber());
+							case 6:
+								System.out.println("Número: " + supplierCopy.getAddress().getNumber());
 								System.out.print("(Endereço) Novo número: ");
 								String newNumber = sc.nextLine();
 								supplierCopy.getAddress().setNumber(newNumber);
 								break;
-							case 8:
-								System.out.println("Complemento: " + supplier1.getAddress().getComplement());
+							case 7:
+								System.out.println("Complemento: " + supplierCopy.getAddress().getComplement());
 								System.out.print("(Endereço) Novo complemento: ");
 								String newComplement = sc.nextLine();
 								supplierCopy.getAddress().setComplement(newComplement);
 								break;
-							case 9:
-								System.out.println("Bairro: " + supplier1.getAddress().getNeighborhood());
+							case 8:
+								System.out.println("Bairro: " + supplierCopy.getAddress().getNeighborhood());
 								System.out.print("(Endereço) Novo bairro: ");
 								String newNeighborhood = sc.nextLine();
 								supplierCopy.getAddress().setNeighborhood(newNeighborhood);
 								break;
-							case 10:
-								System.out.println("CEP: " + supplier1.getAddress().getCep());
+							case 9:
+								System.out.println("CEP: " + supplierCopy.getAddress().getCep());
 								System.out.print("(Endereço) Novo CEP: ");
 								String newCep = sc.nextLine();
 								supplierCopy.getAddress().setCep(newCep);
 								break;
-							case 11:
-								System.out.println("Cidade: " + supplier1.getAddress().getCity());
+							case 10:
+								System.out.println("Cidade: " + supplierCopy.getAddress().getCity());
 								System.out.print("(Endereço) Nova cidade: ");
 								String newCity = sc.nextLine();
 								supplierCopy.getAddress().setCity(newCity);
 								break;
-							case 12:
-								System.out.println("Estado: " + supplier1.getAddress().getState());
+							case 11:
+								System.out.println("Estado: " + supplierCopy.getAddress().getState());
 								System.out.print("(Endereço) Novo estado: ");
 								String newState = sc.nextLine();
 								supplierCopy.getAddress().setState(newState);
 								break;
-							case 13:
+							case 12:
 								try {
 									supplierController.edit(supplier1,supplierCopy);
 								} catch (Exception e) {
@@ -548,7 +549,7 @@ public class AdminView {
 							case 0:
 								System.out.println("Alterações não realizadas...");
 						}
-					}while(editInfo != 0 && editInfo != 13);
+					}while(editInfo != 0 && editInfo != 12);
 					break;
 				case 4:
 					System.out.println("--------");
@@ -656,36 +657,40 @@ public class AdminView {
 					
 					System.out.print("Digite o ID do produto que deseja editar: ");
 
-					int id;
+					int id = -1;
 					Product product1;
 
+					do {
+						try {
+							id = sc.nextInt();
+							sc.nextLine();
+						} catch (InputMismatchException e) {
+							System.out.println("Tipo digitado não corresponde a um ID, digite novamente: ");
+							sc.nextLine();
+						}
+					} while (id == -1);
+
 					try {
-						id = sc.nextInt();
-
-						product1 = (Product) productController.getById(id);
-
-					} catch (InputMismatchException e) {
-						System.out.println("Tipo digitado não corresponde a um ID.");
-						return;
+						product1 = productController.getById(id);
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
 						return;
 					}
-					
+
 					ProductCopy productCopy = new ProductCopy(product1);
 					int newQuantity = product1.getStock().getQuantity();
 					double newPrice = product1.getStock().getPrice();
-					Stock newStock = new Stock();
+					Stock newStock;
 					
 					int editInfo = -1;
 
 					do {
 						System.out.println("EDITAR PRODUTO: ");
-						System.out.println("1. Nome: " + product1.getName());
-				    	System.out.println("2. Descrição: " + product1.getDescription());
-				    	System.out.println("3. Fornecedor: " + product1.getSupplier().getName());
-				    	System.out.println("4. Quantidade em estoque: " + product1.getStock().getQuantity());
-				    	System.out.println("5. Preço: "+ product1.getStock().getPrice());
+						System.out.println("1. Nome: " + productCopy.getName());
+				    	System.out.println("2. Descrição: " + productCopy.getDescription());
+				    	System.out.println("3. Fornecedor: " + productCopy.getSupplier().getName());
+				    	System.out.println("4. Quantidade em estoque: " + productCopy.getStock().getQuantity());
+				    	System.out.println("5. Preço: "+ productCopy.getStock().getPrice());
 				    	System.out.println("6. Salvar");
 				    	System.out.println("0. Cancelar");
 				    	System.out.print("Escolha o campo que deseja editar: ");
@@ -706,19 +711,19 @@ public class AdminView {
 				    	
 				    	switch(editInfo) {
 				    		case 1:
-				    			System.out.println("Nome: " + product1.getName());
+				    			System.out.println("Nome: " + productCopy.getName());
 				    			System.out.print("Novo nome: ");
 				    			String newName = sc.nextLine();
 				    			productCopy.setName(newName);
 				    			break;
 				    		case 2:
-				    			System.out.println("Descrição: " + product1.getDescription());
+				    			System.out.println("Descrição: " + productCopy.getDescription());
 				    			System.out.print("Nova descrição: ");
 				    			String newDescription = sc.nextLine();
 				    			productCopy.setDescription(newDescription);
 				    			break;
 				    		case 3: 
-				    			System.out.println("ID: "+ product1.getSupplier().getId() +" | FORNECEDOR ATUAL: " + product1.getSupplier().getName());
+				    			System.out.println("ID: "+ productCopy.getSupplier().getId() +" | FORNECEDOR ATUAL: " + product1.getSupplier().getName());
 				    			try {
 									supplierController.showArray(Role.SUPPLIER);
 								} catch (Exception e) {
@@ -727,11 +732,10 @@ public class AdminView {
 						    	System.out.print("ID do novo fornecedor: ");
 						    	int idNewSupplier = sc.nextInt();
 						    	sc.nextLine();
-				    				
-								SupplierController findSupplier = new SupplierController(store);
+
 								Supplier newSupplier = new Supplier();
 								try {
-									newSupplier = findSupplier.getById(idNewSupplier);
+									newSupplier = supplierController.getById(idNewSupplier);
 								} catch (Exception e) {
 									System.out.println(e.getMessage());
 									return;
@@ -739,7 +743,7 @@ public class AdminView {
 					    		productCopy.setSupplier(newSupplier);			
 				    			break;
 				    		case 4: 
-				    			System.out.println("Quantidade em estoque: " + product1.getStock().getQuantity());
+				    			System.out.println("Quantidade em estoque: " + productCopy.getStock().getQuantity());
 				    			System.out.println("Nova quantidade em estoque: ");
 				    			newQuantity = sc.nextInt();
 				    			sc.nextLine();
@@ -747,7 +751,7 @@ public class AdminView {
 				    			productCopy.setStock(newStock);
 				    			break;
 				    		case 5:
-				    			System.out.println("Preço: " + product1.getStock().getPrice());
+				    			System.out.println("Preço: " + productCopy.getStock().getPrice());
 				    			System.out.println("Novo preço: ");
 				    			newPrice = sc.nextDouble();
 				    			sc.nextLine();

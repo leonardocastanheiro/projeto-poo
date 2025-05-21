@@ -1,6 +1,10 @@
 package br.ucs.projetosistemaprodutos.models.itens;
 
+import br.ucs.projetosistemaprodutos.collections.DynamicProductArray;
 import br.ucs.projetosistemaprodutos.models.person.Supplier;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Product {
     private String name;
@@ -87,4 +91,6 @@ public class Product {
 	public String toString() {
 		return "ID: " + this.getId() + " | Produto: " + this.getName();
 	}
+
+
 }
