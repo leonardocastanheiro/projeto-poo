@@ -783,7 +783,11 @@ public class AdminView {
 				    		case 5:
 				    			System.out.println("Preço: " + productCopy.getStock().getPrice());
 				    			System.out.println("Novo preço: ");
-				    			newPrice = sc.nextDouble();
+				    			try {
+				    				newPrice = sc.nextDouble();
+				    			}catch(InputMismatchException e) {
+				    				System.out.println("Entrada inválida. Preço não alterado");
+				    			}
 				    			sc.nextLine();
 				    			newStock = new Stock(newQuantity, newPrice);
 				    			productCopy.setStock(newStock);
