@@ -4,9 +4,18 @@ Realizar ajustes propostos em aula
 
 1 - Pesquisa por ID e Nome
 2 - Melhorar visualização do produtoXfornecedor
-3 - Ajustar o deletar em cascada (tornar fornecedor de todos os produtos nulo)
+3 - Ajustar o deletar em cascade (tornar fornecedor de todos os produtos nulo)
 4 - Rever o código para buscar melhorias
 
+{
+Realizado por Leo (22/05):
+
+Pesquisa por ID, Nome, Descrição, Login e E-mail (variando o tipo)
+
+Ajuste do deletar em cascade (Coloquei pra quando existe algum item vinculado ao fornecedor que vai ser excluido, o código impossibilitar isso (coloquei uma exceção no controller)
+
+Adicionada a opção de visualizar produto por fornecedor na sub de produtos
+}
 
 Próximos passos:
 
