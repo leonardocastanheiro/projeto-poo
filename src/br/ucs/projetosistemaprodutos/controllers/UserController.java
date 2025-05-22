@@ -5,6 +5,9 @@ import br.ucs.projetosistemaprodutos.models.itens.Store;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserController {
     private DynamicUserArray userArray;
 
@@ -44,5 +47,24 @@ public class UserController {
         }
 
         return null;
+    }
+
+    protected List<User> getByText(String text, Role role) throws Exception {
+        int id = -1;
+        List<User> users = new ArrayList<>();
+
+        try {
+            id = Integer.parseInt(text);
+            text = null;
+        } catch (Exception ignored) {}
+
+        if(text == null) {
+            users.add(this.getById(id));
+
+            return users;
+        }
+
+        return userArray.getByText(text, role);
+
     }
 }

@@ -1,6 +1,8 @@
 package br.ucs.projetosistemaprodutos.collections;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import br.ucs.projetosistemaprodutos.models.itens.Product;
 import br.ucs.projetosistemaprodutos.models.person.Role;
@@ -98,5 +100,28 @@ public class DynamicSupplierArray {
         }
         throw new Exception("Fornecedor não encontrado.");
     }
-    
+
+    public List<Supplier> getByText(String text) throws Exception {
+        List<Supplier> suppliers = new ArrayList<>();
+
+        text = text.toLowerCase();
+
+        for(Supplier supplier : this.suppliers) {
+            if(supplier != null && (supplier.getName().toLowerCase().contains(text) ||
+            supplier.getEmail().toLowerCase().contains(text) ||
+            supplier.getDescription().toLowerCase().contains(text))) {
+                suppliers.add(supplier);
+            }
+        }
+
+        if(suppliers.isEmpty()) {
+            throw new Exception("Nenhum fornecedor existente com essa correspondência");
+        }
+
+        return suppliers;
+    }
+
+    public int size() {
+        return count;
+    }
 }

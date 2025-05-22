@@ -11,6 +11,9 @@ import br.ucs.projetosistemaprodutos.models.itens.Store;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.Supplier;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ProductController {
 	private DynamicProductArray productArray;
 		
@@ -55,7 +58,25 @@ public class ProductController {
 	public Product getById(int id) throws Exception{
 		return productArray.getById(id);
 	}
-	
+
+	public List<Product> getByText(String text) throws Exception {
+		int id = -1;
+		List<Product> products = new ArrayList<>();
+
+		try {
+			id = Integer.parseInt(text);
+			text = null;
+		} catch (Exception ignored) {}
+
+		if(text == null) {
+			products.add(this.getById(id));
+
+			return products;
+		}
+
+		return productArray.getByText(text);
+	}
+
 	@Override
 	public String toString() {
 		return productArray.toString();

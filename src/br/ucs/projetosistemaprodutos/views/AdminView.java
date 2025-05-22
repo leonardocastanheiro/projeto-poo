@@ -1,5 +1,6 @@
 package br.ucs.projetosistemaprodutos.views;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 import br.ucs.projetosistemaprodutos.controllers.*;
@@ -18,8 +19,8 @@ public class AdminView {
 	private final Store store;
 	private AdminController adminController;
 	private final ClientController clientController;
-	private SupplierController supplierController;
-	private ProductController productController;
+	private final SupplierController supplierController;
+	private final ProductController productController;
 
 
 	public AdminView(Store store) {
@@ -86,7 +87,7 @@ public class AdminView {
 			System.out.println("------------------");
 			System.out.println("Escolha uma opção:");
     		System.out.println(" 1  - Adicionar cliente");
-    		System.out.println(" 2  - Ver clientes");
+    		System.out.println(" 2  - Procurar cliente");
     		System.out.println(" 3  - Atualizar cliente");
     		System.out.println(" 4  - Excluir cliente");
     		System.out.println(" 0  - Sair");
@@ -144,36 +145,63 @@ public class AdminView {
 					}
 					break;
 				case 2:
-					try {
-						clientController.showArray();
-					} catch (Exception e) {
-						System.out.println(e.getMessage());
-                    }
-                    break;
-				case 3:
-					try {
-						clientController.showArray();
-					} catch (Exception e) {
-						System.out.println(e.getMessage());
-                    }
-					System.out.println("--------");
-					System.out.println("Digite o ID do cliente que deseja editar: ");
+					System.out.println("Buscar Cliente: ");
+					String text = sc.nextLine();
 
-					int id;
-					Client client1;
+					List<Client> clients;
 
 					try {
-						id = sc.nextInt();
-						
-						client1 = (Client) clientController.getById(id);
-
-					} catch (InputMismatchException e) {
-						System.out.println("Tipo digitado não corresponde a um ID.");
-						return;
+						clients = clientController.getByText(text);
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
 						return;
 					}
+
+					for(int i = 0; i<clients.size();i++) {
+						System.out.println(i+1+" - Nome: "+clients.get(i).getName());
+					}
+                    break;
+				case 3:
+					System.out.println("Buscar Cliente: ");
+					String text1 = sc.nextLine();
+
+					List<Client> clients1;
+
+					try {
+						clients1 = clientController.getByText(text1);
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+						return;
+					}
+
+					for(int i = 0; i<clients1.size();i++) {
+						System.out.println(i+1+" - Nome: "+clients1.get(i).getName());
+					}
+					System.out.println("0 - Sair");
+
+					System.out.println("--------");
+					System.out.print("Digite o número do cliente: ");
+
+					int id = -1;
+					Client client1;
+
+					do {
+						try {
+							id = sc.nextInt();
+
+						} catch (InputMismatchException e) {
+							System.out.print("Entrada inválida, digite novamente: ");
+						} catch (Exception e) {
+							System.out.println(e.getMessage());
+							return;
+						}
+					} while (id<0 || id>clients1.size());
+
+					if(id == 0) {
+						return;
+					}
+
+					client1 = clients1.get(id-1);
 
 					ClientCopy clientCopy = new ClientCopy(client1);
 					int editInfo = -1;
@@ -301,30 +329,49 @@ public class AdminView {
 					}while(editInfo != 0 && editInfo != 14);
 					break;
 				case 4:
-					System.out.println("--------");
-					System.out.println("Clientes: ");
+					System.out.println("Buscar Cliente: ");
+					String text2 = sc.nextLine();
+
+					List<Client> clients2;
 
 					try {
-						clientController.showArray(Role.CLIENT);
+						clients2 = clientController.getByText(text2);
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
 						return;
 					}
 
-					System.out.println("--------");
-					System.out.println("Selecione o ID do cliente que deseja excluir: ");
+					for(int i = 0; i<clients2.size();i++) {
+						System.out.println(i+1+" - Nome: "+clients2.get(i).getName());
+					}
+					System.out.println("0 - Sair");
 
-					int id1;
+					System.out.println("--------");
+					System.out.print("Digite o número do cliente: ");
+
+					int id1 = -1;
+					Client client2;
+
+					do {
+						try {
+							id1 = sc.nextInt();
+
+						} catch (InputMismatchException e) {
+							System.out.print("Entrada inválida, digite novamente: ");
+						} catch (Exception e) {
+							System.out.println(e.getMessage());
+							return;
+						}
+					} while (id1<0 || id1>clients2.size());
+
+					if(id1 == 0) {
+						return;
+					}
+
+					client2 = clients2.get(id1-1);
 
 					try {
-						id1 = sc.nextInt();
-
-						User user = clientController.getById(id1);
-
-						clientController.delete((Client) user);
-					} catch (InputMismatchException e) {
-						System.out.println("Tipo digitado não corresponde a um ID.");
-						return;
+						clientController.delete(client2);
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
 						return;
@@ -349,7 +396,7 @@ public class AdminView {
 			System.out.println("------------------");
 			System.out.println("Escolha uma opção:");
     		System.out.println(" 1  - Adicionar fornecedor");
-    		System.out.println(" 2  - Ver fornecedores");
+    		System.out.println(" 2  - Buscar fornecedor");
     		System.out.println(" 3  - Atualizar fornecedor");
     		System.out.println(" 4  - Excluir fornecedor");
     		System.out.println(" 5  - Ver produtos de um fornecedor");
@@ -405,36 +452,61 @@ public class AdminView {
 					}
 					break;
 				case 2:
-					try {
-						supplierController.showArray(Role.SUPPLIER);
-					} catch (Exception e) {
-						System.out.println(e.getMessage());
-                    }
-					break;
-				case 3:
-					try {
-						supplierController.showArray(Role.SUPPLIER);
-					} catch (Exception e) {
-						System.out.println(e.getMessage());
-                    }
-					System.out.println("--------");
-					System.out.println("Digite o ID do fornecedor que deseja editar: ");
+					System.out.print("Buscar Fornecedor: ");;
+					String text = sc.nextLine();
 
-					int id;
-					Supplier supplier1;
+					List<Supplier> suppliers;
 
 					try {
-						id = sc.nextInt();
-						
-						supplier1 = (Supplier) supplierController.getById(id);
-
-					} catch (InputMismatchException e) {
-						System.out.println("Tipo digitado não corresponde a um ID.");
-						return;
+						suppliers = supplierController.getByText(text);
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
 						return;
 					}
+
+					for(int i = 0; i<suppliers.size();i++) {
+						System.out.println(i+1+" - Nome: "+suppliers.get(i).getName());
+					}
+					break;
+				case 3:
+					System.out.print("Buscar Fornecedor: ");;
+					String text1 = sc.nextLine();
+
+					List<Supplier> suppliers1;
+
+					try {
+						suppliers1 = supplierController.getByText(text1);
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+						return;
+					}
+
+					for(int i = 0; i<suppliers1.size();i++) {
+						System.out.println(i+1+" - Nome: "+suppliers1.get(i).getName());
+					}
+					System.out.println("0 - Sair");
+					System.out.println("--------");
+					System.out.print("Digite o número do fornecedor que deseja editar: ");
+
+					int id = -1;
+					Supplier supplier1;
+
+					do {
+						try {
+							id = sc.nextInt();
+						} catch (InputMismatchException e) {
+							System.out.print("Entrada inválida, digite novamente: ");
+						} catch (Exception e) {
+							System.out.println(e.getMessage());
+							return;
+						}
+					} while (id<0 || id > suppliers1.size());
+
+					if(id == 0) {
+						return;
+					}
+
+					supplier1 = suppliers1.get(id-1);
 
 					SupplierCopy supplierCopy = new SupplierCopy(supplier1);
 					int editInfo = -1;
@@ -549,30 +621,47 @@ public class AdminView {
 					}while(editInfo != 0 && editInfo != 12);
 					break;
 				case 4:
-					System.out.println("--------");
-					System.out.println("Fornecedores: ");
+					System.out.print("Buscar Fornecedor: ");;
+					String text2 = sc.nextLine();
+
+					List<Supplier> suppliers2;
 
 					try {
-						supplierController.showArray(Role.SUPPLIER);
+						suppliers2 = supplierController.getByText(text2);
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
 						return;
 					}
 
+					for(int i = 0; i<suppliers2.size();i++) {
+						System.out.println(i+1+" - Nome: "+suppliers2.get(i).getName());
+					}
+					System.out.println("0 - Sair");
 					System.out.println("--------");
-					System.out.println("Selecione o ID do fornecedor que deseja excluir: ");
+					System.out.print("Digite o número do fornecedor que deseja excluir: ");
 
-					int id1;
+					int id1 = -1;
+					Supplier supplier2;
+
+					do {
+						try {
+							id1 = sc.nextInt();
+						} catch (InputMismatchException e) {
+							System.out.print("Entrada inválida, digite novamente: ");
+						} catch (Exception e) {
+							System.out.println(e.getMessage());
+							return;
+						}
+					} while (id1<0 || id1 > suppliers2.size());
+
+					if(id1 == 0) {
+						return;
+					}
+
+					supplier2 = suppliers2.get(id1-1);
 
 					try {
-						id1 = sc.nextInt();
-
-						Supplier sup = supplierController.getById(id1);
-
-						supplierController.delete((Supplier) sup);
-					} catch (InputMismatchException e) {
-						System.out.println("Tipo digitado não corresponde a um ID.");
-						return;
+						supplierController.delete(supplier2);
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
 						return;
@@ -582,31 +671,48 @@ public class AdminView {
 					break;
 					
 				case 5:
-				    System.out.println("--------");
-				    System.out.println("Fornecedores: ");
+					System.out.print("Buscar Fornecedor: ");;
+					String text3 = sc.nextLine();
 
-				    try {
-				        supplierController.showArray(Role.SUPPLIER);
-				    } catch (Exception e) {
-				        System.out.println(e.getMessage());
-				        break;
-				    }
+					List<Supplier> suppliers3;
 
-				    System.out.println("--------");
-				    System.out.println("Digite o ID do fornecedor para ver os produtos: ");
+					try {
+						suppliers3 = supplierController.getByText(text3);
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+						return;
+					}
 
-				    int id2;
+					for(int i = 0; i<suppliers3.size();i++) {
+						System.out.println(i+1+" - Nome: "+suppliers3.get(i).getName());
+					}
+					System.out.println("0 - Sair");
+					System.out.println("--------");
+					System.out.print("Digite o número do fornecedor que deseja visualizar os produtos: ");
 
-				    try {
-				        id2 = sc.nextInt();
-				        sc.nextLine(); 
-				        productController.showProductsArray(id2);
-				    } catch (InputMismatchException e) {
-				        System.out.println("ID inválido. Operação cancelada.");
-				        sc.nextLine(); 
-				    } catch (Exception e) {
-				        System.out.println(e.getMessage());
-				    }
+					int id2 = -1;
+					Supplier supplier3;
+
+					do {
+						try {
+							id2 = sc.nextInt();
+						} catch (InputMismatchException e) {
+							System.out.print("Entrada inválida, digite novamente: ");
+						} catch (Exception e) {
+							System.out.println(e.getMessage());
+							return;
+						}
+					} while (id2<0 || id2 > suppliers3.size());
+
+					if(id2 == 0) {
+						return;
+					}
+
+					supplier3 = suppliers3.get(id2-1);
+
+				    for(Product product : supplier3.getProducts().getAllProducts()) {
+						System.out.println("ID: "+product.getId() + " | Nome: "+product.getName());
+					}
 				    break;
 				case 0:
 					System.out.println("Saindo de 'Fornecedores'...");
@@ -624,16 +730,17 @@ public class AdminView {
 			System.out.println("------------------");
 			System.out.println("Escolha uma opção:");
     		System.out.println(" 1  - Adicionar produto");
-    		System.out.println(" 2  - Ver produtos");
+    		System.out.println(" 2  - Procurar produto");
     		System.out.println(" 3  - Atualizar produto");
     		System.out.println(" 4  - Excluir produto");
+			System.out.println(" 5  - Procurar produto por fornecedor");
     		System.out.println(" 0  - Sair");
 
 			do {
 				try {
 					subOption = sc.nextInt();
 
-					if(subOption < 0 || subOption > 4) {
+					if(subOption < 0 || subOption > 5) {
 						throw new InputMismatchException("Entrada inválida");
 					}
 
@@ -641,7 +748,7 @@ public class AdminView {
 					System.out.print("Entrada inválida, digite novamente: ");
 				}
 				sc.nextLine();
-			} while (subOption<0 || subOption>4);
+			} while (subOption<0 || subOption>5);
 			
 			switch (subOption) {
 				case 1:
@@ -649,26 +756,45 @@ public class AdminView {
 			    	String name = sc.nextLine();
 			    	System.out.print("Descrição: ");
 			    	String description = sc.nextLine();
-			    	System.out.println("Fornecedor: ");
-			    	try {
-						supplierController.showArray(Role.SUPPLIER);
-					} catch (Exception e) {
-						System.out.println(e.getMessage());
-                    }
-			    	System.out.print("ID do fornecedor: ");
-			    	int idSupplier;
-			    	Supplier productSupplier;
-			    	try {
-			    		idSupplier = sc.nextInt();
-			    		productSupplier = supplierController.getById(idSupplier);
-					} catch (InputMismatchException e) {
-						System.out.println("Tipo digitado não corresponde a um ID.");
-						return;
+					System.out.print("Buscar Fornecedor: ");;
+					String text = sc.nextLine();
+
+					List<Supplier> suppliers;
+
+					try {
+						suppliers = supplierController.getByText(text);
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
 						return;
 					}
-			    	 
+
+					for(int i = 0; i<suppliers.size();i++) {
+						System.out.println(i+1+" - Nome: "+suppliers.get(i).getName());
+					}
+					System.out.println("0 - Sair");
+					System.out.println("--------");
+					System.out.print("Digite o número do fornecedor que deseja relacionar: ");
+
+					int id = -1;
+					Supplier supplier;
+
+					do {
+						try {
+							id = sc.nextInt();
+						} catch (InputMismatchException e) {
+							System.out.print("Entrada inválida, digite novamente: ");
+						} catch (Exception e) {
+							System.out.println(e.getMessage());
+							return;
+						}
+					} while (id<0 || id > suppliers.size());
+
+					if(id == 0) {
+						return;
+					}
+
+					supplier = suppliers.get(id-1);
+
 			    	System.out.print("Quantidade em estoque: ");
 			    	int quantity = -1;
 			    	do {
@@ -695,51 +821,73 @@ public class AdminView {
 				    Stock stock = new Stock(quantity, price);
 				    	
 					try {
-						Product product = new Product(name, description, stock, productSupplier);
+						Product product = new Product(name, description, stock, supplier);
 						productController.create(product);
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
 					}
 					break;
 				case 2:
-					try {
-						productController.showArray();
-					} catch (Exception e) {
-						System.out.println(e.getMessage());
-                    }
-					break;
-				case 3:
-					try {
-						productController.showArray();
-					} catch (Exception e) {
-						System.out.println(e.getMessage());
-	                }
-					
-					System.out.print("Digite o ID do produto que deseja editar: ");
+					System.out.print("Buscar Produto: ");;
+					String text1 = sc.nextLine();
 
-					int id = -1;
-					Product product1;
-
-					do {
-						try {
-							id = sc.nextInt();
-							sc.nextLine();
-						} catch (InputMismatchException e) {
-							System.out.println("Tipo digitado não corresponde a um ID, digite novamente: ");
-							sc.nextLine();
-						}
-					} while (id == -1);
+					List<Product> products;
 
 					try {
-						product1 = productController.getById(id);
+						products = productController.getByText(text1);
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
 						return;
 					}
 
-					ProductCopy productCopy = new ProductCopy(product1);
-					int newQuantity = product1.getStock().getQuantity();
-					double newPrice = product1.getStock().getPrice();
+					for(int i = 0; i<products.size();i++) {
+						System.out.println(i+1+" - Nome: "+products.get(i).getName());
+					}
+					break;
+				case 3:
+					System.out.print("Buscar Produto: ");;
+					String text2 = sc.nextLine();
+
+					List<Product> products1;
+
+					try {
+						products1 = productController.getByText(text2);
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+						return;
+					}
+
+					for(int i = 0; i<products1.size();i++) {
+						System.out.println(i+1+" - Nome: "+products1.get(i).getName());
+					}
+					System.out.println("0 - Sair");
+					System.out.println("--------");
+					System.out.println("Digite o número do produto que deseja editar: ");
+
+					int id1 = -1;
+
+					Product product;
+
+					do {
+						try {
+							id1 = sc.nextInt();
+						} catch (InputMismatchException e) {
+							System.out.print("Entrada inválida, digite novamente: ");
+						} catch (Exception e) {
+							System.out.println(e.getMessage());
+							return;
+						}
+					} while (id1<0 || id1 > products1.size());
+
+					if(id1 == 0) {
+						return;
+					}
+
+					product = products1.get(id1-1);
+
+					ProductCopy productCopy = new ProductCopy(product);
+					int newQuantity = product.getStock().getQuantity();
+					double newPrice = product.getStock().getPrice();
 					Stock newStock;
 					
 					int editInfo = -1;
@@ -783,7 +931,7 @@ public class AdminView {
 				    			productCopy.setDescription(newDescription);
 				    			break;
 				    		case 3: 
-				    			System.out.println("ID: "+ productCopy.getSupplier().getId() +" | FORNECEDOR ATUAL: " + product1.getSupplier().getName());
+				    			System.out.println("ID: "+ productCopy.getSupplier().getId() +" | FORNECEDOR ATUAL: " + product.getSupplier().getName());
 				    			try {
 									supplierController.showArray(Role.SUPPLIER);
 								} catch (Exception e) {
@@ -840,7 +988,7 @@ public class AdminView {
 								break;
 				    		case 6:
 								try {
-									productController.edit(product1, productCopy);
+									productController.edit(product, productCopy);
 								} catch (Exception e) {
 									System.out.println(e.getMessage());
 									return;
@@ -852,30 +1000,99 @@ public class AdminView {
 					}while(editInfo != 0 && editInfo != 6);
 					break;
 				case 4:
+					System.out.print("Buscar Produto: ");;
+					String text3 = sc.nextLine();
+
+					List<Product> products2;
+
 					try {
-						productController.showArray();
+						products2 = productController.getByText(text3);
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
-                    }
-					
-					System.out.print("Digite o ID do produto que deseja excluir: ");
-					int id1 = -1;
+						return;
+					}
+
+					for(int i = 0; i<products2.size();i++) {
+						System.out.println(i+1+" - Nome: "+products2.get(i).getName());
+					}
+					System.out.println("0 - Sair");
+					System.out.println("--------");
+					System.out.println("Digite o número do produto que deseja excluir: ");
+
+					int id2 = -1;
+
+					Product product1;
 
 					do {
 						try {
-							id1 = sc.nextInt();
+							id2 = sc.nextInt();
 						} catch (InputMismatchException e) {
-							System.out.println("Tipo digitado não corresponde a um ID, digite novamente: ");
+							System.out.print("Entrada inválida, digite novamente: ");
+						} catch (Exception e) {
+							System.out.println(e.getMessage());
+							return;
 						}
-					} while (id1 == -1);
+					} while (id2<0 || id2 > products2.size());
 
-					try {
-						Product product = productController.getById(id1);
-						productController.delete(product);
-					} catch (Exception e) {
-						System.out.println(e.getMessage());
+					if(id2 == 0) {
+						return;
 					}
 
+					product1 = products2.get(id2-1);
+
+					try {
+						productController.delete(product1);
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+						return;
+					}
+
+					System.out.println("Produto excluído com sucesso!");
+					break;
+
+				case 5:
+					System.out.print("Buscar Fornecedor: ");;
+					String text4 = sc.nextLine();
+
+					List<Supplier> suppliers1;
+
+					try {
+						suppliers1 = supplierController.getByText(text4);
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+						return;
+					}
+
+					for(int i = 0; i<suppliers1.size();i++) {
+						System.out.println(i+1+" - Nome: "+suppliers1.get(i).getName());
+					}
+					System.out.println("0 - Sair");
+					System.out.println("--------");
+					System.out.print("Digite o número do fornecedor que deseja visualizar os produtos: ");
+
+					int id3 = -1;
+					Supplier supplier1;
+
+					do {
+						try {
+							id3 = sc.nextInt();
+						} catch (InputMismatchException e) {
+							System.out.print("Entrada inválida, digite novamente: ");
+						} catch (Exception e) {
+							System.out.println(e.getMessage());
+							return;
+						}
+					} while (id3<0 || id3 > suppliers1.size());
+
+					if(id3 == 0) {
+						return;
+					}
+
+					supplier1 = suppliers1.get(id3-1);
+
+					for(Product productAux : supplier1.getProducts().getAllProducts()) {
+						System.out.println("ID: "+productAux.getId() + " | Nome: "+productAux.getName());
+					}
 					break;
 				case 0:
 					System.out.println("Saindo de 'Produtos'...");

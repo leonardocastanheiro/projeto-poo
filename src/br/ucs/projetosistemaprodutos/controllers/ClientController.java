@@ -8,6 +8,9 @@ import br.ucs.projetosistemaprodutos.models.person.Client;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ClientController extends UserController{
 
     DynamicUserArray userArray;
@@ -73,5 +76,15 @@ public class ClientController extends UserController{
         }
 
         return user;
+    }
+
+    public List<Client> getByText(String text) throws Exception {
+        List<Client> clients = new ArrayList<>();
+
+        for(User user : super.getByText(text, Role.CLIENT)) {
+            clients.add((Client) user);
+        }
+
+        return clients;
     }
 }

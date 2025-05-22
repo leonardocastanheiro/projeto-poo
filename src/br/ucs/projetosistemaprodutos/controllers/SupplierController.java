@@ -12,6 +12,9 @@ import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.Supplier;
 import br.ucs.projetosistemaprodutos.models.person.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SupplierController {
 	private DynamicSupplierArray supplierArray;
 	private DynamicProductArray productArray;
@@ -27,12 +30,8 @@ public class SupplierController {
 	 
 	public void delete(Supplier supplier) throws Exception {
 		
-		 for(Product product : supplier.getProducts().getProducts()) {
-			 
-			 if(product != null) {
-				 productArray.delete(product);
-			 }
-			 
+		 if(supplier.getProducts().size() > 0) {
+			 throw new Exception("Existem itens vinculados a esse fornecedor, tornando impossível excluí-lo.");
 		 }
 		
 		 supplierArray.delete(supplier);
@@ -74,5 +73,21 @@ public class SupplierController {
 		supplierArray.showArray(role);
 	}
 	
-	
+	public List<Supplier> getByText(String text) throws Exception {
+		int id = -1;
+		List<Supplier> suppliers = new ArrayList<>();
+
+		try {
+			id = Integer.parseInt(text);
+			text = null;
+		} catch (Exception ignored) {}
+
+		if(text == null) {
+			suppliers.add(this.getById(id));
+
+			return suppliers;
+		}
+
+		return supplierArray.getByText(text);
+	}
 }

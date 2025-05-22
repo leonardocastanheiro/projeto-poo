@@ -1,6 +1,8 @@
 package br.ucs.projetosistemaprodutos.collections;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 import br.ucs.projetosistemaprodutos.models.address.Address;
@@ -141,6 +143,30 @@ public class DynamicUserArray {
         }
 
         return false;
+    }
+
+    public List<User> getByText(String text, Role role) throws Exception {
+        List<User> users = new ArrayList<>();
+
+        for(User user : this.users) {
+            if(user != null && user.getRole() == role &&
+                    (user.getName().toLowerCase().contains(text.toLowerCase()) ||
+                    user.getLogin().toLowerCase().contains(text.toLowerCase()) ||
+                    user.getEmail().toLowerCase().contains(text.toLowerCase()))) {
+
+                users.add(user);
+            }
+        }
+
+        if(users.isEmpty()) {
+            throw new Exception("Nenhum usuário existente com essa correspondência");
+        }
+
+        return users;
+    }
+
+    public int size() {
+        return count;
     }
 }
   //-----------------------------------------------------------------

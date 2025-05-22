@@ -1,6 +1,8 @@
 package br.ucs.projetosistemaprodutos.collections;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import br.ucs.projetosistemaprodutos.models.itens.Product;
 import br.ucs.projetosistemaprodutos.models.person.Role;
@@ -96,9 +98,40 @@ public class DynamicProductArray {
         }
     }
 
-	public Product[] getProducts() {
-		return products;
+    public List<Product> getByText(String text) throws Exception {
+        List<Product> products = new ArrayList<>();
+
+        text = text.toLowerCase();
+
+        for(Product product : this.products) {
+            if(product != null && (product.getName().toLowerCase().contains(text) ||
+                    product.getDescription().toLowerCase().contains(text))) {
+                products.add(product);
+            }
+        }
+
+        if(products.isEmpty()) {
+            throw new Exception("Nenhum produto existente com essa correspondência");
+        }
+
+        return products;
+    }
+
+	public List<Product> getAllProducts() {
+		List<Product> products = new ArrayList<>(count);
+
+        for(Product product : this.products) {
+            if(product != null) {
+                products.add(product);
+            }
+        }
+
+        return products;
 	}
-    
+
+
+    public int size() {
+        return count;
+    }
     
 }

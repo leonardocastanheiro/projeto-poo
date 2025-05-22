@@ -59,4 +59,8 @@ public class DynamicStockArray {
         }
         throw new Exception("Invalid stock ID.");
     }
+
+    public int size() {
+        return count;
+    }
 }
