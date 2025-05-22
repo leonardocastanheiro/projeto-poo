@@ -70,3 +70,16 @@ R${VALOR ATUAL DO CARRINHO}
 
 5. Excluir Carrinho
 // Limpar tudo do carrinho de compras //
+
+
+Sub Pedidos
+1. Mostrar Pedidos
+   // TODOS (últimos 90 dias), CANCELADOS, NOVOS, ENTREGUES //
+   
+// Estado, Valor
+1. Cancelar (Se o pedido for novo)
+
+
+Sub Dados Clients
+
+EDIT QUE JÁ TEM NA NOSSA 
