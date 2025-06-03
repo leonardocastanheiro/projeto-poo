@@ -1,7 +1,6 @@
 package br.ucs.projetosistemaprodutos.repositories;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,11 +9,11 @@ import br.ucs.projetosistemaprodutos.models.person.Admin;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.User;
 
-public class UserRepository {
+public class DynamicUserArray {
     private List<User> users;
 
 
-    public UserRepository(Integer initialCapacity) {
+    public DynamicUserArray(Integer initialCapacity) {
         users.add(new Admin("admin","admin",Role.ADMIN,"admin","admin","admin", new Address("admin","admin","admin","admin","admin","admin","admin")));
     }
 

@@ -7,11 +7,11 @@ import java.util.List;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.Supplier;
 
-public class SupplierRepository {
+public class DynamicSupplierArray {
 	private Supplier [] suppliers;
     private Integer count;
 
-    public SupplierRepository(Integer initialCapacity) {
+    public DynamicSupplierArray(Integer initialCapacity) {
         suppliers = new Supplier[initialCapacity];
         count = 0;
     }

@@ -1,7 +1,7 @@
 package br.ucs.projetosistemaprodutos.controllers;
 
-import br.ucs.projetosistemaprodutos.repositories.ProductRepository;
-import br.ucs.projetosistemaprodutos.repositories.SupplierRepository;
+import br.ucs.projetosistemaprodutos.repositories.DynamicProductArray;
+import br.ucs.projetosistemaprodutos.repositories.DynamicSupplierArray;
 import br.ucs.projetosistemaprodutos.models.address.Address;
 import br.ucs.projetosistemaprodutos.models.copies.SupplierCopy;
 import br.ucs.projetosistemaprodutos.models.itens.Store;
@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SupplierController {
-	private SupplierRepository supplierArray;
-	private ProductRepository productArray;
+	private DynamicSupplierArray supplierArray;
+	private DynamicProductArray productArray;
 	
 	public SupplierController(Store store){
 		this.supplierArray = store.getSupplierArray();

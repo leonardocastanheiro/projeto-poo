@@ -1,6 +1,6 @@
 package br.ucs.projetosistemaprodutos.controllers;
 
-import br.ucs.projetosistemaprodutos.repositories.ProductRepository;
+import br.ucs.projetosistemaprodutos.repositories.DynamicProductArray;
 import br.ucs.projetosistemaprodutos.models.copies.ProductCopy;
 import br.ucs.projetosistemaprodutos.models.itens.Product;
 import br.ucs.projetosistemaprodutos.models.itens.Stock;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductController {
-	private ProductRepository productArray;
+	private DynamicProductArray productArray;
 		
 	public ProductController(Store store){
 		this.productArray = store.getProductArray();

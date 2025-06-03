@@ -6,11 +6,11 @@ import java.util.List;
 
 import br.ucs.projetosistemaprodutos.models.itens.Product;
 
-public class ProductRepository {
+public class DynamicProductArray {
     private Product [] products;
     private Integer count;
 
-    public ProductRepository(Integer initialCapacity) {
+    public DynamicProductArray(Integer initialCapacity) {
         products = new Product[initialCapacity];
         count = 0;
     }

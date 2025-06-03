@@ -4,11 +4,11 @@ import java.util.Arrays;
 
 import br.ucs.projetosistemaprodutos.models.itens.Stock;
 
-public class StockRepository {
+public class DynamicStockArray {
     private Stock [] stocks;
     private Integer count;
 
-    public StockRepository(Integer initialCapacity) {
+    public DynamicStockArray(Integer initialCapacity) {
         stocks = new Stock[initialCapacity];
         count = 0;
     }
