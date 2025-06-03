@@ -4,54 +4,50 @@ Realizar ajustes propostos em aula
 
 1 - Pesquisa por ID e Nome
 2 - Melhorar visualização do produtoXfornecedor
-3 - Ajustar o deletar em cascada (tornar fornecedor de todos os produtos nulo)
+3 - Ajustar o deletar em cascade (tornar fornecedor de todos os produtos nulo)
 4 - Rever o código para buscar melhorias
 
+{
+Realizado por Leo (22/05):
+
+Pesquisa por ID, Nome, Descrição, Login e E-mail (variando o tipo)
+
+Ajuste do deletar em cascade (Coloquei pra quando existe algum item vinculado ao fornecedor que vai ser excluido, o código impossibilitar isso (coloquei uma exceção no controller)
+
+Adicionada a opção de visualizar produto por fornecedor na sub de produtos
+}
+
+{
+Realizado por Maithe (25/05):
+
+Tela Cliente (1 - Produtos, 2 - Carrinho de Compras, 3 - Pedidos, 4 - Dados do Cliente, 0 - Sair)
+
+Início do SubProduct
+
+-> Lista os produtos (nome e preço) da busca, criando uma nova lista com esses produtos
+
+-> Seleção pelo ID (posição) para ver os detalhes
+
+-> Mostra os detalhes do produto escolhido
+
+-> Se selecionada a opção "Adicionar ao carrinho", pede quantas unidades
+
+-> Se o estoque for menor que o valor selecionado, mostrar a quantidade máxima em estoque e oferecer ao usuário
+
+}
 
 Próximos passos:
 
-Tela Cliente
-
-1 - Produtos
-2 - Carrinho de Compras
-3 - Pedidos
-4 - Dados do Cliente
-0 - Sair
-
 SubProduct
 
-// Busca //
+//Adicionar código do produto na lista
 
-// Lista produtos (nome e preço) da busca, criando uma nova lista com esses produtos //
-1.
-2. 
-3.
-4.
-5.
-0 - Sair
-
-"Selecione o produto que você deseja visualizar"
-
-{NOME_PRODUTO}
-
-Nome:
-Preço:
-Descrição:
-Quantidade em estoque: (INDISPONÍVEL)
-
-1 - Adicionar ao carrinho
-0 - Sair
-
-// Adicionar ao carrinho ///
-"Digite a quantidade que deseja adicionar ao carrinho: "
-
-// Se o estoque for menor que o valor selecionado, mostrar a quantidade máxima em estoque e oferecer ao usuário // 
+//Permitir a seleção para ver detalhes pelo código também
 
 // Adicionar ao carrinho //
 
 
-
-
+--------------------------------------------------------
 Sub Carrinho de Compras
 
 R${VALOR ATUAL DO CARRINHO}
