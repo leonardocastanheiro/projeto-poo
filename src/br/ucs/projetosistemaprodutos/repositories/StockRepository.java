@@ -1,14 +1,14 @@
-package br.ucs.projetosistemaprodutos.collections;
+package br.ucs.projetosistemaprodutos.repositories;
 
 import java.util.Arrays;
 
 import br.ucs.projetosistemaprodutos.models.itens.Stock;
 
-public class DynamicStockArray {
+public class StockRepository {
     private Stock [] stocks;
     private Integer count;
 
-    public DynamicStockArray(Integer initialCapacity) {
+    public StockRepository(Integer initialCapacity) {
         stocks = new Stock[initialCapacity];
         count = 0;
     }

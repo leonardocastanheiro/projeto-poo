@@ -1,6 +1,6 @@
 package br.ucs.projetosistemaprodutos.controllers;
 
-import br.ucs.projetosistemaprodutos.collections.DynamicUserArray;
+import br.ucs.projetosistemaprodutos.repositories.UserRepository;
 import br.ucs.projetosistemaprodutos.models.address.Address;
 import br.ucs.projetosistemaprodutos.models.copies.ClientCopy;
 import br.ucs.projetosistemaprodutos.models.itens.Store;
@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ClientController extends UserController{
 
-    DynamicUserArray userArray;
+    UserRepository userArray;
 
     public ClientController(Store store) {
         super(store);

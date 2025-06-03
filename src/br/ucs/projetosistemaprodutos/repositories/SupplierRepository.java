@@ -1,18 +1,17 @@
-package br.ucs.projetosistemaprodutos.collections;
+package br.ucs.projetosistemaprodutos.repositories;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import br.ucs.projetosistemaprodutos.models.itens.Product;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.Supplier;
 
-public class DynamicSupplierArray {
+public class SupplierRepository {
 	private Supplier [] suppliers;
     private Integer count;
 
-    public DynamicSupplierArray(Integer initialCapacity) {
+    public SupplierRepository(Integer initialCapacity) {
         suppliers = new Supplier[initialCapacity];
         count = 0;
     }

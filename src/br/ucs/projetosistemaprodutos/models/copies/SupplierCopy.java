@@ -1,6 +1,6 @@
 package br.ucs.projetosistemaprodutos.models.copies;
 
-import br.ucs.projetosistemaprodutos.collections.DynamicProductArray;
+import br.ucs.projetosistemaprodutos.repositories.ProductRepository;
 import br.ucs.projetosistemaprodutos.models.address.Address;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.Supplier;
@@ -13,7 +13,7 @@ public class SupplierCopy extends Supplier{
     private String email;
     private Address address;
     private String description;
-    private DynamicProductArray products;
+    private ProductRepository products;
 
     public SupplierCopy(Supplier supplier) {
         this.id = supplier.getId();
@@ -56,7 +56,7 @@ public class SupplierCopy extends Supplier{
 		this.description = description;
 	}
 	
-	public void setProducts(DynamicProductArray products) {
+	public void setProducts(ProductRepository products) {
 		this.products = products;
 	}
 	
@@ -88,7 +88,7 @@ public class SupplierCopy extends Supplier{
  		return description;
  	}
     
-    public DynamicProductArray getProducts() {
+    public ProductRepository getProducts() {
 		return products;
 	}
 

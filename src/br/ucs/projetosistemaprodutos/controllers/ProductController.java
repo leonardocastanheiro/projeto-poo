@@ -1,21 +1,16 @@
 package br.ucs.projetosistemaprodutos.controllers;
 
-import br.ucs.projetosistemaprodutos.collections.DynamicProductArray;
-import br.ucs.projetosistemaprodutos.collections.DynamicSupplierArray;
-import br.ucs.projetosistemaprodutos.models.address.Address;
+import br.ucs.projetosistemaprodutos.repositories.ProductRepository;
 import br.ucs.projetosistemaprodutos.models.copies.ProductCopy;
-import br.ucs.projetosistemaprodutos.models.copies.SupplierCopy;
 import br.ucs.projetosistemaprodutos.models.itens.Product;
 import br.ucs.projetosistemaprodutos.models.itens.Stock;
 import br.ucs.projetosistemaprodutos.models.itens.Store;
-import br.ucs.projetosistemaprodutos.models.person.Role;
-import br.ucs.projetosistemaprodutos.models.person.Supplier;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductController {
-	private DynamicProductArray productArray;
+	private ProductRepository productArray;
 		
 	public ProductController(Store store){
 		this.productArray = store.getProductArray();

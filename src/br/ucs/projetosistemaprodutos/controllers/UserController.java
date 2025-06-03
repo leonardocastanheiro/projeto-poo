@@ -1,6 +1,6 @@
 package br.ucs.projetosistemaprodutos.controllers;
 
-import br.ucs.projetosistemaprodutos.collections.DynamicUserArray;
+import br.ucs.projetosistemaprodutos.repositories.UserRepository;
 import br.ucs.projetosistemaprodutos.models.itens.Store;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.User;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserController {
-    private DynamicUserArray userArray;
+    private UserRepository userArray;
 
     public UserController(Store store) {
         this.userArray = store.getUserArray();

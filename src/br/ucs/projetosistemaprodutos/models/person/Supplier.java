@@ -1,31 +1,31 @@
 package br.ucs.projetosistemaprodutos.models.person;
 
-import br.ucs.projetosistemaprodutos.collections.DynamicProductArray;
+import br.ucs.projetosistemaprodutos.repositories.ProductRepository;
 import br.ucs.projetosistemaprodutos.models.address.Address;
 
 public class Supplier extends Person {
     private String description;
-    private DynamicProductArray products;
+    private ProductRepository products;
 
     public Supplier() {
-        this.products = new DynamicProductArray(10); 
+        this.products = new ProductRepository(10);
     }
 
     public Supplier(Role role, String name, String phone, String email, Address address) {
         super(role, name, phone, email, address);
-        this.products = new DynamicProductArray(10); 
+        this.products = new ProductRepository(10);
     }
 
     public Supplier(Role role, String name, String phone, String email, String description, Address address) {
         super(role, name, phone, email, address);
         this.description = description;
-        this.products = new DynamicProductArray(10); 
+        this.products = new ProductRepository(10);
     }
 
-    public Supplier(Role role, String name, String phone, String email, String description, Address address, DynamicProductArray products) {
+    public Supplier(Role role, String name, String phone, String email, String description, Address address, ProductRepository products) {
         super(role, name, phone, email, address);
         this.description = description;
-        this.products = (products != null) ? products : new DynamicProductArray(10);
+        this.products = (products != null) ? products : new ProductRepository(10);
     }
 
     public String getDescription() {
@@ -36,11 +36,11 @@ public class Supplier extends Person {
         this.description = description;
     }
 
-    public DynamicProductArray getProducts() {
+    public ProductRepository getProducts() {
         return products;
     }
 
-    public void setProducts(DynamicProductArray products) {
+    public void setProducts(ProductRepository products) {
         this.products = products;
     }
 

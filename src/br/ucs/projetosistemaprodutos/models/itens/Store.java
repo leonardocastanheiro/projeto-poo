@@ -1,9 +1,9 @@
 package br.ucs.projetosistemaprodutos.models.itens;
 
-import br.ucs.projetosistemaprodutos.collections.DynamicProductArray;
-import br.ucs.projetosistemaprodutos.collections.DynamicStockArray;
-import br.ucs.projetosistemaprodutos.collections.DynamicSupplierArray;
-import br.ucs.projetosistemaprodutos.collections.DynamicUserArray;
+import br.ucs.projetosistemaprodutos.repositories.ProductRepository;
+import br.ucs.projetosistemaprodutos.repositories.StockRepository;
+import br.ucs.projetosistemaprodutos.repositories.SupplierRepository;
+import br.ucs.projetosistemaprodutos.repositories.UserRepository;
 import br.ucs.projetosistemaprodutos.controllers.ProductController;
 import br.ucs.projetosistemaprodutos.controllers.SupplierController;
 import br.ucs.projetosistemaprodutos.models.address.Address;
@@ -13,10 +13,10 @@ import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.Supplier;
 
 public class Store {
-    private final DynamicProductArray productArray = new DynamicProductArray(10);
-    private final DynamicStockArray stockArray = new DynamicStockArray(10);
-    private final DynamicSupplierArray supplierArray = new DynamicSupplierArray(10);
-    private final DynamicUserArray userArray = new DynamicUserArray(10);
+    private final ProductRepository productArray = new ProductRepository(10);
+    private final StockRepository stockArray = new StockRepository(10);
+    private final SupplierRepository supplierArray = new SupplierRepository(10);
+    private final UserRepository userArray = new UserRepository(10);
     
     private final String name;
     
@@ -34,7 +34,7 @@ public class Store {
         }
     }
 
-    private void setSupplierArray(DynamicSupplierArray supplierArray) {
+    private void setSupplierArray(SupplierRepository supplierArray) {
     	Supplier[] suppliers = new Supplier[] {
     			new Supplier(Role.SUPPLIER, "Paralela", "54996853348", "livrosparalela@contato.com", "Livros e produtos de papelaria", 
     	    			new Address("Rua das Laranjeiras", "92", "Bloco 2", "Bairro Limoeiro", "95010-260", "Caxias do Sul", "RS")),
@@ -51,7 +51,7 @@ public class Store {
         }
     }
     
-    private void setProductArray(DynamicProductArray productArray) { 
+    private void setProductArray(ProductRepository productArray) {
     	Product[] products;
     	
     	try {
@@ -80,23 +80,23 @@ public class Store {
         }
     }
     
-    public DynamicProductArray getProductArray() {
+    public ProductRepository getProductArray() {
         return productArray;
     }
 
-    public DynamicStockArray getStockArray() {
+    public StockRepository getStockArray() {
         return stockArray;
     }
 
 
-    public DynamicSupplierArray getSupplierArray() {
+    public SupplierRepository getSupplierArray() {
         return supplierArray;
     }
 
-    public DynamicUserArray getUserArray() {
+    public UserRepository getUserArray() {
         return userArray;
     }
-    private void setUserArray(DynamicUserArray userArray) {
+    private void setUserArray(UserRepository userArray) {
     	Client[] clientUsers = new Client[] {
     			new Client("joaosilva", "senha123", Role.CLIENT, "João Silva", "999999999", "joao@gmail.com", "12345",
     					new Address("Rua das Amoras", "10", "Apto 10", "Bairro Frutas", "12345-999", "Curitiba", "Paraná")),
