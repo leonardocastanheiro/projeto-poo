@@ -34,15 +34,16 @@ Início do SubProduct
 
 -> Se o estoque for menor que o valor selecionado, mostrar a quantidade máxima em estoque e oferecer ao usuário
 
+Realizado por Maithe (04/06):
+
+-> Adicionar código do produto na lista
 }
 
 Próximos passos:
 
 SubProduct
 
-//Adicionar código do produto na lista
-
-//Permitir a seleção para ver detalhes pelo código também
+//Permitir a seleção para ver detalhes pelo código E posição
 
 // Adicionar ao carrinho //
 
