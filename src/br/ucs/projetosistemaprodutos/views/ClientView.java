@@ -87,34 +87,42 @@ public class ClientView {
 			}
 
 			for(int i = 0; i<products.size();i++) {
-				System.out.println(i+1+" - Nome: "+products.get(i).getName() + " | Preço: " + products.get(i).getStock().getPrice());
+				System.out.println(i+1+" - Código: "+ products.get(i).getProductCode() +" - Nome: "+products.get(i).getName() + " | Preço: " + products.get(i).getStock().getPrice());
 			}
 			System.out.println("0 - Sair ");
-			System.out.println(" Digite o ID do produto para ver detalhes ");
-			//FALTA PEGAR PELO CÓDIGO TAMBÉM
+			System.out.println(" Digite o ID ou código do produto para ver detalhes ");
+				
+			String text = sc.nextLine();
 			
-			do {
-				try {
-					productId = sc.nextInt();
+			Product productDetails;
 
-					if(productId < 0 || productId > products.size()) {
-						throw new InputMismatchException("Entrada inválida");
-					}
-
-				} catch (InputMismatchException e) {
-					System.out.print("Entrada inválida, digite novamente: ");
-				}
-				sc.nextLine();
-			} while (productId<0 || productId>products.size());
+			try {
+				productDetails = productController.getByProductCode(text);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				return;
+			}
 			
-			if(productId == 0) {
+			//ESTÁ PEGANDO SÓ O CÓDIGO, FALTA CONSEGUIR BUSCAR PELA POSIÇÃO NA LISTA (products) TAMBÉM
+			/*
+			 * do { try { productId = sc.nextInt();
+			 * 
+			 * if(productId < 0 || productId > products.size()) { throw new
+			 * InputMismatchException("Entrada inválida"); }
+			 * 
+			 * } catch (InputMismatchException e) {
+			 * System.out.print("Entrada inválida, digite novamente: "); } sc.nextLine(); }
+			 * while (productId<0 || productId>products.size());
+			 */
+			
+			if(text == "0") {
 				System.out.println("Saindo de pesquisa de produtos");
 			}else {
-				Product productDetails = products.get(productId - 1);
+				//Product productDetails = products.get(productId - 1);
 				int add = -1;
 				
 				System.out.println("PRODUTO: ");
-				System.out.println("Código: ");
+				System.out.println("Código: " + productDetails.getProductCode());
 				System.out.println("Nome: " + productDetails.getName());
 		    	System.out.println("Descrição: " + productDetails.getDescription());
 		    	System.out.println("Quantidade em estoque: " + productDetails.getStock().getQuantity());

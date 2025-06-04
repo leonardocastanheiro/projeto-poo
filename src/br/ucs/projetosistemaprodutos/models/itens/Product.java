@@ -9,6 +9,7 @@ public class Product {
     private Stock stock;
     private Integer id;
     private Supplier supplier;
+    private String productCode;
 
     private static Integer lastId = 1;
 
@@ -19,19 +20,21 @@ public class Product {
         this.name = name;
         this.description = description;
     }
-    public Product(String name, String description, Supplier supplier) {
+    public Product(String name, String description, Supplier supplier, String productCode) {
     	this.id = lastId++;
         this.name = name;
         this.description = description;
         this.supplier = supplier;
         this.stock = new Stock(0, 0.0);
+        this.productCode = productCode;
     }
-    public Product(String name, String description, Stock stock, Supplier supplier) {
+	public Product(String name, String description, Stock stock, Supplier supplier, String productCode) {
         this.id = lastId++;
         this.name = name;
         this.description = description;
         this.stock = stock;
         this.supplier = supplier;
+        this.productCode = productCode;
     }
     public Product(String name, String description, Byte[] photo, Stock stock) {
         this.id = lastId++;
@@ -84,9 +87,14 @@ public class Product {
 		this.supplier = supplier;
 	}
 	
+	public String getProductCode() {
+		return productCode;
+	}
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
+	}
+	
 	public String toString() {
 		return "ID: " + this.getId() + " | Produto: " + this.getName();
 	}
-
-
 }

@@ -11,13 +11,16 @@ public class ProductCopy {
     private Stock stock;
     private Integer id;
     private Supplier supplier;
+    private String productCode;
     
-    public ProductCopy(Product product) {
+   
+	public ProductCopy(Product product) {
     	this.name = product.getName();
     	this.description = product.getDescription();
     	this.stock = new Stock(product.getStock().getQuantity(), product.getStock().getPrice());
     	this.id = product.getId();
     	this.supplier = product.getSupplier();
+    	this.productCode = product.getProductCode();
     }
 
 	public String getName() {
@@ -66,5 +69,13 @@ public class ProductCopy {
 
 	public void setSupplier(Supplier supplier) {
 		this.supplier = supplier;
+	}
+	
+	public String getProductCode() {
+		return productCode;
+	}
+
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
 	}
 }

@@ -756,6 +756,8 @@ public class AdminView {
 			    	String name = sc.nextLine();
 			    	System.out.print("Descrição: ");
 			    	String description = sc.nextLine();
+			    	System.out.print("Código: ");
+			    	String productCode = sc.nextLine();
 					System.out.print("Buscar Fornecedor: ");;
 					String text = sc.nextLine();
 
@@ -821,7 +823,7 @@ public class AdminView {
 				    Stock stock = new Stock(quantity, price);
 				    	
 					try {
-						Product product = new Product(name, description, stock, supplier);
+						Product product = new Product(name, description, stock, supplier, productCode);
 						productController.create(product);
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
@@ -841,7 +843,7 @@ public class AdminView {
 					}
 
 					for(int i = 0; i<products.size();i++) {
-						System.out.println(i+1+" - Nome: "+products.get(i).getName());
+						System.out.println(i+1+" - Código: "+ products.get(i).getProductCode() + " - Nome: "+products.get(i).getName());
 					}
 					break;
 				case 3:
@@ -858,7 +860,7 @@ public class AdminView {
 					}
 
 					for(int i = 0; i<products1.size();i++) {
-						System.out.println(i+1+" - Nome: "+products1.get(i).getName());
+						System.out.println(i+1+" - Código: "+ products1.get(i).getProductCode() + " - Nome: "+products1.get(i).getName());
 					}
 					System.out.println("0 - Sair");
 					System.out.println("--------");
@@ -894,12 +896,13 @@ public class AdminView {
 
 					do {
 						System.out.println("EDITAR PRODUTO: ");
-						System.out.println("1. Nome: " + productCopy.getName());
-				    	System.out.println("2. Descrição: " + productCopy.getDescription());
-				    	System.out.println("3. Fornecedor: " + productCopy.getSupplier().getName());
-				    	System.out.println("4. Quantidade em estoque: " + productCopy.getStock().getQuantity());
-				    	System.out.println("5. Preço: "+ productCopy.getStock().getPrice());
-				    	System.out.println("6. Salvar");
+						System.out.println("1. Código: " + productCopy.getProductCode());
+						System.out.println("2. Nome: " + productCopy.getName());
+				    	System.out.println("3. Descrição: " + productCopy.getDescription());
+				    	System.out.println("4. Fornecedor: " + productCopy.getSupplier().getName());
+				    	System.out.println("5. Quantidade em estoque: " + productCopy.getStock().getQuantity());
+				    	System.out.println("6. Preço: "+ productCopy.getStock().getPrice());
+				    	System.out.println("7. Salvar");
 				    	System.out.println("0. Cancelar");
 				    	System.out.print("Escolha o campo que deseja editar: ");
 				    	
@@ -907,7 +910,7 @@ public class AdminView {
 							try {
 								editInfo = sc.nextInt();
 
-								if(editInfo < 0 || editInfo > 6) {
+								if(editInfo < 0 || editInfo > 7) {
 									throw new InputMismatchException("Entrada inválida");
 								}
 
@@ -915,22 +918,28 @@ public class AdminView {
 								System.out.print("Entrada inválida, digite novamente: ");
 							}
 							sc.nextLine();
-				    	}while(editInfo<0 || editInfo>6);
+				    	}while(editInfo<0 || editInfo>7);
 				    	
 				    	switch(editInfo) {
 				    		case 1:
+				    			System.out.println("Código: " + productCopy.getProductCode());
+				    			System.out.print("Novo código: ");
+				    			String newProductCode = sc.nextLine();
+				    			productCopy.setProductCode(newProductCode);
+				    			break;
+				    		case 2:
 				    			System.out.println("Nome: " + productCopy.getName());
 				    			System.out.print("Novo nome: ");
 				    			String newName = sc.nextLine();
 				    			productCopy.setName(newName);
 				    			break;
-				    		case 2:
+				    		case 3:
 				    			System.out.println("Descrição: " + productCopy.getDescription());
 				    			System.out.print("Nova descrição: ");
 				    			String newDescription = sc.nextLine();
 				    			productCopy.setDescription(newDescription);
 				    			break;
-				    		case 3: 
+				    		case 4: 
 				    			System.out.println("ID: "+ productCopy.getSupplier().getId() +" | FORNECEDOR ATUAL: " + product.getSupplier().getName());
 				    			try {
 									supplierController.showArray(Role.SUPPLIER);
@@ -962,7 +971,7 @@ public class AdminView {
 								}
 					    		productCopy.setSupplier(newSupplier);			
 				    			break;
-				    		case 4: 
+				    		case 5: 
 				    			System.out.println("Quantidade em estoque: " + productCopy.getStock().getQuantity());
 				    			System.out.println("Nova quantidade em estoque: ");
 				    			try {
@@ -974,7 +983,7 @@ public class AdminView {
 				    			newStock = new Stock(newQuantity, newPrice);
 				    			productCopy.setStock(newStock);
 				    			break;
-				    		case 5:
+				    		case 6:
 				    			System.out.println("Preço: " + productCopy.getStock().getPrice());
 				    			System.out.println("Novo preço: ");
 				    			try {
@@ -986,7 +995,7 @@ public class AdminView {
 				    			newStock = new Stock(newQuantity, newPrice);
 				    			productCopy.setStock(newStock);
 								break;
-				    		case 6:
+				    		case 7:
 								try {
 									productController.edit(product, productCopy);
 								} catch (Exception e) {
@@ -997,7 +1006,7 @@ public class AdminView {
 				    		case 0:
 				    			System.out.println("Alterações não realizadas...");
 					    }
-					}while(editInfo != 0 && editInfo != 6);
+					}while(editInfo != 0 && editInfo != 7);
 					break;
 				case 4:
 					System.out.print("Buscar Produto: ");;
@@ -1013,7 +1022,7 @@ public class AdminView {
 					}
 
 					for(int i = 0; i<products2.size();i++) {
-						System.out.println(i+1+" - Nome: "+products2.get(i).getName());
+						System.out.println(i+1+" - Código: "+ products2.get(i).getProductCode() + " - Nome: "+products2.get(i).getName());
 					}
 					System.out.println("0 - Sair");
 					System.out.println("--------");

@@ -56,10 +56,10 @@ public class Store {
     	
     	try {
   			products = new Product[] {
-  	    		new Product("Lápis de cor", "Conjunto 40 lápis", new Stock(10, 49.9), supplierArray.getByIndex(0)),
-  	    		new Product("Boneca", "Boneca Baby Alive", new Stock(15, 120.9), supplierArray.getByIndex(1)),
-  	    		new Product("Livro", "Livro infanto-juvenil", new Stock(15, 49.9), supplierArray.getByIndex(0)),
-  	    		new Product("Carrinho", "Hot Wheels", new Stock(100, 20.5), supplierArray.getByIndex(1)),
+  	    		new Product("Lápis de cor", "Conjunto 40 lápis", new Stock(10, 49.9), supplierArray.getByIndex(0), "100"),
+  	    		new Product("Boneca", "Boneca Baby Alive", new Stock(15, 120.9), supplierArray.getByIndex(1), "3042"),
+  	    		new Product("Livro", "Livro infanto-juvenil", new Stock(15, 49.9), supplierArray.getByIndex(0), "423"),
+  	    		new Product("Carrinho", "Hot Wheels", new Stock(100, 20.5), supplierArray.getByIndex(1), "3151"),
   	    	};
   	 
     	}catch(Exception e) {

@@ -81,6 +81,16 @@ public class DynamicProductArray {
         throw new Exception("Id do produto inválido");
     }
 
+    public Product getByProductCode(String productCode) throws Exception{
+    	productCode = productCode.toLowerCase();
+    	for(Product product : products) {
+            if (product != null && product.getProductCode().toLowerCase().equals(productCode)) {
+                return product;
+            }
+        } 
+        throw new Exception("Código do produto inválido");
+    }
+    
     public void showProductsArray(int id) throws Exception{
     	boolean existsProduct = false;
 
@@ -127,9 +137,17 @@ public class DynamicProductArray {
         return products;
 	}
 
-
     public int size() {
         return count;
     }
     
+    public boolean isProductCodeExists(String productCode, Product product) {
+    	for(Product p : products) {
+    		if(p != null && p.getProductCode().equals(productCode) && !p.equals(product)) {
+    			return true;
+    		}
+    	}
+    	
+    	return false;
+    }
 }

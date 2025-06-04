@@ -30,9 +30,14 @@ public class ProductController {
 	}
 	 
 	public void edit(Product product, ProductCopy copy) throws Exception { 
+		if(productArray.isProductCodeExists(copy.getProductCode(), product)) {
+            throw new Exception("Código do produto já registrado!");
+        }
+		
 		product.setName(copy.getName());
         product.setDescription(copy.getDescription());
         product.setSupplier(copy.getSupplier());
+        product.setProductCode(copy.getProductCode());
         
         Stock stock = product.getStock();
         Stock copyStock = copy.getStock();
@@ -54,6 +59,10 @@ public class ProductController {
 		return productArray.getById(id);
 	}
 
+	public Product getByProductCode(String productCode) throws Exception{
+		return productArray.getByProductCode(productCode);
+	}
+	
 	public List<Product> getByText(String text) throws Exception {
 		int id = -1;
 		List<Product> products = new ArrayList<>();
