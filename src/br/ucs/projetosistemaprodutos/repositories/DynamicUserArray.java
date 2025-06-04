@@ -10,11 +10,11 @@ import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.User;
 
 public class DynamicUserArray {
-    private List<User> users;
+    private List<User> users = new ArrayList<>();
 
 
     public DynamicUserArray(Integer initialCapacity) {
-        users.add(new Admin("admin","admin",Role.ADMIN,"admin","admin","admin", new Address("admin","admin","admin","admin","admin","admin","admin")));
+    	users.add(new Admin("admin","admin",Role.ADMIN,"admin","admin","admin", new Address("admin","admin","admin","admin","admin","admin","admin")));
     }
 
 
