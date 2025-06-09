@@ -3,6 +3,7 @@ package br.ucs.projetosistemaprodutos.controllers;
 import br.ucs.projetosistemaprodutos.collections.DynamicUserArray;
 import br.ucs.projetosistemaprodutos.models.address.Address;
 import br.ucs.projetosistemaprodutos.models.copies.ClientCopy;
+import br.ucs.projetosistemaprodutos.models.itens.Order;
 import br.ucs.projetosistemaprodutos.models.itens.Store;
 import br.ucs.projetosistemaprodutos.models.person.Client;
 import br.ucs.projetosistemaprodutos.models.person.Role;
@@ -86,5 +87,9 @@ public class ClientController extends UserController{
         }
 
         return clients;
+    }
+
+    public void addOrder(Order order) {
+        order.getOwner().getOrders().add(order);
     }
 }

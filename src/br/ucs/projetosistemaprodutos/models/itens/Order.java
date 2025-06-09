@@ -1,5 +1,7 @@
 package br.ucs.projetosistemaprodutos.models.itens;
 
+import br.ucs.projetosistemaprodutos.models.person.Client;
+
 import java.util.Date;
 
 public class Order {
@@ -9,12 +11,14 @@ public class Order {
     private Date dateOrder;
     private Date dataDeliver;
     private Situation situation;
+    private Client owner;
 
-    public Order(Date dateOrder, Date dataDeliver, Situation situation) {
+    public Order(Date dateOrder, Date dataDeliver, Situation situation, Client owner) {
         this.id = lastId++;
         this.dateOrder = dateOrder;
         this.dataDeliver = dataDeliver;
         this.situation = situation;
+        this.owner = owner;
     }
 
     public Integer getId() {
@@ -47,5 +51,9 @@ public class Order {
 
     public void setSituation(Situation situation) {
         this.situation = situation;
+    }
+
+    public Client getOwner() {
+        return this.owner;
     }
 }

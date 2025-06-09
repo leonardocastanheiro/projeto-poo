@@ -5,9 +5,12 @@ import br.ucs.projetosistemaprodutos.models.copies.ProductCopy;
 import br.ucs.projetosistemaprodutos.models.itens.Product;
 import br.ucs.projetosistemaprodutos.models.itens.Stock;
 import br.ucs.projetosistemaprodutos.models.itens.Store;
+import br.ucs.projetosistemaprodutos.models.person.Client;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProductController {
 	private DynamicProductArray productArray;
@@ -79,6 +82,42 @@ public class ProductController {
 		}
 
 		return productArray.getByText(text);
+	}
+
+	public Map<Product, Integer> mapProducts(List<Product> products) {
+		Map<Product, Integer> mapProduct = new HashMap<>();
+
+		for(Product product : products) {
+			mapProduct.put(product, mapProduct.getOrDefault(product, 0) + 1);
+		}
+
+		return mapProduct;
+	}
+
+	public void changeStock(Product product, int delta) throws IllegalArgumentException {
+		int currentStock = product.getStock().getQuantity();
+		int updatedStock = currentStock + delta;
+
+		if (updatedStock < 0) {
+			throw new IllegalArgumentException("Estoque insuficiente. Estoque atual: " + currentStock + ", tentativa de alteração: " + delta);
+		}
+
+		product.getStock().setQuantity(updatedStock);
+	}
+
+	public void editCartItem(Client client, Product product, int newQuantity) throws IllegalArgumentException {
+		int currentCartQuantity = client.getShoppingCart().getQuantity(product);
+		int currentStockQuantity = product.getStock().getQuantity();
+
+		int delta = newQuantity - currentCartQuantity;
+
+		if (delta > 0 && currentStockQuantity < delta) {
+			throw new IllegalArgumentException("Estoque insuficiente para adicionar mais unidades. Estoque atual: " + currentStockQuantity);
+		}
+
+		changeStock(product, -delta);
+
+		client.getShoppingCart().setQuantity(product, newQuantity);
 	}
 
 	@Override

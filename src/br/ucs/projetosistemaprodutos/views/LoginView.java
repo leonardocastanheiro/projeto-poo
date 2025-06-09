@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 import br.ucs.projetosistemaprodutos.controllers.UserController;
 import br.ucs.projetosistemaprodutos.models.itens.Store;
+import br.ucs.projetosistemaprodutos.models.person.Client;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.User;
 
@@ -40,7 +41,7 @@ public class LoginView {
 			AdminView admin = new AdminView(store);
 			admin.show(sc);
 		} else if (user.getRole() == Role.CLIENT) {
-			ClientView client = new ClientView(store);
+			ClientView client = new ClientView(store, (Client) user);
 			client.show(sc);
 		}
 
