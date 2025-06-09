@@ -1,20 +1,18 @@
-package br.ucs.projetosistemaprodutos.repositories;
+package br.ucs.projetosistemaprodutos.collections;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import br.ucs.projetosistemaprodutos.models.address.Address;
-import br.ucs.projetosistemaprodutos.models.person.Admin;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.User;
 
 public class DynamicUserArray {
-    private List<User> users = new ArrayList<>();
+    private final List<User> users;
 
 
-    public DynamicUserArray(Integer initialCapacity) {
-    	users.add(new Admin("admin","admin",Role.ADMIN,"admin","admin","admin", new Address("admin","admin","admin","admin","admin","admin","admin")));
+    public DynamicUserArray() {
+        users =  new ArrayList<>();
     }
 
 
@@ -30,6 +28,9 @@ public class DynamicUserArray {
                 }
                 else if(Objects.equals(userAux.getEmail(), user.getEmail())) {
                     throw new Exception("Esse endereço de e-mail já está sendo utilizado.");
+                }
+                else if(Objects.equals(userAux.getId(),user.getId())) {
+                    throw new Exception("ID já existente");
                 }
         	}
         }

@@ -1,6 +1,6 @@
 package br.ucs.projetosistemaprodutos.controllers;
 
-import br.ucs.projetosistemaprodutos.repositories.DynamicUserArray;
+import br.ucs.projetosistemaprodutos.collections.DynamicUserArray;
 import br.ucs.projetosistemaprodutos.models.itens.Store;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.User;

@@ -1,6 +1,6 @@
 package br.ucs.projetosistemaprodutos.models.copies;
 
-import br.ucs.projetosistemaprodutos.repositories.DynamicProductArray;
+import br.ucs.projetosistemaprodutos.collections.DynamicProductArray;
 import br.ucs.projetosistemaprodutos.models.address.Address;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.Supplier;

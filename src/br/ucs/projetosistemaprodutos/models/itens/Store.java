@@ -1,9 +1,9 @@
 package br.ucs.projetosistemaprodutos.models.itens;
 
-import br.ucs.projetosistemaprodutos.repositories.DynamicProductArray;
-import br.ucs.projetosistemaprodutos.repositories.DynamicStockArray;
-import br.ucs.projetosistemaprodutos.repositories.DynamicSupplierArray;
-import br.ucs.projetosistemaprodutos.repositories.DynamicUserArray;
+import br.ucs.projetosistemaprodutos.collections.DynamicProductArray;
+import br.ucs.projetosistemaprodutos.collections.DynamicStockArray;
+import br.ucs.projetosistemaprodutos.collections.DynamicSupplierArray;
+import br.ucs.projetosistemaprodutos.collections.DynamicUserArray;
 import br.ucs.projetosistemaprodutos.controllers.ProductController;
 import br.ucs.projetosistemaprodutos.controllers.SupplierController;
 import br.ucs.projetosistemaprodutos.models.address.Address;
@@ -13,10 +13,10 @@ import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.Supplier;
 
 public class Store {
-    private final DynamicProductArray productArray = new DynamicProductArray(10);
-    private final DynamicStockArray stockArray = new DynamicStockArray(10);
-    private final DynamicSupplierArray supplierArray = new DynamicSupplierArray(10);
-    private final DynamicUserArray userArray = new DynamicUserArray(10);
+    private final DynamicProductArray productArray = new DynamicProductArray();
+    private final DynamicStockArray stockArray = new DynamicStockArray();
+    private final DynamicSupplierArray supplierArray = new DynamicSupplierArray();
+    private final DynamicUserArray userArray = new DynamicUserArray();
     
     private final String name;
     
@@ -111,6 +111,7 @@ public class Store {
     					new Address("Avenida Brasil", "120", "", "Bairro América", "58963-002", "Porto Alegre", "RS")),
     			new Admin("carlos", "123senha", Role.ADMIN, "Calros", "666666666", "carlos@gmail.com", 
     					new Address("Rua Canário", "1000", "", "Bairro Pássaro", "87510-260", "Caxias do Sul", "RS")),
+				new Admin("admin","admin",Role.ADMIN,"admin","admin","admin", new Address("admin","admin","admin","admin","admin","admin","admin"))
     	};
     	try {
     		for(Client user : clientUsers) {

@@ -1,7 +1,7 @@
 package br.ucs.projetosistemaprodutos.controllers;
 
-import br.ucs.projetosistemaprodutos.repositories.DynamicProductArray;
-import br.ucs.projetosistemaprodutos.repositories.DynamicSupplierArray;
+import br.ucs.projetosistemaprodutos.collections.DynamicProductArray;
+import br.ucs.projetosistemaprodutos.collections.DynamicSupplierArray;
 import br.ucs.projetosistemaprodutos.models.address.Address;
 import br.ucs.projetosistemaprodutos.models.copies.SupplierCopy;
 import br.ucs.projetosistemaprodutos.models.itens.Store;

@@ -1,6 +1,6 @@
 package br.ucs.projetosistemaprodutos.controllers;
 
-import br.ucs.projetosistemaprodutos.repositories.DynamicProductArray;
+import br.ucs.projetosistemaprodutos.collections.DynamicProductArray;
 import br.ucs.projetosistemaprodutos.models.copies.ProductCopy;
 import br.ucs.projetosistemaprodutos.models.itens.Product;
 import br.ucs.projetosistemaprodutos.models.itens.Stock;
@@ -51,8 +51,8 @@ public class ProductController {
 	    productArray.showArray();
 	}
 
-	public void showProductsArray(int id) throws Exception{
-		productArray.showProductsArray(id);
+	public void showProductById(int id) throws Exception{
+		productArray.showProductById(id);
 	}
 	
 	public Product getById(int id) throws Exception{
