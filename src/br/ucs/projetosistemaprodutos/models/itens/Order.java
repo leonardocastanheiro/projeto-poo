@@ -3,6 +3,7 @@ package br.ucs.projetosistemaprodutos.models.itens;
 import br.ucs.projetosistemaprodutos.models.person.Client;
 
 import java.util.Date;
+import java.util.Map;
 
 public class Order {
     private static Integer lastId = 1;
@@ -12,13 +13,15 @@ public class Order {
     private Date dataDeliver;
     private Situation situation;
     private Client owner;
+    private Map<Product, Integer> products;
 
-    public Order(Date dateOrder, Date dataDeliver, Situation situation, Client owner) {
+    public Order(Date dateOrder, Date dataDeliver, Situation situation, Client owner, Map<Product, Integer> products) {
         this.id = lastId++;
         this.dateOrder = dateOrder;
         this.dataDeliver = dataDeliver;
         this.situation = situation;
         this.owner = owner;
+        this.products = products;
     }
 
     public Integer getId() {
@@ -55,5 +58,9 @@ public class Order {
 
     public Client getOwner() {
         return this.owner;
+    }
+
+    public Map<Product, Integer> getProducts() {
+        return products;
     }
 }

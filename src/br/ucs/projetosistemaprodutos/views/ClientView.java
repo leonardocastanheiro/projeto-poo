@@ -357,7 +357,7 @@ public class ClientView {
 
 				System.out.println("Pedido Finalizado!");
 
-				Order order = new Order(new Date(), null, Situation.NEW,client);
+				Order order = new Order(new Date(), null, Situation.NEW,client, client.getShoppingCart().getProducts());
 				clientController.addOrder(order);
 
 				System.out.println("ID do pedido: "+order.getId());
