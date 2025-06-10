@@ -3,7 +3,6 @@ package br.ucs.projetosistemaprodutos.models.copies;
 import br.ucs.projetosistemaprodutos.models.address.Address;
 import br.ucs.projetosistemaprodutos.models.person.Client;
 import br.ucs.projetosistemaprodutos.models.person.Role;
-import br.ucs.projetosistemaprodutos.models.person.User;
 
 public class ClientCopy extends Client{
 

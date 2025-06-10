@@ -4,11 +4,12 @@ import br.ucs.projetosistemaprodutos.models.itens.Store;
 import br.ucs.projetosistemaprodutos.views.LoginView;
 
 public class Main {
-	private static Store store = new Store("Amazon");
+	private Store store = new Store("Amazon");
 	
     public static void main(String[] args) throws Exception {
+    	Main m = new Main();
     	Scanner sc = new Scanner(System.in);
-    	LoginView login = new LoginView(store);
+    	LoginView login = new LoginView(m.store);
         login.show(sc);
         
         System.out.println("Programa encerrado.");
