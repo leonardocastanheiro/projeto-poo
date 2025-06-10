@@ -345,15 +345,18 @@ public class ClientView {
 				}
 
 				double value = 0;
+				double valueICMS = 0;
 				for (Map.Entry<Product, Integer> newEntry : client.getShoppingCart().getProducts().entrySet()) {
 					double valueProduct = newEntry.getKey().getStock().getPrice();
 					Integer newQuantity = newEntry.getValue();
 
 					value += valueProduct * newQuantity;
+					valueICMS = value + value * 0.17;
 				}
 
 				System.out.println("Cartão de Crédito: " + client.getCreditCard());
-				System.out.println("Valor Total: R$" + value);
+				System.out.println("Valor total (sem ICMS): R$" + String.format("%.2f", value));
+				System.out.println("Valor total (com ICMS): R$ " + String.format("%.2f", valueICMS));
 				System.out.println("1 - Finalizar\n0 - Cancelar");
 
 				option = -1;
@@ -378,13 +381,14 @@ public class ClientView {
 
 				System.out.println("Pedido Finalizado!");
 
-				Order order = new Order(new Date(), null, Situation.NEW, client, new HashMap<>(client.getShoppingCart().getProducts()));
+				Order order = new Order(new Date(), null, Situation.NEW, client, value, valueICMS, new HashMap<>(client.getShoppingCart().getProducts()));
 				clientController.addOrder(order);
 
 				System.out.println("ID do pedido: " + order.getId());
 				System.out.println("Data do pedido: " + new SimpleDateFormat("dd/MM/yyyy").format(order.getDateOrder()));
 				System.out.println("Cliente: " + order.getOwner().getName() + " - " + order.getOwner().getEmail());
-				System.out.println("Valor total: R$" + value);
+				System.out.println("Valor total (sem ICMS): R$" + String.format("%.2f", order.getTotalPrice()));
+				System.out.println("Valor total (com ICMS): R$" + String.format("%.2f", order.getTotalPriceICMS()));
 
 				client.getShoppingCart().clearCart();
 
@@ -400,7 +404,6 @@ public class ClientView {
 		System.out.println("Pedidos");
 
 		for (Order order : client.getOrders()) {
-			double value = 0;
 			System.out.println("----------  Pedido  ----------");
 			System.out.println("ID do Pedido: " + order.getId());
 			System.out.println("Situação: " + order.getSituation().toString());
@@ -413,10 +416,10 @@ public class ClientView {
 				Integer quantity = entry.getValue();
 
 				System.out.println("Nome: " + product.getName() + " | Quantidade: " + quantity + " | Valor Total: " + product.getStock().getPrice() * quantity);
-				value += product.getStock().getPrice() * quantity;
 			}
 			System.out.println("----------          ----------");
-			System.out.println("Valor total do pedido: R$" + value);
+			System.out.println("Valor total do pedido (sem ICMS): R$" + String.format("%.2f", order.getTotalPrice()));
+			System.out.println("Valor total do pedido (com ICMS): R$" + String.format("%.2f", order.getTotalPriceICMS()));
 			System.out.println("----------          ----------\n");
 		}
 	}

@@ -13,14 +13,18 @@ public class Order {
     private Date dataDeliver;
     private Situation situation;
     private Client owner;
-    private Map<Product, Integer> products;
+    private double totalPrice;
+    private double totalPriceICMS;
+	private Map<Product, Integer> products;
 
-    public Order(Date dateOrder, Date dataDeliver, Situation situation, Client owner, Map<Product, Integer> products) {
+    public Order(Date dateOrder, Date dataDeliver, Situation situation, Client owner, double totalPrice, double totalPriceICMS, Map<Product, Integer> products) {
         this.id = lastId++;
         this.dateOrder = dateOrder;
         this.dataDeliver = dataDeliver;
         this.situation = situation;
         this.owner = owner;
+        this.totalPrice = totalPrice;
+        this.totalPriceICMS = totalPriceICMS;
         this.products = products;
     }
 
@@ -63,4 +67,20 @@ public class Order {
     public Map<Product, Integer> getProducts() {
         return products;
     }
+    
+    public double getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public double getTotalPriceICMS() {
+		return totalPriceICMS;
+	}
+
+	public void setTotalPriceICMS(double totalPriceICMS) {
+		this.totalPriceICMS = totalPriceICMS;
+	}
 }
