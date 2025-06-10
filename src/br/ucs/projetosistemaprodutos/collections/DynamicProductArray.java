@@ -59,12 +59,12 @@ public class DynamicProductArray {
 
     public Product getByProductCode(String productCode) throws Exception {
 
-        productCode = productCode.trim().toLowerCase();
+        productCode = productCode.trim();
 
         for (Product product : products) {
             if (product != null && product.getProductCode() != null &&
-                    product.getProductCode().trim().toLowerCase().equals(productCode)) {
-                return product;
+            	product.getProductCode().trim().equalsIgnoreCase(productCode)) {
+                	return product;
             }
         }
 
@@ -88,19 +88,21 @@ public class DynamicProductArray {
     public List<Product> getByText(String text) throws Exception {
         List<Product> products = new ArrayList<>();
 
-        text = text.toLowerCase();
-
-        for(Product product : this.products) {
-            if(product != null && (product.getName().toLowerCase().contains(text) ||
-                    product.getDescription().toLowerCase().contains(text))) {
-                products.add(product);
-            }
+        if(text != null) {
+        	text = text.toLowerCase();
+        
+	        for(Product product : this.products) {
+	            if(product != null && (product.getName().toLowerCase().contains(text) ||
+	                    product.getDescription().toLowerCase().contains(text))) {
+	                products.add(product);
+	            }
+	        }
         }
-
-        if(products.isEmpty()) {
-            throw new Exception("Nenhum produto existente com essa correspondência");
-        }
-
+        
+	   if(products.isEmpty()) {
+		   throw new Exception("Nenhum produto existente com essa correspondência");
+	   }
+        
         return products;
     }
 

@@ -71,16 +71,20 @@ public class ProductController {
 		List<Product> products = new ArrayList<>();
 
 		try {
+			products.add(this.getByProductCode(text));
+			return products;
+		}catch(Exception ignored) {}
+		
+		try {
 			id = Integer.parseInt(text);
 			text = null;
 		} catch (Exception ignored) {}
 
 		if(text == null) {
 			products.add(this.getById(id));
-
 			return products;
 		}
-
+	
 		return productArray.getByText(text);
 	}
 
