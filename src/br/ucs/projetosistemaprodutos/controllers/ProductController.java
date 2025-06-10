@@ -1,0 +1,127 @@
+package br.ucs.projetosistemaprodutos.controllers;
+
+import br.ucs.projetosistemaprodutos.collections.DynamicProductArray;
+import br.ucs.projetosistemaprodutos.models.copies.ProductCopy;
+import br.ucs.projetosistemaprodutos.models.itens.Product;
+import br.ucs.projetosistemaprodutos.models.itens.Stock;
+import br.ucs.projetosistemaprodutos.models.itens.Store;
+import br.ucs.projetosistemaprodutos.models.person.Client;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class ProductController {
+	private DynamicProductArray productArray;
+		
+	public ProductController(Store store){
+		this.productArray = store.getProductArray();
+	}
+	
+	public void create(Product product) throws Exception {
+		productArray.add(product);
+		
+		product.getSupplier().getProducts().add(product);
+	}
+	 
+	public void delete(Product product) throws Exception {
+		
+		product.getSupplier().getProducts().delete(product);
+		productArray.delete(product);
+		
+	}
+	 
+	public void edit(Product product, ProductCopy copy) throws Exception { 
+		if(productArray.isProductCodeExists(copy.getProductCode(), product)) {
+            throw new Exception("Código do produto já registrado!");
+        }
+		
+		product.setName(copy.getName());
+        product.setDescription(copy.getDescription());
+        product.setSupplier(copy.getSupplier());
+        product.setProductCode(copy.getProductCode());
+        
+        Stock stock = product.getStock();
+        Stock copyStock = copy.getStock();
+        
+        stock.setQuantity(copyStock.getQuantity());
+        stock.setPrice(copy.getStock().getPrice());
+                
+    }
+	
+	public void showArray() throws Exception{
+	    productArray.showArray();
+	}
+
+	public void showProductById(int id) throws Exception{
+		productArray.showProductById(id);
+	}
+	
+	public Product getById(int id) throws Exception{
+		return productArray.getById(id);
+	}
+
+	public Product getByProductCode(String productCode) throws Exception{
+		return productArray.getByProductCode(productCode);
+	}
+	
+	public List<Product> getByText(String text) throws Exception {
+		int id = -1;
+		List<Product> products = new ArrayList<>();
+
+		try {
+			id = Integer.parseInt(text);
+			text = null;
+		} catch (Exception ignored) {}
+
+		if(text == null) {
+			products.add(this.getById(id));
+
+			return products;
+		}
+
+		return productArray.getByText(text);
+	}
+
+	public Map<Product, Integer> mapProducts(List<Product> products) {
+		Map<Product, Integer> mapProduct = new HashMap<>();
+
+		for(Product product : products) {
+			mapProduct.put(product, mapProduct.getOrDefault(product, 0) + 1);
+		}
+
+		return mapProduct;
+	}
+
+	public void changeStock(Product product, int delta) throws IllegalArgumentException {
+		int currentStock = product.getStock().getQuantity();
+		int updatedStock = currentStock + delta;
+
+		if (updatedStock < 0) {
+			throw new IllegalArgumentException("Estoque insuficiente. Estoque atual: " + currentStock + ", tentativa de alteração: " + delta);
+		}
+
+		product.getStock().setQuantity(updatedStock);
+	}
+
+	public void editCartItem(Client client, Product product, int newQuantity) throws IllegalArgumentException {
+		int currentCartQuantity = client.getShoppingCart().getQuantity(product);
+		int currentStockQuantity = product.getStock().getQuantity();
+
+		int delta = newQuantity - currentCartQuantity;
+
+		if (delta > 0 && currentStockQuantity < delta) {
+			throw new IllegalArgumentException("Estoque insuficiente para adicionar mais unidades. Estoque atual: " + currentStockQuantity);
+		}
+
+		changeStock(product, -delta);
+
+		client.getShoppingCart().setQuantity(product, newQuantity);
+	}
+
+	@Override
+	public String toString() {
+		return productArray.toString();
+	}
+}
