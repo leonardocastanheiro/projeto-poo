@@ -27,7 +27,6 @@ public class ClientView {
 	public void show(Scanner sc) {
 		int option = -1;
 		do {
-			System.out.println("---------------------------------------------");
 			System.out.println("Escolha uma opção:");
 			System.out.println(" 1 - Produtos");
 			System.out.println(" 2 - Carrinho de compras");
@@ -51,16 +50,16 @@ public class ClientView {
 			
 			switch (option) {
 				case 1:
-					this.subProducts(sc, store);
+					this.subProducts(sc);
 					break;
 				case 2:
-					this.subCart(sc, store);
+					this.subCart(sc);
 					break;
 				case 3: 
-					this.subOrders(sc, store);
+					this.subOrders(sc);
 					break;
 				case 4: 
-					this.subClientAccount(sc, store);
+					this.subClientAccount(sc);
 					break;
 				case 0:
 					System.out.println("Saindo...");
@@ -68,12 +67,11 @@ public class ClientView {
 				default:
 					System.out.println("Não encontrado...");
 			}
-			System.out.println("---------------------------------------------");
 		} while (option != 0);
 		sc.close();
 	}
 	
-	public void subProducts(Scanner sc, Store store) {	
+	public void subProducts(Scanner sc) {
 		int id = -1;
 				
 		do {
@@ -82,6 +80,18 @@ public class ClientView {
 			String text1 = sc.nextLine();
 
 			List<Product> products;
+
+			try {
+				int idAux = Integer.parseInt(text1);
+
+				if(idAux == 0) {
+					id = 0;
+				}
+			} catch (NumberFormatException ignored) {}
+
+			if(id == 0) {
+				return;
+			}
 
 			try {
 				products = productController.getByText(text1);
@@ -94,7 +104,7 @@ public class ClientView {
 				System.out.println(i+1+" - Código: "+ products.get(i).getProductCode() +" - Nome: "+products.get(i).getName() + " | Preço: " + products.get(i).getStock().getPrice());
 			}
 			System.out.println("0 - Sair ");
-			System.out.print(" Digite o ID ou código do produto para ver detalhes: ");
+			System.out.print("Digite o ID ou código do produto para ver detalhes: ");
 
 
 			String text = sc.nextLine();
@@ -127,13 +137,13 @@ public class ClientView {
 				System.out.println("Saindo de pesquisa de produtos");
 			}else {
 				int add = -1;
-				
-				System.out.println("PRODUTO: ");
+				System.out.println("---------- Produto  ----------");
 				System.out.println("Código: " + productDetails.getProductCode());
 				System.out.println("Nome: " + productDetails.getName());
 		    	System.out.println("Descrição: " + productDetails.getDescription());
 		    	System.out.println("Quantidade em estoque: " + productDetails.getStock().getQuantity());
 		    	System.out.println("Preço: "+ productDetails.getStock().getPrice());
+				System.out.println("----------          ----------");
 		    	System.out.println("Escolha o que deseja fazer: ");
 		    	System.out.println("1. Adicionar ao carrinho");
 		    	System.out.println("0. Cancelar");
@@ -161,6 +171,12 @@ public class ClientView {
 		    		System.out.print("Digite quantas unidades deseja adicionar ao carrinho: ");
 		    		int quantity = sc.nextInt();
 		    		sc.nextLine();
+
+					if(quantity < 1) {
+						System.out.println("Nenhum produto adicionado.");
+						return;
+					}
+
 		    		if(quantity > maxQuantity) {
 		    			int maxQuantityOp = -1;
 		    			System.out.println("Não temos essa quantidade disponível no momento. Adicionar " + maxQuantity + " ao carrinho? ");
@@ -198,12 +214,11 @@ public class ClientView {
 
 		    	}
 			}
-			System.out.println("---------------------------------------------");
 			
 		}while(id != 0);
 	}
 	
-	public void subCart(Scanner sc, Store store) {
+	public void subCart(Scanner sc) {
 		System.out.println("Carrinho de Compras");
 
 		if(client.getShoppingCart().getProducts() == null) {
@@ -310,7 +325,7 @@ public class ClientView {
 
 				return;
 			case 2:
-				System.out.println("Finalizar Pedido\n1 - Finalizar\n0 - Sair");
+				System.out.println("Finalizar Pedido\n1 - Continuar\n0 - Sair");
 
 				option = -1;
 
@@ -332,7 +347,16 @@ public class ClientView {
 					break;
 				}
 
+				double value = 0;
+				for (Map.Entry<Product, Integer> newEntry : client.getShoppingCart().getProducts().entrySet()) {
+					double valueProduct = newEntry.getKey().getStock().getPrice();
+					Integer newQuantity = newEntry.getValue();
+
+					value += valueProduct*newQuantity;
+				}
+
 				System.out.println("Cartão de Crédito: "+client.getCreditCard());
+				System.out.println("Valor Total: R$"+value);
 				System.out.println("1 - Finalizar\n0 - Cancelar");
 
 				option = -1;
@@ -363,6 +387,7 @@ public class ClientView {
 				System.out.println("ID do pedido: "+order.getId());
 				System.out.println("Data do pedido: "+new SimpleDateFormat("dd/MM/yyyy").format(order.getDateOrder()));
 				System.out.println("Cliente: "+order.getOwner().getName()+" - "+order.getOwner().getEmail());
+				System.out.println("Valor total: R$"+value);
 
 				client.getShoppingCart().clearCart();
 
@@ -374,11 +399,34 @@ public class ClientView {
 		}
 	}
 	
-	public void subOrders(Scanner sc, Store store) {
-		
+	public void subOrders(Scanner sc) {
+		System.out.println("Pedidos");
+
+		for(Order order : client.getOrders()) {
+			double value = 0;
+			System.out.println("----------  Pedido  ----------");
+			System.out.println("ID do Pedido: "+order.getId());
+			System.out.println("Situação: "+order.getSituation().toString());
+			System.out.println("Data do pedido: "+new SimpleDateFormat("dd/MM/yyyy").format(order.getDateOrder()));
+			System.out.println("Data de envio: "+(order.getDataDeliver() == null ? "*AINDA NÃO ENVIADO*" : new SimpleDateFormat("dd/MM/yyyy").format(order.getDateOrder())));
+
+			System.out.println("---------- Produtos ----------");
+			for (Map.Entry<Product, Integer> entry : order.getProducts().entrySet()) {
+				Product product = entry.getKey();
+				Integer quantity = entry.getValue();
+
+				System.out.println("Nome: " + product.getName() + " | Quantidade: " + quantity + " | Valor Total: "+product.getStock().getPrice()*quantity);
+				value += product.getStock().getPrice()*quantity;
+			}
+			System.out.println("----------          ----------");
+			System.out.println("Valor total do pedido: R$"+value);
+			System.out.println("----------          ----------\n");
+		}
 	}
 	
-	public void subClientAccount(Scanner sc, Store store) {
-		
+	public void subClientAccount(Scanner sc) {
+		System.out.println("Dados do cliente");
+
+		System.out.println("Em produção");
 	}
 }
