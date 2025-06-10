@@ -10,5 +10,8 @@ public class Main {
     	Scanner sc = new Scanner(System.in);
     	LoginView login = new LoginView(store);
         login.show(sc);
+        
+        System.out.println("Programa encerrado.");
+        sc.close();
     }    
 }

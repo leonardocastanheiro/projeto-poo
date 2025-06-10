@@ -71,13 +71,12 @@ public class AdminView {
 					break;					
 				case 0:
 					System.out.println("Saindo...");
-					break;
+					return;
 				default:
-					System.out.println("Não encotrado...");
+					System.out.println("Não encontrado...");
 			}
 			System.out.println("------------------");
 		} while (option != 0);
-		sc.close();
 	}
 
     public void subClients(Scanner sc, Store store) {

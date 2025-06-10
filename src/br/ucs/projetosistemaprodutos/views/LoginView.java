@@ -44,6 +44,7 @@ public class LoginView {
 			ClientView client = new ClientView(store, (Client) user);
 			client.show(sc);
 		}
-
+		
+		return;
 	}
 }

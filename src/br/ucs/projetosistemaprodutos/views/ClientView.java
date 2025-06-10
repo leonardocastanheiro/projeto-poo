@@ -63,12 +63,11 @@ public class ClientView {
 					break;
 				case 0:
 					System.out.println("Saindo...");
-					System.exit(0);
+					return;
 				default:
 					System.out.println("Não encontrado...");
 			}
 		} while (option != 0);
-		sc.close();
 	}
 
 	public void subProducts(Scanner sc) {
