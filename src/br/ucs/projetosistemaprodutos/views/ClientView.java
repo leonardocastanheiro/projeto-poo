@@ -409,7 +409,8 @@ public class ClientView {
 			System.out.println("ID do Pedido: " + order.getId());
 			System.out.println("Situação: " + order.getSituation().toString());
 			System.out.println("Data do pedido: " + new SimpleDateFormat("dd/MM/yyyy").format(order.getDateOrder()));
-			System.out.println("Data de envio: " + (order.getDataDeliver() == null ? "*AINDA NÃO ENVIADO*" : new SimpleDateFormat("dd/MM/yyyy").format(order.getDateOrder())));
+			System.out.println("Data de envio: " + (order.getDateForward() == null ? "*AINDA NÃO ENVIADO*" : new SimpleDateFormat("dd/MM/yyyy").format(order.getDateForward())));
+			System.out.println("Data de entrega: " + (order.getDateDeliver() == null ? "*AINDA NÃO ENTREGUE*" : new SimpleDateFormat("dd/MM/yyyy").format(order.getDateDeliver())));
 
 			System.out.println("---------- Produtos ----------");
 			for (Map.Entry<Product, Integer> entry : order.getProducts().entrySet()) {

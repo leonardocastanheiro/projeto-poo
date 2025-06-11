@@ -1,7 +1,6 @@
 package br.ucs.projetosistemaprodutos.views;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import br.ucs.projetosistemaprodutos.controllers.*;
 import br.ucs.projetosistemaprodutos.models.address.Address;
@@ -1112,7 +1111,146 @@ public class AdminView {
 	}
    
     public void subOrders(Scanner sc, Store store) {
-		System.out.println("------------------");
-		System.out.println("EM PRODUÇÃO");
+		System.out.println("Pedidos\n");
+
+		System.out.println("Buscar pedido: ");
+		int id = -1;
+
+		do {
+			try {
+				id = sc.nextInt();
+			} catch (InputMismatchException ignored) {}
+
+			if(id == -1) {
+				System.out.println("Entrada inválida, digite novamente: ");
+			}
+		} while (id == -1);
+
+		Optional<Order> orderOptional = clientController.getOrderById(id);
+
+		if(orderOptional.isEmpty()) {
+			System.out.println("Nenhum pedido encontrado com esse ID");
+			return;
+		}
+
+		Order order = orderOptional.get();
+
+			System.out.println("----------  Pedido  ----------");
+			System.out.println("ID do Pedido: " + order.getId());
+			System.out.println("Situação: " + order.getSituation().toString());
+			System.out.println("Data do pedido: " + new SimpleDateFormat("dd/MM/yyyy").format(order.getDateOrder()));
+			System.out.println("Data de envio: " + (order.getDateForward() == null ? "*AINDA NÃO ENVIADO*" : new SimpleDateFormat("dd/MM/yyyy").format(order.getDateForward())));
+			System.out.println("Data de entrega: " + (order.getDateDeliver() == null ? "*AINDA NÃO ENTREGUE*" : new SimpleDateFormat("dd/MM/yyyy").format(order.getDateDeliver())));
+
+			System.out.println("---------- Produtos ----------");
+		for (Map.Entry<Product, Integer> entry : order.getProducts().entrySet()) {
+			Product product = entry.getKey();
+			Integer quantity = entry.getValue();
+
+			System.out.println("Nome: " + product.getName() + " | Quantidade: " + quantity + " | Valor Total: " + product.getStock().getPrice() * quantity);
+		}
+		System.out.println("----------          ----------");
+		System.out.println("Valor total do pedido (sem ICMS): R$" + String.format("%.2f", order.getTotalPrice()));
+		System.out.println("Valor total do pedido (com ICMS): R$" + String.format("%.2f", order.getTotalPriceICMS()));
+		System.out.println("----------          ----------\n");
+
+		System.out.println("1 - Editar Situação\n0 - Sair");
+
+		int option = -1;
+
+		do {
+			try {
+				option = sc.nextInt();
+
+				if (option < 0 || option > 1) {
+					throw new InputMismatchException("Entrada inválida");
+				}
+
+			} catch (InputMismatchException e) {
+				System.out.print("Entrada inválida, digite novamente: ");
+			}
+			sc.nextLine();
+		} while (option < 0 || option > 1);
+
+		if(option == 0) {
+			return;
+		}
+
+		System.out.println("Situação Atual: "+order.getSituation().toString());
+
+		switch (order.getSituation()) {
+            case NEW -> {
+                System.out.println("\n1 - Cancelar\n2 - Enviar\n0 - Sair");
+                option = -1;
+
+                do {
+                    try {
+                        option = sc.nextInt();
+
+                        if (option < 0 || option > 2) {
+                            throw new InputMismatchException("Entrada inválida");
+                        }
+
+                    } catch (InputMismatchException e) {
+                        System.out.print("Entrada inválida, digite novamente: ");
+                    }
+                    sc.nextLine();
+                } while (option < 0 || option > 2);
+
+                if(option == 0) {
+                    break;
+                }
+
+				switch (option) {
+					case 1:
+						order.setSituation(Situation.CANCELED);
+						order.setDateForward(null);
+						System.out.println("Pedido Cancelado com sucesso!");
+						break;
+
+					case 2:
+						order.setSituation(Situation.FORWARD);
+						order.setDateForward(new Date());
+						System.out.println("Pedido Enviado com sucesso!");
+				}
+            }
+
+			case FORWARD -> {
+				System.out.println("\n1 - Confirmar Entrega\n0 - Sair");
+				option = -1;
+
+				do {
+					try {
+						option = sc.nextInt();
+
+						if (option < 0 || option > 1) {
+							throw new InputMismatchException("Entrada inválida");
+						}
+
+					} catch (InputMismatchException e) {
+						System.out.print("Entrada inválida, digite novamente: ");
+					}
+					sc.nextLine();
+				} while (option < 0 || option > 1);
+
+				if(option == 0) {
+					break;
+				}
+
+				order.setDateDeliver(new Date());
+				order.setSituation(Situation.DELIVERED);
+				break;
+			}
+
+			case CANCELED -> {
+				System.out.println("\nPedido já cancelado!");
+				break;
+			}
+
+			case DELIVERED -> {
+				System.out.println("\nProduto já entregue!");
+				break;
+			}
+        }
 	}
 }

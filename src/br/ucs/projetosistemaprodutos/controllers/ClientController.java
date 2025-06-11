@@ -9,9 +9,7 @@ import br.ucs.projetosistemaprodutos.models.person.Client;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.User;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class ClientController extends UserController{
 
@@ -107,5 +105,14 @@ public class ClientController extends UserController{
         Collections.sort(orders);
 
         return orders;
+    }
+
+    public Optional<Order> getOrderById(Integer id) {
+        for(Order order : this.getAllOrders()) {
+            if(Objects.equals(order.getId(), id)) {
+                return Optional.of(order);
+            }
+        }
+        return Optional.empty();
     }
 }

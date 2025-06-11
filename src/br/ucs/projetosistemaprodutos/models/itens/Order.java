@@ -2,6 +2,7 @@ package br.ucs.projetosistemaprodutos.models.itens;
 
 import br.ucs.projetosistemaprodutos.models.person.Client;
 
+import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.Map;
 
@@ -10,17 +11,18 @@ public class Order implements Comparable<Order>{
 
     private Integer id;
     private Date dateOrder;
-    private Date dataDeliver;
+    private Date dateDeliver;
+    private Date dateForward;
     private Situation situation;
     private Client owner;
     private double totalPrice;
     private double totalPriceICMS;
 	private Map<Product, Integer> products;
 
-    public Order(Date dateOrder, Date dataDeliver, Situation situation, Client owner, double totalPrice, double totalPriceICMS, Map<Product, Integer> products) {
+    public Order(Date dateOrder, Date dateDeliver, Situation situation, Client owner, double totalPrice, double totalPriceICMS, Map<Product, Integer> products) {
         this.id = lastId++;
         this.dateOrder = dateOrder;
-        this.dataDeliver = dataDeliver;
+        this.dateDeliver = dateDeliver;
         this.situation = situation;
         this.owner = owner;
         this.totalPrice = totalPrice;
@@ -44,12 +46,20 @@ public class Order implements Comparable<Order>{
         this.dateOrder = dateOrder;
     }
 
-    public Date getDataDeliver() {
-        return dataDeliver;
+    public Date getDateDeliver() {
+        return dateDeliver;
     }
 
-    public void setDataDeliver(Date dataDeliver) {
-        this.dataDeliver = dataDeliver;
+    public void setDateDeliver(Date dataDeliver) {
+        this.dateDeliver = dataDeliver;
+    }
+
+    public Date getDateForward() {
+        return dateForward;
+    }
+
+    public void setDateForward(Date dateForward) {
+        this.dateForward = dateForward;
     }
 
     public Situation getSituation() {
