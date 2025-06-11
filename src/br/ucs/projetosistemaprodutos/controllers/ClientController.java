@@ -10,6 +10,7 @@ import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.User;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ClientController extends UserController{
@@ -102,6 +103,8 @@ public class ClientController extends UserController{
                 orders.addAll(client.getOrders());
             }
         }
+
+        Collections.sort(orders);
 
         return orders;
     }

@@ -5,7 +5,7 @@ import br.ucs.projetosistemaprodutos.models.person.Client;
 import java.util.Date;
 import java.util.Map;
 
-public class Order implements Comparable{
+public class Order implements Comparable<Order>{
     private static Integer lastId = 1;
 
     private Integer id;
@@ -85,7 +85,7 @@ public class Order implements Comparable{
 	}
 
     @Override
-    public int compareTo(Object o) {
-        return 0;
+    public int compareTo(Order other) {
+        return this.id.compareTo(other.id);
     }
 }
