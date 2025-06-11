@@ -140,4 +140,7 @@ public class DynamicUserArray {
         return users;
     }
 
+    public List<User> getAllUsers() {
+        return this.users;
+    }
 }

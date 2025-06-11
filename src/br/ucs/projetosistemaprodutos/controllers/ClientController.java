@@ -92,4 +92,17 @@ public class ClientController extends UserController{
     public void addOrder(Order order) {
         order.getOwner().getOrders().add(order);
     }
+
+    public List<Order> getAllOrders() {
+        List<Order> orders = new ArrayList<>();
+
+        for(User user : userArray.getAllUsers()) {
+            if(user.getRole() == Role.CLIENT) {
+                Client client = (Client) user;
+                orders.addAll(client.getOrders());
+            }
+        }
+
+        return orders;
+    }
 }

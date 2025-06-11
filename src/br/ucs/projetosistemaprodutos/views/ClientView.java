@@ -4,6 +4,7 @@ import java.util.*;
 
 import br.ucs.projetosistemaprodutos.controllers.ClientController;
 import br.ucs.projetosistemaprodutos.controllers.ProductController;
+import br.ucs.projetosistemaprodutos.models.copies.ClientCopy;
 import br.ucs.projetosistemaprodutos.models.itens.Order;
 import br.ucs.projetosistemaprodutos.models.itens.Product;
 import br.ucs.projetosistemaprodutos.models.itens.Situation;
@@ -379,16 +380,16 @@ public class ClientView {
 					break;
 				}
 
-				System.out.println("Pedido Finalizado!");
-
 				Order order = new Order(new Date(), null, Situation.NEW, client, value, valueICMS, new HashMap<>(client.getShoppingCart().getProducts()));
 				clientController.addOrder(order);
+				System.out.println("Pedido Finalizado!");
 
 				System.out.println("ID do pedido: " + order.getId());
 				System.out.println("Data do pedido: " + new SimpleDateFormat("dd/MM/yyyy").format(order.getDateOrder()));
 				System.out.println("Cliente: " + order.getOwner().getName() + " - " + order.getOwner().getEmail());
 				System.out.println("Valor total (sem ICMS): R$" + String.format("%.2f", order.getTotalPrice()));
 				System.out.println("Valor total (com ICMS): R$" + String.format("%.2f", order.getTotalPriceICMS()));
+
 
 				client.getShoppingCart().clearCart();
 
@@ -431,6 +432,7 @@ public class ClientView {
 			System.out.println("Nome: " + client.getName());
 			System.out.println("Telefone: " + client.getPhone());
 			System.out.println("E-mail: " + client.getEmail());
+			System.out.println("Cartão de Crédito: "+client.getCreditCard());
 
 			// Endereço com verificação de null
 			System.out.println("\n---------- ENDEREÇO ----------");
@@ -451,6 +453,165 @@ public class ClientView {
 			System.out.println("Erro ao exibir dados do cliente: " + e.getMessage());
 		}
 
-		System.out.println("\n\n\n-------------------------------Adicionar visualizar dados de pagamaneto e edição dos dados------------------------------------------");
+		System.out.println("\n1 - Editar\n0 - Sair");
+
+		int option = -1;
+
+		do {
+			try {
+				option = sc.nextInt();
+
+				if (option < 0 || option > 1) {
+					throw new InputMismatchException("Entrada inválida");
+				}
+
+			} catch (InputMismatchException e) {
+				System.out.print("Entrada inválida, digite novamente: ");
+			}
+			sc.nextLine();
+		} while (option < 0 || option > 1);
+
+		if(option == 0) {
+			return;
+		}
+
+		ClientCopy clientCopy = new ClientCopy(client);
+		int editInfo = -1;
+		do {
+			System.out.println("1 - Nome: "+clientCopy.getName());
+			System.out.println("2 - Telefone: "+clientCopy.getPhone());
+			System.out.println("3 - Email: "+clientCopy.getEmail());
+			System.out.println("4 - Usuário: "+clientCopy.getLogin());
+			System.out.println("5 - Senha");
+			System.out.println("6 - Cartão de crédito: "+clientCopy.getCreditCard());
+			System.out.println("7 - Rua: "+clientCopy.getAddress().getStreet());
+			System.out.println("8 - Número: "+clientCopy.getAddress().getNumber());
+			System.out.println("9 - Complemento: "+clientCopy.getAddress().getComplement());
+			System.out.println("10 - Bairro: "+clientCopy.getAddress().getNeighborhood());
+			System.out.println("11 - CEP: "+clientCopy.getAddress().getCep());
+			System.out.println("12 - Cidade: "+clientCopy.getAddress().getCity());
+			System.out.println("13 - Estado: "+clientCopy.getAddress().getState());
+			System.out.println("14 - Salvar alterações");
+			System.out.println("0 - Cancelar");
+			System.out.println("Informe o campo que deseja editar: ");
+
+			do {
+				try {
+					editInfo = sc.nextInt();
+
+					if(editInfo < 0 || editInfo > 14) {
+						throw new InputMismatchException("Entrada inválida");
+					}
+
+				} catch (InputMismatchException e) {
+					System.out.print("Entrada inválida, digite novamente: ");
+				}
+				sc.nextLine();
+			}while(editInfo<0 || editInfo>14);
+
+			switch(editInfo) {
+				case 1:
+					System.out.println("Nome: " + clientCopy.getName());
+					System.out.print("Novo nome: ");
+					String newName = sc.nextLine();
+					clientCopy.setName(newName);
+					break;
+				case 2:
+					System.out.println("Telefone: " + clientCopy.getPhone());
+					System.out.print("Novo telefone: ");
+					String newPhone = sc.nextLine();
+					clientCopy.setPhone(newPhone);
+					break;
+				case 3:
+					System.out.println("Email: " + clientCopy.getEmail());
+					System.out.print("Novo email: ");
+					String newEmail = sc.nextLine();
+					clientCopy.setEmail(newEmail);
+					break;
+				case 4:
+					System.out.println("Usuário: " + clientCopy.getLogin());
+					System.out.print("Novo nome de usuário: ");
+					String newUsername = sc.nextLine();
+					clientCopy.setLogin(newUsername);
+					break;
+				case 5:
+					String newPasswordOne;
+					String newPasswordTwo;
+
+					do {
+						System.out.print("Nova senha: ");
+						newPasswordOne = sc.nextLine();
+
+						System.out.print("Digite a senha novamente: ");
+						newPasswordTwo = sc.nextLine();
+
+						if(!newPasswordOne.equals(newPasswordTwo)) {
+							System.out.println("As senha não são iguais, por favor, tente novamente");
+						}
+					} while (!newPasswordOne.equals(newPasswordTwo));
+
+					clientCopy.setPassword(newPasswordOne);
+					break;
+				case 6:
+					System.out.println("Cartão de crédito: " + clientCopy.getCreditCard());
+					System.out.print("Novo cartão de crédito: ");
+					String newCreditCard = sc.nextLine();
+					clientCopy.setCreditCard(newCreditCard);
+					break;
+				case 7:
+					System.out.println("Rua: " + clientCopy.getAddress().getStreet());
+					System.out.print("(Endereço) Nova rua: ");
+					String newStreet = sc.nextLine();
+					clientCopy.getAddress().setStreet(newStreet);
+					break;
+				case 8:
+					System.out.println("Número: " + clientCopy.getAddress().getNumber());
+					System.out.print("(Endereço) Novo número: ");
+					String newNumber = sc.nextLine();
+					clientCopy.getAddress().setNumber(newNumber);
+					break;
+				case 9:
+					System.out.println("Complemento: " + clientCopy.getAddress().getComplement());
+					System.out.print("(Endereço) Novo complemento: ");
+					String newComplement = sc.nextLine();
+					clientCopy.getAddress().setComplement(newComplement);
+					break;
+				case 10:
+					System.out.println("Bairro: " + clientCopy.getAddress().getNeighborhood());
+					System.out.print("(Endereço) Novo bairro: ");
+					String newNeighborhood = sc.nextLine();
+					clientCopy.getAddress().setNeighborhood(newNeighborhood);
+					break;
+				case 11:
+					System.out.println("CEP: " + clientCopy.getAddress().getCep());
+					System.out.print("(Endereço) Novo CEP: ");
+					String newCep = sc.nextLine();
+					clientCopy.getAddress().setCep(newCep);
+					break;
+				case 12:
+					System.out.println("Cidade: " + clientCopy.getAddress().getCity());
+					System.out.print("(Endereço) Nova cidade: ");
+					String newCity = sc.nextLine();
+					clientCopy.getAddress().setCity(newCity);
+					break;
+				case 13:
+					System.out.println("Estado: " + clientCopy.getAddress().getState());
+					System.out.print("(Endereço) Novo estado: ");
+					String newState = sc.nextLine();
+					clientCopy.getAddress().setState(newState);
+					break;
+				case 14:
+					try {
+						clientController.edit(client,clientCopy);
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+						return;
+					}
+					break;
+				case 0:
+					System.out.println("Alterações não realizadas...");
+			}
+		}while(editInfo != 0 && editInfo != 14);
+
 	}
 }

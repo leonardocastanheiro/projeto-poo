@@ -5,7 +5,7 @@ import br.ucs.projetosistemaprodutos.models.person.Client;
 import java.util.Date;
 import java.util.Map;
 
-public class Order {
+public class Order implements Comparable{
     private static Integer lastId = 1;
 
     private Integer id;
@@ -83,4 +83,9 @@ public class Order {
 	public void setTotalPriceICMS(double totalPriceICMS) {
 		this.totalPriceICMS = totalPriceICMS;
 	}
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;
+    }
 }
