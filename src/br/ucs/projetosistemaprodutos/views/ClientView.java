@@ -5,10 +5,7 @@ import java.util.*;
 import br.ucs.projetosistemaprodutos.controllers.ClientController;
 import br.ucs.projetosistemaprodutos.controllers.ProductController;
 import br.ucs.projetosistemaprodutos.models.copies.ClientCopy;
-import br.ucs.projetosistemaprodutos.models.itens.Order;
-import br.ucs.projetosistemaprodutos.models.itens.Product;
-import br.ucs.projetosistemaprodutos.models.itens.Situation;
-import br.ucs.projetosistemaprodutos.models.itens.Store;
+import br.ucs.projetosistemaprodutos.models.itens.*;
 import br.ucs.projetosistemaprodutos.models.person.Client;
 
 public class ClientView {
@@ -352,7 +349,7 @@ public class ClientView {
 					Integer newQuantity = newEntry.getValue();
 
 					value += valueProduct * newQuantity;
-					valueICMS = value + value * 0.17;
+					valueICMS = value * 1.17;
 				}
 
 				System.out.println("Cartão de Crédito: " + client.getCreditCard());
@@ -380,7 +377,12 @@ public class ClientView {
 					break;
 				}
 
-				Order order = new Order(new Date(), null, Situation.NEW, client, value, valueICMS, new HashMap<>(client.getShoppingCart().getProducts()));
+				List<ItemOrder> itemOrders = new ArrayList<>();
+				Order order = new Order(new Date(), null, Situation.NEW, client, value, valueICMS);
+				for (Map.Entry<Product, Integer> newEntry : client.getShoppingCart().getProducts().entrySet()) {
+						itemOrders.add(new ItemOrder(newEntry.getValue(), newEntry.getKey().getStock().getPrice(), order, newEntry.getKey()));
+				}
+				order.setItemOrders(itemOrders);
 				clientController.addOrder(order);
 				System.out.println("Pedido Finalizado!");
 
@@ -413,11 +415,12 @@ public class ClientView {
 			System.out.println("Data de entrega: " + (order.getDateDeliver() == null ? "*AINDA NÃO ENTREGUE*" : new SimpleDateFormat("dd/MM/yyyy").format(order.getDateDeliver())));
 
 			System.out.println("---------- Produtos ----------");
-			for (Map.Entry<Product, Integer> entry : order.getProducts().entrySet()) {
-				Product product = entry.getKey();
-				Integer quantity = entry.getValue();
+			for (ItemOrder itemOrder : order.getItemOrders()) {
 
-				System.out.println("Nome: " + product.getName() + " | Quantidade: " + quantity + " | Valor Total: " + product.getStock().getPrice() * quantity);
+				Product product = itemOrder.getProduct();
+				Integer quantity = itemOrder.getQuantity();
+
+				System.out.println("Nome: " + product.getName() + " | Quantidade: " + quantity + " | Valor Total: " + itemOrder.getPrice() * quantity);
 			}
 			System.out.println("----------          ----------");
 			System.out.println("Valor total do pedido (sem ICMS): R$" + String.format("%.2f", order.getTotalPrice()));

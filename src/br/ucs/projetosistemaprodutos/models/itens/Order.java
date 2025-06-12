@@ -1,13 +1,16 @@
 package br.ucs.projetosistemaprodutos.models.itens;
 
 import br.ucs.projetosistemaprodutos.models.person.Client;
+import br.ucs.projetosistemaprodutos.serialize.IdManager;
 
 import javax.xml.crypto.Data;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class Order implements Comparable<Order>{
-    private static Integer lastId = 1;
+
+    private static final IdManager idManager = new IdManager("order");
 
     private Integer id;
     private Date dateOrder;
@@ -17,17 +20,18 @@ public class Order implements Comparable<Order>{
     private Client owner;
     private double totalPrice;
     private double totalPriceICMS;
-	private Map<Product, Integer> products;
+	private List<ItemOrder> itemOrders;
 
-    public Order(Date dateOrder, Date dateDeliver, Situation situation, Client owner, double totalPrice, double totalPriceICMS, Map<Product, Integer> products) {
+    public Order(Date dateOrder, Date dateDeliver, Situation situation, Client owner, double totalPrice, double totalPriceICMS) {
+        int lastId = idManager.loadLastId();
         this.id = lastId++;
+        idManager.saveLastId(lastId);
         this.dateOrder = dateOrder;
         this.dateDeliver = dateDeliver;
         this.situation = situation;
         this.owner = owner;
         this.totalPrice = totalPrice;
         this.totalPriceICMS = totalPriceICMS;
-        this.products = products;
     }
 
     public Integer getId() {
@@ -73,10 +77,6 @@ public class Order implements Comparable<Order>{
     public Client getOwner() {
         return this.owner;
     }
-
-    public Map<Product, Integer> getProducts() {
-        return products;
-    }
     
     public double getTotalPrice() {
 		return totalPrice;
@@ -97,5 +97,13 @@ public class Order implements Comparable<Order>{
     @Override
     public int compareTo(Order other) {
         return this.id.compareTo(other.id);
+    }
+
+    public List<ItemOrder> getItemOrders() {
+        return itemOrders;
+    }
+
+    public void setItemOrders(List<ItemOrder> itemOrders) {
+        this.itemOrders = itemOrders;
     }
 }

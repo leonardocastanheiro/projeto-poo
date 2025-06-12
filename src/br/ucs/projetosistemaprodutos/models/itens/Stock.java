@@ -1,16 +1,20 @@
 package br.ucs.projetosistemaprodutos.models.itens;
 
+import br.ucs.projetosistemaprodutos.serialize.IdManager;
+
 public class Stock {
     private Integer quantity;
     private Double price;
     private Integer id;
     
-    private static Integer lastId = 1;
+    private static IdManager idManager = new IdManager("stock");
     
     public Stock() {
     }
     public Stock(Integer quantity, Double price) {
-    	this.id = lastId++;
+        int lastId = idManager.loadLastId();
+        this.id = lastId++;
+        idManager.saveLastId(lastId);
         this.quantity = quantity;
         this.price = price;
     }

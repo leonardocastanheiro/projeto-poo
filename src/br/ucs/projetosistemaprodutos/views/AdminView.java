@@ -1143,11 +1143,12 @@ public class AdminView {
 			System.out.println("Data de entrega: " + (order.getDateDeliver() == null ? "*AINDA NÃO ENTREGUE*" : new SimpleDateFormat("dd/MM/yyyy").format(order.getDateDeliver())));
 
 			System.out.println("---------- Produtos ----------");
-		for (Map.Entry<Product, Integer> entry : order.getProducts().entrySet()) {
-			Product product = entry.getKey();
-			Integer quantity = entry.getValue();
+		for (ItemOrder itemOrder : order.getItemOrders()) {
 
-			System.out.println("Nome: " + product.getName() + " | Quantidade: " + quantity + " | Valor Total: " + product.getStock().getPrice() * quantity);
+			Product product = itemOrder.getProduct();
+			Integer quantity = itemOrder.getQuantity();
+
+			System.out.println("Nome: " + product.getName() + " | Quantidade: " + quantity + " | Valor Total: " + itemOrder.getPrice() * quantity);
 		}
 		System.out.println("----------          ----------");
 		System.out.println("Valor total do pedido (sem ICMS): R$" + String.format("%.2f", order.getTotalPrice()));

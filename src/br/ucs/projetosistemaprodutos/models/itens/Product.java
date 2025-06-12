@@ -1,6 +1,7 @@
 package br.ucs.projetosistemaprodutos.models.itens;
 
 import br.ucs.projetosistemaprodutos.models.person.Supplier;
+import br.ucs.projetosistemaprodutos.serialize.IdManager;
 
 public class Product {
     private String name;
@@ -11,17 +12,21 @@ public class Product {
     private Supplier supplier;
     private String productCode;
 
-    private static Integer lastId = 1;
+    private static final IdManager idManager = new IdManager("product");
 
     public Product() {
     }
     public Product(String name, String description) {
-    	this.id = lastId++;
+        int lastId = idManager.loadLastId();
+        this.id = lastId++;
+        idManager.saveLastId(lastId);
         this.name = name;
         this.description = description;
     }
     public Product(String name, String description, Supplier supplier, String productCode) {
-    	this.id = lastId++;
+        int lastId = idManager.loadLastId();
+        this.id = lastId++;
+        idManager.saveLastId(lastId);
         this.name = name;
         this.description = description;
         this.supplier = supplier;
@@ -29,7 +34,9 @@ public class Product {
         this.productCode = productCode;
     }
 	public Product(String name, String description, Stock stock, Supplier supplier, String productCode) {
+        int lastId = idManager.loadLastId();
         this.id = lastId++;
+        idManager.saveLastId(lastId);
         this.name = name;
         this.description = description;
         this.stock = stock;
@@ -37,7 +44,9 @@ public class Product {
         this.productCode = productCode;
     }
     public Product(String name, String description, Byte[] photo, Stock stock) {
+        int lastId = idManager.loadLastId();
         this.id = lastId++;
+        idManager.saveLastId(lastId);
         this.name = name;
         this.description = description;
         this.photo = photo;
