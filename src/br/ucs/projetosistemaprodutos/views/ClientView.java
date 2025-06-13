@@ -320,27 +320,6 @@ public class ClientView {
 
 				return;
 			case 2:
-				System.out.println("Finalizar Pedido\n1 - Continuar\n0 - Sair");
-
-				option = -1;
-
-				do {
-					try {
-						option = sc.nextInt();
-
-						if (option < 0 || option > 1) {
-							throw new InputMismatchException("Entrada inválida");
-						}
-
-					} catch (InputMismatchException e) {
-						System.out.print("Entrada inválida, digite novamente: ");
-					}
-					sc.nextLine();
-				} while (option < 0 || option > 1);
-
-				if (option == 0) {
-					break;
-				}
 
 				double value = 0;
 				double valueICMS = 0;

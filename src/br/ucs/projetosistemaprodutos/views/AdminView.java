@@ -1115,35 +1115,69 @@ public class AdminView {
 
 		System.out.print("Buscar pedido: ");
 		int id = -1;
+		String text;
 
-		do {
+		text = sc.nextLine();
+
+		try {
+			id = Integer.parseInt(text);
+		} catch (NumberFormatException ignored) {}
+
+		List<Order> orders = new ArrayList<>();
+
+        if(id == -1) {
 			try {
-				id = sc.nextInt();
-			} catch (InputMismatchException ignored) {}
-
-			if(id == -1) {
-				System.out.print("Entrada inválida, digite novamente: ");
+                orders = new ArrayList<>(clientController.getAllOrderByText(text));
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				return;
 			}
-			sc.nextLine();
-		} while (id == -1);
-
-		Optional<Order> orderOptional = clientController.getOrderById(id);
-
-		if(orderOptional.isEmpty()) {
-			System.out.println("Nenhum pedido encontrado com esse ID");
-			return;
+		}
+		else {
+			Optional<Order> orderOptional = clientController.getOrderById(id);
+			if (orderOptional.isEmpty()) {
+				System.out.println("Nenhum pedido encontrado com esse ID");
+				return;
+			}
+			orders.add(orderOptional.get());
 		}
 
-		Order order = orderOptional.get();
+		Order order;
 
-			System.out.println("----------  Pedido  ----------");
-			System.out.println("ID do Pedido: " + order.getId());
-			System.out.println("Situação: " + order.getSituation().toString());
-			System.out.println("Data do pedido: " + new SimpleDateFormat("dd/MM/yyyy").format(order.getDateOrder()));
-			System.out.println("Data de envio: " + (order.getDateForward() == null ? "*AINDA NÃO ENVIADO*" : new SimpleDateFormat("dd/MM/yyyy").format(order.getDateForward())));
-			System.out.println("Data de entrega: " + (order.getDateDeliver() == null ? "*AINDA NÃO ENTREGUE*" : new SimpleDateFormat("dd/MM/yyyy").format(order.getDateDeliver())));
+		if(orders.size() == 1) {
+			order = orders.getFirst();
+		}
+		else {
+			for (Order orderAux : orders) {
+				System.out.println("ID: " + orderAux.getId() + " | Dono: " + orderAux.getOwner().getName());
+			}
 
-			System.out.println("---------- Produtos ----------");
+			id = -1;
+
+			System.out.print("\nDigite o ID do pedido que você deseja acessar: ");
+			do {
+				try {
+					id = sc.nextInt();
+				} catch (InputMismatchException ignored) {
+				}
+				sc.nextLine();
+			} while (id < 1);
+			try {
+				order = productController.getOrderByList(id, orders);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				return;
+			}
+		}
+
+		System.out.println("----------  Pedido  ----------");
+		System.out.println("ID do Pedido: " + order.getId());
+		System.out.println("Situação: " + order.getSituation().toString());
+		System.out.println("Data do pedido: " + new SimpleDateFormat("dd/MM/yyyy").format(order.getDateOrder()));
+		System.out.println("Data de envio: " + (order.getDateForward() == null ? "*AINDA NÃO ENVIADO*" : new SimpleDateFormat("dd/MM/yyyy").format(order.getDateForward())));
+		System.out.println("Data de entrega: " + (order.getDateDeliver() == null ? "*AINDA NÃO ENTREGUE*" : new SimpleDateFormat("dd/MM/yyyy").format(order.getDateDeliver())));
+
+		System.out.println("---------- Produtos ----------");
 		for (ItemOrder itemOrder : order.getItemOrders()) {
 
 			Product product = itemOrder.getProduct();

@@ -2,6 +2,7 @@ package br.ucs.projetosistemaprodutos.controllers;
 
 import br.ucs.projetosistemaprodutos.collections.DynamicProductArray;
 import br.ucs.projetosistemaprodutos.models.copies.ProductCopy;
+import br.ucs.projetosistemaprodutos.models.itens.Order;
 import br.ucs.projetosistemaprodutos.models.itens.Product;
 import br.ucs.projetosistemaprodutos.models.itens.Stock;
 import br.ucs.projetosistemaprodutos.models.itens.Store;
@@ -124,6 +125,15 @@ public class ProductController {
 		client.getShoppingCart().setQuantity(product, newQuantity);
 	}
 
+	public Order getOrderByList(Integer id, List<Order> orders) throws Exception {
+		for(Order order : orders) {
+			if(id.equals(order.getId())) {
+				return order;
+			}
+		}
+
+		throw new Exception("Pedido não encontrado");
+	}
 	@Override
 	public String toString() {
 		return productArray.toString();
