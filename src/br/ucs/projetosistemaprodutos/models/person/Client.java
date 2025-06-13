@@ -4,10 +4,15 @@ import br.ucs.projetosistemaprodutos.models.address.Address;
 import br.ucs.projetosistemaprodutos.models.itens.Order;
 import br.ucs.projetosistemaprodutos.models.itens.ShoppingCart;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Client extends User {
+public class Client extends User implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1;
+
     private String creditCard;
     private ShoppingCart shoppingCart;
     private List<Order> orders;

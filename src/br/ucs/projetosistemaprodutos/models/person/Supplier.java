@@ -3,7 +3,13 @@ package br.ucs.projetosistemaprodutos.models.person;
 import br.ucs.projetosistemaprodutos.collections.DynamicProductArray;
 import br.ucs.projetosistemaprodutos.models.address.Address;
 
-public class Supplier extends Person {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class Supplier extends Person implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1;
+
     private String description;
     private DynamicProductArray products;
 

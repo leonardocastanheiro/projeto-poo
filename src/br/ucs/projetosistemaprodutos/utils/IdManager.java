@@ -1,10 +1,15 @@
-package br.ucs.projetosistemaprodutos.serialize;
+package br.ucs.projetosistemaprodutos.utils;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class IdManager {
+public class IdManager implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1;
 
     private final String filePath;
 

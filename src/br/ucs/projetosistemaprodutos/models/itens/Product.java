@@ -1,9 +1,15 @@
 package br.ucs.projetosistemaprodutos.models.itens;
 
 import br.ucs.projetosistemaprodutos.models.person.Supplier;
-import br.ucs.projetosistemaprodutos.serialize.IdManager;
+import br.ucs.projetosistemaprodutos.utils.IdManager;
 
-public class Product {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class Product implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1;
+
     private String name;
     private String description;
     private Byte [] photo;

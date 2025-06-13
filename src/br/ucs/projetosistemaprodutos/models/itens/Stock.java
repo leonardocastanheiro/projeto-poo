@@ -1,8 +1,14 @@
 package br.ucs.projetosistemaprodutos.models.itens;
 
-import br.ucs.projetosistemaprodutos.serialize.IdManager;
+import br.ucs.projetosistemaprodutos.utils.IdManager;
 
-public class Stock {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class Stock implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1;
+
     private Integer quantity;
     private Double price;
     private Integer id;

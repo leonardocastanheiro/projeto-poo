@@ -1,5 +1,7 @@
 package br.ucs.projetosistemaprodutos.collections;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -7,7 +9,10 @@ import java.util.Objects;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.User;
 
-public class DynamicUserArray {
+public class DynamicUserArray implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1;
+
     private final List<User> users;
 
 

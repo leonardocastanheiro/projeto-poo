@@ -1,6 +1,12 @@
 package br.ucs.projetosistemaprodutos.models.address;
 
-public class Address {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class Address implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1;
+
     private String street;
     private String number;
     private String complement;

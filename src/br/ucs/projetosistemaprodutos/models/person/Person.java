@@ -1,8 +1,14 @@
 package br.ucs.projetosistemaprodutos.models.person;
 import br.ucs.projetosistemaprodutos.models.address.Address;
-import br.ucs.projetosistemaprodutos.serialize.IdManager;
+import br.ucs.projetosistemaprodutos.utils.IdManager;
 
-public abstract class Person {
+import java.io.Serial;
+import java.io.Serializable;
+
+public abstract class Person implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1;
+
     private Role role;
     private String name;
     private String phone;

@@ -2,7 +2,13 @@ package br.ucs.projetosistemaprodutos.models.person;
 
 import br.ucs.projetosistemaprodutos.models.address.Address;
 
-public abstract class User extends Person {
+import java.io.Serial;
+import java.io.Serializable;
+
+public abstract class User extends Person implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1;
 
     private String login;
     private String password;

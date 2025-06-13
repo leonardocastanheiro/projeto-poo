@@ -1,6 +1,12 @@
 package br.ucs.projetosistemaprodutos.models.itens;
 
-public class ItemOrder {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class ItemOrder implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1;
+
     private Integer quantity;
     private Double price;
 

@@ -1111,9 +1111,9 @@ public class AdminView {
 	}
    
     public void subOrders(Scanner sc, Store store) {
-		System.out.println("Pedidos\n");
+		System.out.println("---------- Pedidos ----------\n");
 
-		System.out.println("Buscar pedido: ");
+		System.out.print("Buscar pedido: ");
 		int id = -1;
 
 		do {
@@ -1122,8 +1122,9 @@ public class AdminView {
 			} catch (InputMismatchException ignored) {}
 
 			if(id == -1) {
-				System.out.println("Entrada inválida, digite novamente: ");
+				System.out.print("Entrada inválida, digite novamente: ");
 			}
+			sc.nextLine();
 		} while (id == -1);
 
 		Optional<Order> orderOptional = clientController.getOrderById(id);

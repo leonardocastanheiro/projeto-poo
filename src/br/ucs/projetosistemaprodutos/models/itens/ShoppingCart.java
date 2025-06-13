@@ -3,12 +3,17 @@ package br.ucs.projetosistemaprodutos.models.itens;
 import br.ucs.projetosistemaprodutos.collections.DynamicProductArray;
 import br.ucs.projetosistemaprodutos.models.person.Client;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ShoppingCart {
+public class ShoppingCart implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1;
+
     private Map<Product, Integer> products;
     private Client owner;
 

@@ -1,14 +1,16 @@
 package br.ucs.projetosistemaprodutos.models.itens;
 
 import br.ucs.projetosistemaprodutos.models.person.Client;
-import br.ucs.projetosistemaprodutos.serialize.IdManager;
+import br.ucs.projetosistemaprodutos.utils.IdManager;
 
-import javax.xml.crypto.Data;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
-public class Order implements Comparable<Order>{
+public class Order implements Comparable<Order>, Serializable {
+    @Serial
+    private static final long serialVersionUID = 1;
 
     private static final IdManager idManager = new IdManager("order");
 
