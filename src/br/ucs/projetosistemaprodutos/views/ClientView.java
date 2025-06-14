@@ -73,7 +73,8 @@ public class ClientView {
 
 		do {
 			System.out.println("---------------------------------------------");
-			System.out.print("Buscar produto: ");
+			System.out.println("Buscar produto: ");
+			System.out.println("Digite 0 para voltar ao menu");
 			String text1 = sc.nextLine();
 
 			List<Product> products;

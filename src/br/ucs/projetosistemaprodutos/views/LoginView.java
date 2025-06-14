@@ -28,7 +28,7 @@ public class LoginView {
 			System.out.print("Senha: ");
 			String password = sc.nextLine();
 			System.out.println("------");
-
+			
 			try {
 				user = controller.verifyLoginAndPassword(login, password);
 			} catch (Exception e) {
