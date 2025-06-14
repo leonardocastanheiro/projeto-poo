@@ -384,15 +384,17 @@ public class ClientView {
 	}
 
 	public void subOrders(Scanner sc) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		int op = -1;
 		System.out.println("Pedidos");
 
 		for (Order order : client.getOrders()) {
 			System.out.println("----------  Pedido  ----------");
 			System.out.println("ID do Pedido: " + order.getId());
 			System.out.println("Situação: " + order.getSituation().toString());
-			System.out.println("Data do pedido: " + new SimpleDateFormat("dd/MM/yyyy").format(order.getDateOrder()));
-			System.out.println("Data de envio: " + (order.getDateForward() == null ? "*AINDA NÃO ENVIADO*" : new SimpleDateFormat("dd/MM/yyyy").format(order.getDateForward())));
-			System.out.println("Data de entrega: " + (order.getDateDeliver() == null ? "*AINDA NÃO ENTREGUE*" : new SimpleDateFormat("dd/MM/yyyy").format(order.getDateDeliver())));
+			System.out.println("Data do pedido: " + sdf.format(order.getDateOrder()));
+			System.out.println("Data de envio: " + (order.getDateForward() == null ? "*AINDA NÃO ENVIADO*" : sdf.format(order.getDateForward())));
+			System.out.println("Data de entrega: " + (order.getDateDeliver() == null ? "*AINDA NÃO ENTREGUE*" : sdf.format(order.getDateDeliver())));
 
 			System.out.println("---------- Produtos ----------");
 			for (ItemOrder itemOrder : order.getItemOrders()) {
