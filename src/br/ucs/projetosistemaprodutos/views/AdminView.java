@@ -1,5 +1,6 @@
 package br.ucs.projetosistemaprodutos.views;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 import br.ucs.projetosistemaprodutos.controllers.*;
@@ -1246,7 +1247,7 @@ public class AdminView {
 
 					case 2:
 						order.setSituation(Situation.FORWARD);
-						order.setDateForward(new Date());
+						order.setDateForward(LocalDate.now());
 						System.out.println("Pedido Enviado com sucesso!");
 				}
             }
@@ -1273,7 +1274,7 @@ public class AdminView {
 					break;
 				}
 
-				order.setDateDeliver(new Date());
+				order.setDateDeliver(LocalDate.now());
 				order.setSituation(Situation.DELIVERED);
 				break;
 			}

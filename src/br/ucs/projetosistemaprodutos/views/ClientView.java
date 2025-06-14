@@ -1,5 +1,8 @@
 package br.ucs.projetosistemaprodutos.views;
-import java.text.SimpleDateFormat;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 import br.ucs.projetosistemaprodutos.controllers.ClientController;
@@ -358,7 +361,7 @@ public class ClientView {
 				}
 
 				List<ItemOrder> itemOrders = new ArrayList<>();
-				Order order = new Order(new Date(), null, Situation.NEW, client, value, valueICMS);
+				Order order = new Order(LocalDate.now(), null, Situation.NEW, client, value, valueICMS);
 				for (Map.Entry<Product, Integer> newEntry : client.getShoppingCart().getProducts().entrySet()) {
 						itemOrders.add(new ItemOrder(newEntry.getValue(), newEntry.getKey().getStock().getPrice(), order, newEntry.getKey()));
 				}
@@ -367,11 +370,10 @@ public class ClientView {
 				System.out.println("Pedido Finalizado!");
 
 				System.out.println("ID do pedido: " + order.getId());
-				System.out.println("Data do pedido: " + new SimpleDateFormat("dd/MM/yyyy").format(order.getDateOrder()));
+				System.out.println("Data do pedido: " + order.getDateOrder().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 				System.out.println("Cliente: " + order.getOwner().getName() + " - " + order.getOwner().getEmail());
 				System.out.println("Valor total (sem ICMS): R$" + String.format("%.2f", order.getTotalPrice()));
 				System.out.println("Valor total (com ICMS): R$" + String.format("%.2f", order.getTotalPriceICMS()));
-
 
 				client.getShoppingCart().clearCart();
 
@@ -384,32 +386,83 @@ public class ClientView {
 	}
 
 	public void subOrders(Scanner sc) {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		List<Order> orders = new ArrayList<>();
 		int op = -1;
-		System.out.println("Pedidos");
-
-		for (Order order : client.getOrders()) {
-			System.out.println("----------  Pedido  ----------");
-			System.out.println("ID do Pedido: " + order.getId());
-			System.out.println("Situação: " + order.getSituation().toString());
-			System.out.println("Data do pedido: " + sdf.format(order.getDateOrder()));
-			System.out.println("Data de envio: " + (order.getDateForward() == null ? "*AINDA NÃO ENVIADO*" : sdf.format(order.getDateForward())));
-			System.out.println("Data de entrega: " + (order.getDateDeliver() == null ? "*AINDA NÃO ENTREGUE*" : sdf.format(order.getDateDeliver())));
-
-			System.out.println("---------- Produtos ----------");
-			for (ItemOrder itemOrder : order.getItemOrders()) {
-
-				Product product = itemOrder.getProduct();
-				Integer quantity = itemOrder.getQuantity();
-
-				System.out.println("Nome: " + product.getName() + " | Quantidade: " + quantity + " | Valor Total: " + itemOrder.getPrice() * quantity);
+		
+		do {
+			System.out.println("Pedidos");
+			System.out.println("1 - Pesquisar por número");
+			System.out.println("2 - Pesquisar por intervalo de data");
+			System.out.println("0 - Sair");
+			System.out.println("Escolha uma opção: ");
+			
+			try {
+				op = sc.nextInt();
+				sc.nextLine();
+			}catch(InputMismatchException e) {
+				System.out.println("Entrada inválida.");
 			}
-			System.out.println("----------          ----------");
-			System.out.println("Valor total do pedido (sem ICMS): R$" + String.format("%.2f", order.getTotalPrice()));
-			System.out.println("Valor total do pedido (com ICMS): R$" + String.format("%.2f", order.getTotalPriceICMS()));
-			System.out.println("----------          ----------\n");
+		}while(op < 0 ||op > 2);
+		
+		switch(op) {
+			case 1:
+				System.out.println("PESQUISAR POR NUMERO");
+				break;
+			case 2: 
+				LocalDate startDate = null;
+				LocalDate endDate = null;
+				
+				try {
+					System.out.println("Data de início: ");
+					startDate = LocalDate.parse(sc.nextLine(), dtf);
+					
+					System.out.println("Data final: ");
+					endDate = LocalDate.parse(sc.nextLine(), dtf);
+				}catch(DateTimeParseException e) {
+					System.out.println("Data inválida.");
+					return;
+				}
+				
+				if(startDate.isAfter(endDate)) {
+					System.out.println("Data de início maior e a data final.");
+					return;
+				}
+				orders = productController.getByDate(startDate, endDate, client.getOrders());
+				break;
+			case 0:
+				System.out.println("Saindo de pedidos...");
+				return;				
+		}
+
+		if(orders.isEmpty()) {
+			System.out.println("Nenhum pedido encontrado");
+		}else {
+			for(Order order : orders) {
+				System.out.println("-----------  Pedido  -----------");
+				System.out.println("ID do Pedido: " + order.getId());
+				System.out.println("Situação: " + order.getSituation().toString());
+				System.out.println("Data do pedido: " + order.getDateOrder().format(dtf));
+				System.out.println("Data de envio: " + (order.getDateForward() == null ? "*AINDA NÃO ENVIADO*" : order.getDateForward().format(dtf)));
+				System.out.println("Data de entrega: " + (order.getDateDeliver() == null ? "*AINDA NÃO ENTREGUE*" : order.getDateDeliver().format(dtf)));
+				System.out.println("Valor total do pedido (sem ICMS): R$" + String.format("%.2f", order.getTotalPrice()));
+				System.out.println("Valor total do pedido (com ICMS): R$" + String.format("%.2f", order.getTotalPriceICMS()));
+			
+				System.out.println("---------- Detalhes ----------");
+				for(ItemOrder itemOrder : order.getItemOrders()) {
+					Product product = itemOrder.getProduct(); 
+					Integer quantity = itemOrder.getQuantity();
+					System.out.println("Nome: " + product.getName() + " | Descrição: " + product.getDescription());
+					System.out.println("Quantidade: " + quantity + " | Valor unitário: " + product.getStock().getPrice() + " | Valor Total: " + itemOrder.getPrice() * quantity); 
+				}
+				System.out.println("----------          ----------");
+			}
+			
 		}
 	}
+		
+		
+	
 
 	public void subClientAccount(Scanner sc) {
 		try {

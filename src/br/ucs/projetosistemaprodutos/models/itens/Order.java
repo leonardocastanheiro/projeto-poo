@@ -5,7 +5,7 @@ import br.ucs.projetosistemaprodutos.utils.IdManager;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Order implements Comparable<Order>, Serializable {
@@ -15,16 +15,16 @@ public class Order implements Comparable<Order>, Serializable {
     private static final IdManager idManager = new IdManager("order");
 
     private Integer id;
-    private Date dateOrder;
-    private Date dateDeliver;
-    private Date dateForward;
+    private LocalDate dateOrder;
+    private LocalDate dateDeliver;
+    private LocalDate dateForward;
     private Situation situation;
     private Client owner;
     private double totalPrice;
     private double totalPriceICMS;
 	private List<ItemOrder> itemOrders;
 
-    public Order(Date dateOrder, Date dateDeliver, Situation situation, Client owner, double totalPrice, double totalPriceICMS) {
+    public Order(LocalDate dateOrder, LocalDate dateDeliver, Situation situation, Client owner, double totalPrice, double totalPriceICMS) {
         int lastId = idManager.loadLastId();
         this.id = lastId++;
         idManager.saveLastId(lastId);
@@ -44,27 +44,27 @@ public class Order implements Comparable<Order>, Serializable {
         this.id = id;
     }
 
-    public Date getDateOrder() {
+    public LocalDate getDateOrder() {
         return dateOrder;
     }
 
-    public void setDateOrder(Date dateOrder) {
+    public void setDateOrder(LocalDate dateOrder) {
         this.dateOrder = dateOrder;
     }
 
-    public Date getDateDeliver() {
+    public LocalDate getDateDeliver() {
         return dateDeliver;
     }
 
-    public void setDateDeliver(Date dataDeliver) {
+    public void setDateDeliver(LocalDate dataDeliver) {
         this.dateDeliver = dataDeliver;
     }
 
-    public Date getDateForward() {
+    public LocalDate getDateForward() {
         return dateForward;
     }
 
-    public void setDateForward(Date dateForward) {
+    public void setDateForward(LocalDate dateForward) {
         this.dateForward = dateForward;
     }
 

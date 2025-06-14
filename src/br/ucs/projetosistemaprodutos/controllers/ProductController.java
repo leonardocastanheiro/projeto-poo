@@ -8,7 +8,9 @@ import br.ucs.projetosistemaprodutos.models.itens.Stock;
 import br.ucs.projetosistemaprodutos.models.itens.Store;
 import br.ucs.projetosistemaprodutos.models.person.Client;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -134,6 +136,22 @@ public class ProductController {
 
 		throw new Exception("Pedido não encontrado");
 	}
+	
+	public List<Order> getByDate(LocalDate start, LocalDate end, List<Order> orders){
+		List<Order> ordersPeriod = new ArrayList<>();
+		
+		for(Order clientOrder : orders) {
+			LocalDate dateOrderClient = clientOrder.getDateOrder();
+			
+			if(!dateOrderClient.isBefore(start) && !dateOrderClient.isAfter(end)) {
+				ordersPeriod.add(clientOrder);
+			}
+		}
+		
+		return ordersPeriod;
+		
+	}
+	
 	@Override
 	public String toString() {
 		return productArray.toString();
