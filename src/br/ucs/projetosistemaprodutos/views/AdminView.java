@@ -911,7 +911,7 @@ public class AdminView {
 						System.out.println("3. Descrição: " + productCopy.getDescription());
 						System.out.println("4. Fornecedor: " + productCopy.getSupplier().getName());
 						System.out.println("5. Quantidade em estoque: " + productCopy.getStock().getQuantity());
-						System.out.println("6. Preço: " + productCopy.getStock().getPrice());
+						System.out.println("6. Preço: " + String.format("%.2f", productCopy.getStock().getPrice()));
 						System.out.println("7. Salvar");
 						System.out.println("0. Cancelar");
 						System.out.print("Escolha o campo que deseja editar: ");
@@ -994,7 +994,7 @@ public class AdminView {
 								productCopy.setStock(newStock);
 								break;
 							case 6:
-								System.out.println("Preço: " + productCopy.getStock().getPrice());
+								System.out.println("Preço: " + String.format("%.2f", productCopy.getStock().getPrice()));
 								System.out.println("Novo preço: ");
 								try {
 									newPrice = sc.nextDouble();
@@ -1244,7 +1244,7 @@ public class AdminView {
 			order = orders.getFirst();
 		} else {
 			for (Order orderAux : orders) {
-				System.out.println("ID: " + orderAux.getId() + " | Dono: " + orderAux.getOwner().getName());
+				System.out.println("ID: " + orderAux.getId() + " | Cliente: " + orderAux.getOwner().getName());
 			}
 
 			id = -1;
@@ -1285,7 +1285,7 @@ public class AdminView {
 			Integer quantity = itemOrder.getQuantity();
 			System.out.println("---------- Produto ----------");
 			System.out.println("Nome: " + product.getName() + " | Descrição: " + product.getDescription());
-			System.out.println("Quantidade: " + quantity + " | Valor unitário: " + product.getStock().getPrice() + " | Valor Total: " + itemOrder.getPrice() * quantity);
+			System.out.println("Quantidade: " + quantity + " | Valor unitário: R$ " + String.format("%.2f", product.getStock().getPrice())  + " | Valor Total: R$ " + String.format("%.2f", (itemOrder.getPrice() * quantity))); 
 		}	
 		System.out.println("----------          ----------\n");
 	}

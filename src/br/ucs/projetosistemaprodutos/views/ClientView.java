@@ -103,7 +103,7 @@ public class ClientView {
 			}
 
 			for (int i = 0; i < products.size(); i++) {
-				System.out.println(i + 1 + " - Código: " + products.get(i).getProductCode() + " - Nome: " + products.get(i).getName() + " | Preço: " + products.get(i).getStock().getPrice());
+				System.out.println(i + 1 + " - Código: " + products.get(i).getProductCode() + " - Nome: " + products.get(i).getName() + " | Preço: R$ " + String.format("%.2f", products.get(i).getStock().getPrice()));
 			}
 			System.out.println("0 - Sair ");
 			System.out.print("Digite o ID ou código do produto para ver detalhes: ");
@@ -141,7 +141,7 @@ public class ClientView {
 				System.out.println("Nome: " + productDetails.getName());
 				System.out.println("Descrição: " + productDetails.getDescription());
 				System.out.println("Quantidade em estoque: " + productDetails.getStock().getQuantity());
-				System.out.println("Preço: " + productDetails.getStock().getPrice());
+				System.out.println("Preço: R$ " + String.format("%.2f", productDetails.getStock().getPrice()));
 				System.out.println("----------          ----------");
 				System.out.println("Escolha o que deseja fazer: ");
 				System.out.println("1. Adicionar ao carrinho");
@@ -231,7 +231,7 @@ public class ClientView {
 
 		for (int i = 0; i < entries.size(); i++) {
 			Map.Entry<Product, Integer> entry = entries.get(i);
-			System.out.println((i + 1) + " - " + entry.getKey().getName() + ": " + entry.getValue() + " unidade" + (entry.getValue() > 1 ? "s" : "") + " - Total: R$" + entry.getKey().getStock().getPrice() * entry.getValue());
+			System.out.println((i + 1) + " - " + entry.getKey().getName() + ": " + entry.getValue() + " unidade" + (entry.getValue() > 1 ? "s" : "") + " - Total: R$" + String.format("%.2f", (entry.getKey().getStock().getPrice() * entry.getValue())));
 		}
 
 		System.out.println("---------------------------------------------");
@@ -264,7 +264,7 @@ public class ClientView {
 					Map.Entry<Product, Integer> entry = entries.get(i);
 					System.out.println((i + 1) + " - " + entry.getKey().getName() + ": " + entry.getValue()
 							+ " unidade" + (entry.getValue() > 1 ? "s" : "") + " - Total: R$"
-							+ entry.getKey().getStock().getPrice() * entry.getValue());
+							+ String.format("%.2f", (entry.getKey().getStock().getPrice() * entry.getValue())));
 				}
 				System.out.println("0 - Sair");
 
@@ -486,7 +486,7 @@ public class ClientView {
 					Integer quantity = itemOrder.getQuantity();
 					System.out.println("---------- Produto ----------");
 					System.out.println("Nome: " + product.getName() + " | Descrição: " + product.getDescription());
-					System.out.println("Quantidade: " + quantity + " | Valor unitário: " + product.getStock().getPrice() + " | Valor Total: " + itemOrder.getPrice() * quantity); 
+					System.out.println("Quantidade: " + quantity + " | Valor unitário: R$ " + String.format("%.2f", product.getStock().getPrice())  + " | Valor Total: R$ " + String.format("%.2f", (itemOrder.getPrice() * quantity))); 
 				}
 				System.out.println("----------          ----------");
 			}
