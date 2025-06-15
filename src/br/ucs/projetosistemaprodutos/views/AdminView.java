@@ -1125,57 +1125,90 @@ public class AdminView {
 	}
 
 	public void subOrders(Scanner sc, Store store) {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		List<Order> orders = new ArrayList<>();
 		int option = -1;
 
 		do {
 			System.out.println("\n=== MENU DE PESQUISA DE PEDIDOS ===");
-			System.out.println("1 - Pesquisar por ID ou Texto");
+			System.out.println("1 - Pesquisar por número do pedido ou cliente");
 			System.out.println("2 - Pesquisar por data de realização");
+			System.out.println("3 - Pesquisar por intervalo de data");
 			System.out.println("0 - Voltar");
 			System.out.print("Escolha uma opção: ");
 
 			try {
 				option = sc.nextInt();
 				sc.nextLine();
-
+				
 				System.out.println("--------------------------------------");
-
-				switch (option) {
-					case 1:
-						searchByIdAndText(sc);
-						break;
-
-					case 2:
-						searchByDate(sc);
-						break;
-
-					case 0:
-						System.out.println("Voltando ao menu principal...");
-						break;
-
-					default:
-						System.out.println("Opção inválida! Por favor, escolha entre 0 a 2");
-				}
-
-				if (option != 0) {
-					System.out.println("\nPressione Enter para continuar...");
-					sc.nextLine();
-				}
-
-			} catch (InputMismatchException e) {
-				System.out.println("Erro: por favor, digite um 	numero válido.");
-				sc.nextLine();
-				option = -1;
-			} catch (Exception e) {
+			}catch(InputMismatchException e) {
+				System.out.println("Entrada inválida.");
+			}catch (Exception e) {
 				System.out.println("Erro inesperado: " + e.getMessage());
 			}
+		}while(option < 0 ||option > 3);
+				
 
-		} while (option != 0);
+		switch (option) {
+			case 1:
+				searchByIdAndText(sc);
+				break;
+
+			case 2:
+				LocalDate date = null;
+				
+				try {
+					System.out.println("Informe a data desejada: ");
+					date = LocalDate.parse(sc.nextLine(), dtf);
+					
+				}catch(DateTimeParseException e) {
+					System.out.println("Data inválida.");
+					return;
+				}
+				orders = productController.getOrdersByDate(date, clientController.getAllOrders());
+				break;
+			case 3:
+				LocalDate startDate = null;
+				LocalDate endDate = null;
+				
+				try {
+					System.out.println("Data de início: ");
+					startDate = LocalDate.parse(sc.nextLine(), dtf);
+					
+					System.out.println("Data final: ");
+					endDate = LocalDate.parse(sc.nextLine(), dtf);
+				}catch(DateTimeParseException e) {
+					System.out.println("Data inválida.");
+					return;
+				}
+				
+				if(startDate.isAfter(endDate)) {
+					System.out.println("Data de início maior e a data final.");
+					return;
+				}
+				orders = productController.getOrdersByDate(startDate, endDate, clientController.getAllOrders());
+				break;
+			case 0:
+				System.out.println("Voltando ao menu principal...");
+				break;
+
+			default:
+				System.out.println("Opção inválida! Por favor, escolha entre 0 a 3");
+		}
+		
+		if(orders.isEmpty()) {
+			System.out.println("Nenhum pedido encontrado");
+		}else {
+			for(Order order : orders) {
+				showCompleteDetailsOrder(order);
+			}
+		}
 	}
 
 	private void searchByIdAndText(Scanner sc) {
 
-		System.out.println("Digite o nome do cliente ou o ID do pedido: ");
+		System.out.println("Digite o nome do cliente ou o número do pedido: ");
 
 		int id = -1;
 		String text;
@@ -1236,48 +1269,6 @@ public class AdminView {
 		editDetailsOrder(order, sc);
 	}
 
-	private void searchByDate(Scanner sc){
-		/*DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		LocalDate startDate = null;
-		LocalDate endDate = null;
-		List<Order> orders = new ArrayList<>();
-
-
-		try {
-			System.out.println("Data de início: ");
-			startDate = LocalDate.parse(sc.nextLine(), dtf);
-
-			System.out.println("Data final: ");
-			endDate = LocalDate.parse(sc.nextLine(), dtf);
-		} catch(DateTimeParseException e) {
-			System.out.println("Data inválida.");
-			return;
-		}
-
-		if(startDate.isAfter(endDate)) {
-			System.out.println("Data de início maior e a data final.");
-			return;
-		}
-
-		orders = productController.getByDate(startDate, endDate, );
-
-		if (orders.isEmpty()) {
-			System.out.println("Nenhum pedido encontrado no período especificado.");
-			return;
-		}
-
-
-		System.out.println("\n----- PEDIDOS ENCONTRADOS -----");
-		for (Order o : orders) {
-			System.out.printf("ID: %d | Data: %s | Cliente: %s | Status: %s\n",
-					o.getId(),
-					o.getDateOrder().format(dtf),
-					o.getOwner().getName(),
-					o.getSituation());
-		}
-*/
-	}
-
 	private void showCompleteDetailsOrder(Order order) {
 		System.out.println("----------  Pedido  ----------");
 		System.out.println("ID do Pedido: " + order.getId());
@@ -1285,15 +1276,17 @@ public class AdminView {
 		System.out.println("Data do pedido: " + order.getDateOrder().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 		System.out.println("Data de envio: " + (order.getDateForward() == null ? "*AINDA NÃO ENVIADO*" : order.getDateForward().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
 		System.out.println("Data de entrega: " + (order.getDateDeliver() == null ? "*AINDA NÃO ENTREGUE*" : order.getDateDeliver().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
-		System.out.println("---------- Produtos ----------");
+		System.out.println("Valor total do pedido (sem ICMS): R$" + String.format("%.2f", order.getTotalPrice()));
+		System.out.println("Valor total do pedido (com ICMS): R$" + String.format("%.2f", order.getTotalPriceICMS()));
+		
+		System.out.println("---------- Detalhes ----------");
 		for (ItemOrder itemOrder : order.getItemOrders()) {
 			Product product = itemOrder.getProduct();
 			Integer quantity = itemOrder.getQuantity();
-			System.out.println("Nome: " + product.getName() + " | Quantidade: " + quantity + " | Valor Total: " + itemOrder.getPrice() * quantity);
-		}
-		System.out.println("----------          ----------");
-		System.out.println("Valor total do pedido (sem ICMS): R$" + String.format("%.2f", order.getTotalPrice()));
-		System.out.println("Valor total do pedido (com ICMS): R$" + String.format("%.2f", order.getTotalPriceICMS()));
+			System.out.println("---------- Produto ----------");
+			System.out.println("Nome: " + product.getName() + " | Descrição: " + product.getDescription());
+			System.out.println("Quantidade: " + quantity + " | Valor unitário: " + product.getStock().getPrice() + " | Valor Total: " + itemOrder.getPrice() * quantity);
+		}	
 		System.out.println("----------          ----------\n");
 	}
 

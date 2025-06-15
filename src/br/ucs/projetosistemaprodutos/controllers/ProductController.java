@@ -137,13 +137,26 @@ public class ProductController {
 		throw new Exception("Pedido não encontrado");
 	}
 	
-	public List<Order> getByDate(LocalDate start, LocalDate end, List<Order> orders){
+	public List<Order> getOrdersByDate(LocalDate date1, List<Order> orders){
 		List<Order> ordersPeriod = new ArrayList<>();
 		
 		for(Order clientOrder : orders) {
 			LocalDate dateOrderClient = clientOrder.getDateOrder();
 			
-			if(!dateOrderClient.isBefore(start) && !dateOrderClient.isAfter(end)) {
+			if(dateOrderClient.equals(date1)) {
+				ordersPeriod.add(clientOrder);
+			}
+		}
+		
+		return ordersPeriod;
+	}
+	public List<Order> getOrdersByDate(LocalDate date1, LocalDate date2, List<Order> orders){
+		List<Order> ordersPeriod = new ArrayList<>();
+		
+		for(Order clientOrder : orders) {
+			LocalDate dateOrderClient = clientOrder.getDateOrder();
+			
+			if(!dateOrderClient.isBefore(date1) && !dateOrderClient.isAfter(date2)) {
 				ordersPeriod.add(clientOrder);
 			}
 		}

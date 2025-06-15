@@ -392,8 +392,9 @@ public class ClientView {
 		
 		do {
 			System.out.println("Pedidos");
-			System.out.println("1 - Pesquisar por número");
-			System.out.println("2 - Pesquisar por intervalo de data");
+			System.out.println("1 - Pesquisar por número do pedido");
+			System.out.println("2 - Pesquisar por data de realização");
+			System.out.println("3 - Pesquisar por intervalo de data");
 			System.out.println("0 - Sair");
 			System.out.println("Escolha uma opção: ");
 			
@@ -403,13 +404,44 @@ public class ClientView {
 			}catch(InputMismatchException e) {
 				System.out.println("Entrada inválida.");
 			}
-		}while(op < 0 ||op > 2);
+		}while(op < 0 ||op > 3);
 		
 		switch(op) {
 			case 1:
-				System.out.println("PESQUISAR POR NUMERO");
+				int id = -1;
+				System.out.println("Informe o número do pedido: ");
+				try {
+					id = sc.nextInt();
+					sc.nextLine();
+				}catch(InputMismatchException e) {
+					System.out.println("Entrada inválida.");
+				}
+				
+				if(id == -1) {
+					System.out.println("Algo deu errado.");
+				}else {
+					Optional<Order> orderOptional = clientController.getOrderById(id, client);
+					if (orderOptional.isEmpty()) {
+						System.out.println("Nenhum pedido encontrado com esse ID");
+						return;
+					}
+					orders.add(orderOptional.get());
+				}
 				break;
-			case 2: 
+			case 2:
+				LocalDate date = null;
+				
+				try {
+					System.out.println("Informe a data desejada: ");
+					date = LocalDate.parse(sc.nextLine(), dtf);
+					
+				}catch(DateTimeParseException e) {
+					System.out.println("Data inválida.");
+					return;
+				}
+				orders = productController.getOrdersByDate(date, client.getOrders());
+				break;
+			case 3: 
 				LocalDate startDate = null;
 				LocalDate endDate = null;
 				
@@ -428,7 +460,7 @@ public class ClientView {
 					System.out.println("Data de início maior e a data final.");
 					return;
 				}
-				orders = productController.getByDate(startDate, endDate, client.getOrders());
+				orders = productController.getOrdersByDate(startDate, endDate, client.getOrders());
 				break;
 			case 0:
 				System.out.println("Saindo de pedidos...");
@@ -452,6 +484,7 @@ public class ClientView {
 				for(ItemOrder itemOrder : order.getItemOrders()) {
 					Product product = itemOrder.getProduct(); 
 					Integer quantity = itemOrder.getQuantity();
+					System.out.println("---------- Produto ----------");
 					System.out.println("Nome: " + product.getName() + " | Descrição: " + product.getDescription());
 					System.out.println("Quantidade: " + quantity + " | Valor unitário: " + product.getStock().getPrice() + " | Valor Total: " + itemOrder.getPrice() * quantity); 
 				}

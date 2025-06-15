@@ -115,6 +115,14 @@ public class ClientController extends UserController{
         }
         return Optional.empty();
     }
+    public Optional<Order> getOrderById(Integer id, Client client) {
+        for(Order order : this.getAllOrders()) {
+            if(Objects.equals(order.getId(), id) && Objects.equals(order.getOwner(), client)) {
+                return Optional.of(order);
+            }
+        }
+        return Optional.empty();
+    }
 
     public List<Order> getAllOrderByText(String text) throws Exception {
         List<Client> clients = this.getByText(text);

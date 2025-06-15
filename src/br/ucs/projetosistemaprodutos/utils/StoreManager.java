@@ -6,7 +6,7 @@ import java.io.*;
 
 public class StoreManager {
     public void save(Store store) throws Exception {
-        try (FileOutputStream fileOutputStream = new FileOutputStream("projeto-poo-master/.idea/store.dat")){
+        try (FileOutputStream fileOutputStream = new FileOutputStream("store.dat")){
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
             objectOutputStream.writeObject(store);
@@ -16,7 +16,7 @@ public class StoreManager {
     }
 
     public Store read() throws Exception {
-        try (FileInputStream fileInputStream = new FileInputStream("projeto-poo-master/.idea/store.dat")){
+        try (FileInputStream fileInputStream = new FileInputStream("store.dat")){
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
             return (Store) objectInputStream.readObject();
