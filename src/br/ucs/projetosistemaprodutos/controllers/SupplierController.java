@@ -7,6 +7,7 @@ import br.ucs.projetosistemaprodutos.models.copies.SupplierCopy;
 import br.ucs.projetosistemaprodutos.models.itens.Store;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.Supplier;
+import br.ucs.projetosistemaprodutos.utils.StoreManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,14 +15,19 @@ import java.util.List;
 public class SupplierController {
 	private DynamicSupplierArray supplierArray;
 	private DynamicProductArray productArray;
+	private Store store;
+	private StoreManager storeManager;
 	
 	public SupplierController(Store store){
+		this.storeManager = new StoreManager();
+		this.store = store;
 		this.supplierArray = store.getSupplierArray();
 		this.productArray = store.getProductArray();
 	}
 	
 	public void create(Supplier supplier) throws Exception {
 	    supplierArray.add(supplier);
+		storeManager.save(store);
 	}
 	 
 	public void delete(Supplier supplier) throws Exception {
@@ -31,6 +37,7 @@ public class SupplierController {
 		 }
 		
 		 supplierArray.delete(supplier);
+		 storeManager.save(store);
 	}
 	
 	public void edit(Supplier supplier, SupplierCopy copy) throws Exception {
@@ -51,6 +58,8 @@ public class SupplierController {
         address.setCep(copyAddress.getCep());
         address.setCity(copyAddress.getCity());
         address.setState(copyAddress.getState());
+
+		storeManager.save(store);
     }
 	
 	public Supplier getById(int id) throws Exception{

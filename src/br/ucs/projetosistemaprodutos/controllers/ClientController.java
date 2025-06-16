@@ -8,16 +8,21 @@ import br.ucs.projetosistemaprodutos.models.itens.Store;
 import br.ucs.projetosistemaprodutos.models.person.Client;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.User;
+import br.ucs.projetosistemaprodutos.utils.StoreManager;
 
 import java.util.*;
 
 public class ClientController extends UserController{
 
-    DynamicUserArray userArray;
+    private final DynamicUserArray userArray;
+    private final StoreManager storeManager;
+    private final Store store;
 
     public ClientController(Store store) {
         super(store);
         userArray = store.getUserArray();
+        this.storeManager = new StoreManager();
+        this.store = store;
     }
 
     public void create(Client client) throws Exception {
@@ -64,6 +69,8 @@ public class ClientController extends UserController{
         address.setCep(copyAddress.getCep());
         address.setCity(copyAddress.getCity());
         address.setState(copyAddress.getState());
+
+        storeManager.save(store);
     }
 
     @Override
@@ -88,8 +95,9 @@ public class ClientController extends UserController{
         return clients;
     }
 
-    public void addOrder(Order order) {
+    public void addOrder(Order order) throws Exception {
         order.getOwner().getOrders().add(order);
+        storeManager.save(store);
     }
 
     public List<Order> getAllOrders() {
@@ -134,5 +142,10 @@ public class ClientController extends UserController{
         }
 
         return orders;
+    }
+
+    public void clearCart(Client client) throws Exception {
+        client.getShoppingCart().clearCart();
+        storeManager.save(store);
     }
 }

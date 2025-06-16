@@ -76,8 +76,7 @@ public class ClientView {
 
 		do {
 			System.out.println("---------------------------------------------");
-			System.out.println("Buscar produto: ");
-			System.out.println("Digite 0 para voltar ao menu");
+			System.out.print("Buscar produto (Digite '0' para voltar ao menu): ");
 			String text1 = sc.nextLine();
 
 			List<Product> products;
@@ -202,13 +201,13 @@ public class ClientView {
 						}
 
 						client.getShoppingCart().add(productDetails, maxQuantity);
-						productController.changeStock(productDetails, -maxQuantity);
+
 						System.out.println("Adicionando " + maxQuantity + " " + productDetails.getName() + " ao carrinho");
 						return;
 					}
 
 					client.getShoppingCart().add(productDetails, quantity);
-					productController.changeStock(productDetails, -quantity);
+
 					System.out.println("Adicionando " + quantity + " " + productDetails.getName() + " ao carrinho");
 
 				}
@@ -324,10 +323,39 @@ public class ClientView {
 
 				return;
 			case 2:
-
 				double value = 0;
 				double valueICMS = 0;
 				for (Map.Entry<Product, Integer> newEntry : client.getShoppingCart().getProducts().entrySet()) {
+					Product product = newEntry.getKey();
+					if(product.getStock().getQuantity() < newEntry.getValue()) {
+						System.out.println("O produto "+product.getName()+" tem apenas "+product.getStock().getQuantity()+
+								" unidade"+(product.getStock().getQuantity() > 1 ? "s" : "")+" no estoque, deseja comprar essa quantidade? ");
+
+						System.out.println("1 - Comprar "+product.getStock().getQuantity()+" unidade"+(product.getStock().getQuantity() > 1 ? "s" : ""));
+						System.out.println("2 - Excluir o produto '"+product.getName()+"' do Carrinho de Compras");
+
+						option = -1;
+
+						do {
+							try {
+								option = sc.nextInt();
+							} catch (InputMismatchException ignored) {}
+
+							if(option < 1 || option > 2) {
+								System.out.println("Entrada inválida, digite novamente: ");
+							}
+						}while (option < 1 || option > 2);
+
+						switch (option) {
+							case 1:
+								newEntry.setValue(product.getStock().getQuantity());
+								break;
+							case 2:
+								newEntry.setValue(0);
+								break;
+						}
+					}
+
 					double valueProduct = newEntry.getKey().getStock().getPrice();
 					Integer newQuantity = newEntry.getValue();
 
@@ -366,7 +394,25 @@ public class ClientView {
 						itemOrders.add(new ItemOrder(newEntry.getValue(), newEntry.getKey().getStock().getPrice(), order, newEntry.getKey()));
 				}
 				order.setItemOrders(itemOrders);
-				clientController.addOrder(order);
+				try {
+					clientController.addOrder(order);
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+					return;
+				}
+
+				for (Map.Entry<Product, Integer> newEntry : client.getShoppingCart().getProducts().entrySet()) {
+					Product product = newEntry.getKey();
+					quantity = newEntry.getValue();
+
+					try {
+						productController.changeStock(product, -quantity);
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+						return;
+					}
+				}
+
 				System.out.println("Pedido Finalizado!");
 
 				System.out.println("ID do pedido: " + order.getId());
@@ -375,11 +421,21 @@ public class ClientView {
 				System.out.println("Valor total (sem ICMS): R$" + String.format("%.2f", order.getTotalPrice()));
 				System.out.println("Valor total (com ICMS): R$" + String.format("%.2f", order.getTotalPriceICMS()));
 
-				client.getShoppingCart().clearCart();
+				try {
+					clientController.clearCart(client);
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+					return;
+				}
 
 				return;
 			case 3:
-				client.getShoppingCart().clearCart();
+				try {
+					clientController.clearCart(client);
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+
 				System.out.println("Carrinho de compras excluído com sucesso!");
 				return;
 		}

@@ -7,6 +7,7 @@ import br.ucs.projetosistemaprodutos.models.itens.Product;
 import br.ucs.projetosistemaprodutos.models.itens.Stock;
 import br.ucs.projetosistemaprodutos.models.itens.Store;
 import br.ucs.projetosistemaprodutos.models.person.Client;
+import br.ucs.projetosistemaprodutos.utils.StoreManager;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -17,8 +18,12 @@ import java.util.Map;
 
 public class ProductController {
 	private DynamicProductArray productArray;
+	private Store store;
+	private StoreManager storeManager;
 		
 	public ProductController(Store store){
+		this.storeManager = new StoreManager();
+		this.store = store;
 		this.productArray = store.getProductArray();
 	}
 	
@@ -26,13 +31,16 @@ public class ProductController {
 		productArray.add(product);
 		
 		product.getSupplier().getProducts().add(product);
+
+		storeManager.save(store);
 	}
 	 
 	public void delete(Product product) throws Exception {
 		
 		product.getSupplier().getProducts().delete(product);
 		productArray.delete(product);
-		
+
+		storeManager.save(store);
 	}
 	 
 	public void edit(Product product, ProductCopy copy) throws Exception { 
@@ -50,7 +58,8 @@ public class ProductController {
         
         stock.setQuantity(copyStock.getQuantity());
         stock.setPrice(copy.getStock().getPrice());
-                
+
+		storeManager.save(store);
     }
 	
 	public void showArray() throws Exception{
@@ -101,7 +110,7 @@ public class ProductController {
 		return mapProduct;
 	}
 
-	public void changeStock(Product product, int delta) throws IllegalArgumentException {
+	public void changeStock(Product product, int delta) throws Exception {
 		int currentStock = product.getStock().getQuantity();
 		int updatedStock = currentStock + delta;
 
@@ -110,9 +119,11 @@ public class ProductController {
 		}
 
 		product.getStock().setQuantity(updatedStock);
+
+		storeManager.save(store);
 	}
 
-	public void editCartItem(Client client, Product product, int newQuantity) throws IllegalArgumentException {
+	public void editCartItem(Client client, Product product, int newQuantity) throws Exception {
 		int currentCartQuantity = client.getShoppingCart().getQuantity(product);
 		int currentStockQuantity = product.getStock().getQuantity();
 
@@ -125,6 +136,8 @@ public class ProductController {
 		changeStock(product, -delta);
 
 		client.getShoppingCart().setQuantity(product, newQuantity);
+
+		storeManager.save(store);
 	}
 
 	public Order getOrderByList(Integer id, List<Order> orders) throws Exception {

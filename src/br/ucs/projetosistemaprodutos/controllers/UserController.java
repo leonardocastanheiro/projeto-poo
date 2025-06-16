@@ -4,23 +4,30 @@ import br.ucs.projetosistemaprodutos.collections.DynamicUserArray;
 import br.ucs.projetosistemaprodutos.models.itens.Store;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.User;
+import br.ucs.projetosistemaprodutos.utils.StoreManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserController {
-    private DynamicUserArray userArray;
+    private final DynamicUserArray userArray;
+    private final StoreManager storeManager;
+    private final Store store;
 
     public UserController(Store store) {
+        this.storeManager = new StoreManager();
+        this.store = store;
         this.userArray = store.getUserArray();
     }
 
     protected void create(User user) throws Exception {
         userArray.add(user);
+        storeManager.save(store);
     }
 
     protected void delete(User user) throws Exception {
         userArray.delete(user);
+        storeManager.save(store);
     }
     
     public User getById(int id) throws Exception {
