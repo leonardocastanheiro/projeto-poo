@@ -525,28 +525,144 @@ public class ClientView {
 
 		if(orders.isEmpty()) {
 			System.out.println("Nenhum pedido encontrado");
-		}else {
-			for(Order order : orders) {
-				System.out.println("-----------  Pedido  -----------");
-				System.out.println("ID do Pedido: " + order.getId());
-				System.out.println("Situação: " + order.getSituation().toString());
-				System.out.println("Data do pedido: " + order.getDateOrder().format(dtf));
-				System.out.println("Data de envio: " + (order.getDateForward() == null ? "*AINDA NÃO ENVIADO*" : order.getDateForward().format(dtf)));
-				System.out.println("Data de entrega: " + (order.getDateDeliver() == null ? "*AINDA NÃO ENTREGUE*" : order.getDateDeliver().format(dtf)));
-				System.out.println("Valor total do pedido (sem ICMS): R$" + String.format("%.2f", order.getTotalPrice()));
-				System.out.println("Valor total do pedido (com ICMS): R$" + String.format("%.2f", order.getTotalPriceICMS()));
-			
-				System.out.println("---------- Detalhes ----------");
-				for(ItemOrder itemOrder : order.getItemOrders()) {
-					Product product = itemOrder.getProduct(); 
-					Integer quantity = itemOrder.getQuantity();
-					System.out.println("---------- Produto ----------");
-					System.out.println("Nome: " + product.getName() + " | Descrição: " + product.getDescription());
-					System.out.println("Quantidade: " + quantity + " | Valor unitário: R$ " + String.format("%.2f", product.getStock().getPrice())  + " | Valor Total: R$ " + String.format("%.2f", (itemOrder.getPrice() * quantity))); 
+			return;
+		}
+
+		for(Order order: orders) {
+			System.out.println(" - ID do Pedido: "+order.getId()+" | Data do Pedido: "+order.getDateOrder().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))+" | Situação: "+order.getSituation());
+		}
+		System.out.println("Digite o ID do Pedido que deseja acessar: ");
+
+		Integer id = -1;
+
+		do {
+			try {
+				id = sc.nextInt();
+			} catch (InputMismatchException ignored) {}
+		} while (id == -1);
+
+		Order order;
+
+		try {
+			order = productController.getOrderByList(id, orders);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return;
+		}
+
+		System.out.println("-----------  Pedido  -----------");
+		System.out.println("ID do Pedido: " + order.getId());
+		System.out.println("Situação: " + order.getSituation().toString());
+		System.out.println("Data do pedido: " + order.getDateOrder().format(dtf));
+		System.out.println("Data de envio: " + (order.getDateForward() == null ? "*AINDA NÃO ENVIADO*" : order.getDateForward().format(dtf)));
+		System.out.println("Data de entrega: " + (order.getDateDeliver() == null ? "*AINDA NÃO ENTREGUE*" : order.getDateDeliver().format(dtf)));
+		System.out.println("Valor total do pedido (sem ICMS): R$" + String.format("%.2f", order.getTotalPrice()));
+		System.out.println("Valor total do pedido (com ICMS): R$" + String.format("%.2f", order.getTotalPriceICMS()));
+
+		System.out.println("---------- Detalhes ----------");
+		for(ItemOrder itemOrder : order.getItemOrders()) {
+			Product product = itemOrder.getProduct();
+			Integer quantity = itemOrder.getQuantity();
+			System.out.println("---------- Produto ----------");
+			System.out.println("Nome: " + product.getName() + " | Descrição: " + product.getDescription());
+			System.out.println("Quantidade: " + quantity + " | Valor unitário: R$ " + String.format("%.2f", product.getStock().getPrice())  + " | Valor Total: R$ " + String.format("%.2f", (itemOrder.getPrice() * quantity)));
+		}
+		System.out.println("----------          ----------");
+
+		this.editDetailsOrder(order, sc);
+	}
+
+	private void editDetailsOrder(Order order, Scanner sc) {
+		System.out.println("1 - Editar Situação\n0 - Sair");
+
+		int option = -1;
+
+		do {
+			try {
+				option = sc.nextInt();
+
+				if (option < 0 || option > 1) {
+					throw new InputMismatchException("Entrada inválida");
 				}
-				System.out.println("----------          ----------");
+
+			} catch (InputMismatchException e) {
+				System.out.print("Entrada inválida, digite novamente: ");
 			}
-			
+
+			sc.nextLine();
+
+		} while (option < 0 || option > 1);
+
+		if (option == 0) {
+			return;
+		}
+
+		System.out.println("Situação Atual: " + order.getSituation().toString());
+
+		switch (order.getSituation()) {
+			case NEW -> {
+				System.out.println("1 - Cancelar\n0 - Sair");
+				option = -1;
+
+				do {
+					try {
+						option = sc.nextInt();
+
+						if (option < 0 || option > 1) {
+							throw new InputMismatchException("Entrada inválida");
+						}
+
+					} catch (InputMismatchException e) {
+						System.out.print("Entrada inválida, digite novamente: ");
+					}
+					sc.nextLine();
+				} while (option < 0 || option > 1);
+
+				if (option == 0) {
+					break;
+				}
+
+				order.setSituation(Situation.CANCELED);
+				order.setDateForward(null);
+				System.out.println("Pedido Cancelado com sucesso!");
+			}
+
+			case FORWARD -> {
+				System.out.println("\n1 - Confirmar Entrega\n0 - Sair");
+				option = -1;
+
+				do {
+					try {
+						option = sc.nextInt();
+
+						if (option < 0 || option > 1) {
+							throw new InputMismatchException("Entrada inválida");
+						}
+
+					} catch (InputMismatchException e) {
+						System.out.print("Entrada inválida, digite novamente: ");
+					}
+					sc.nextLine();
+				} while (option < 0 || option > 1);
+
+				if (option == 0) {
+					break;
+				}
+
+				order.setDateDeliver(LocalDate.now());
+				order.setSituation(Situation.DELIVERED);
+				break;
+			}
+
+			case CANCELED -> {
+				System.out.println("\nPedido já cancelado!");
+				break;
+			}
+
+			case DELIVERED -> {
+				System.out.println("\nProduto já entregue!");
+				break;
+			}
 		}
 	}
 
