@@ -6,6 +6,7 @@ import java.util.*;
 import java.util.jar.JarOutputStream;
 
 import br.ucs.projetosistemaprodutos.controllers.*;
+import br.ucs.projetosistemaprodutos.exceptions.EmptyDataException;
 import br.ucs.projetosistemaprodutos.models.address.Address;
 import br.ucs.projetosistemaprodutos.models.copies.ClientCopy;
 import br.ucs.projetosistemaprodutos.models.copies.ProductCopy;
@@ -111,18 +112,57 @@ public class AdminView {
 
 			switch (subOption) {
 				case 1:
-					System.out.print("Nome: ");
-					String name = sc.nextLine();
+					Client c = new Client();
+					String name = "";
+					String login = "";
+					String password = "";
+					String creditCard = "";
+					
+					try {
+						System.out.print("Nome: ");
+						name = sc.nextLine();
+						c.setName(name);
+						clientController.isEmpty(c);
+					}catch(EmptyDataException e) {
+						System.out.println(e.getMessage());		
+						return;
+					}
+					
 					System.out.print("Telefone: ");
 					String phone = sc.nextLine();
 					System.out.print("Email: ");
 					String email = sc.nextLine();
-					System.out.print("Usuário: ");
-					String login = sc.nextLine();
-					System.out.print("Senha: ");
-					String password = sc.nextLine();
-					System.out.print("Cartão de crédito: ");
-					String creditCard = sc.nextLine();
+					
+					try {
+						System.out.print("Usuário: ");
+						login = sc.nextLine();
+						c.setLogin(login);
+						clientController.isEmpty(c);
+					}catch(EmptyDataException e) {
+						System.out.println(e.getMessage());		
+						return;
+					}
+					
+					try {
+						System.out.print("Senha: ");
+						password = sc.nextLine();
+						c.setPassword(password);
+						clientController.isEmpty(c);
+					}catch(EmptyDataException e) {
+						System.out.println(e.getMessage());		
+						return;
+					}
+					
+					try {
+						System.out.print("Cartão de crédito: ");
+						creditCard = sc.nextLine();
+						c.setCreditCard(creditCard);
+						clientController.isEmpty(c);
+					}catch(EmptyDataException e) {
+						System.out.println(e.getMessage());		
+						return;
+					}
+					
 					System.out.println("ENDEREÇO");
 					System.out.print("Rua: ");
 					String street = sc.nextLine();

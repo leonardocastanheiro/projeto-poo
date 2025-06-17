@@ -1,6 +1,7 @@
 package br.ucs.projetosistemaprodutos.controllers;
 
 import br.ucs.projetosistemaprodutos.collections.DynamicUserArray;
+import br.ucs.projetosistemaprodutos.exceptions.EmptyDataException;
 import br.ucs.projetosistemaprodutos.models.itens.Store;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.User;
@@ -21,6 +22,7 @@ public class UserController {
     }
 
     protected void create(User user) throws Exception {
+     	//isEmpty(user);
         userArray.add(user);
         storeManager.save(store);
     }
@@ -73,5 +75,17 @@ public class UserController {
 
         return userArray.getByText(text, role);
 
+    }
+    
+    public void isEmpty(User user) throws EmptyDataException{
+    	if(user.getName().isEmpty()) {
+    		throw new EmptyDataException();
+    	}
+    	if(user.getLogin().isEmpty()) {
+    		throw new EmptyDataException();
+    	}
+    	if(!user.getName().isEmpty() && !user.getLogin().isEmpty() && user.getPassword().isEmpty()) {
+    		throw new EmptyDataException();
+    	}
     }
 }
