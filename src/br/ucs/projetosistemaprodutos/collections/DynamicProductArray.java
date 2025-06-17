@@ -90,8 +90,6 @@ public class DynamicProductArray implements Serializable {
 
     }
 
-    //public void showProductByDate()
-
     public List<Product> getByText(String text) throws Exception {
         List<Product> products = new ArrayList<>();
 

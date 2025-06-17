@@ -149,9 +149,18 @@ public class AdminView {
 					break;
 
 				case 2:
-					System.out.println("Buscar Cliente: ");
+					System.out.println("Buscar cliente (Digite '0' para voltar ao menu): ");
 					String text = sc.nextLine();
 
+					try {
+						int exitSub = Integer.parseInt(text);
+
+						if (exitSub == 0) {
+							return;
+						}
+					} catch (NumberFormatException ignored) {
+					}
+					
 					List<Client> clients;
 
 					try {
@@ -166,9 +175,18 @@ public class AdminView {
 					}
 					break;
 				case 3:
-					System.out.println("Buscar Cliente: ");
+					System.out.println("Buscar cliente (Digite '0' para voltar ao menu): : ");
 					String text1 = sc.nextLine();
 
+					try {
+						int exitSub = Integer.parseInt(text1);
+
+						if (exitSub == 0) {
+							return;
+						}
+					} catch (NumberFormatException ignored) {
+					}
+					
 					List<Client> clients1;
 
 					try {
@@ -333,9 +351,18 @@ public class AdminView {
 					} while (editInfo != 0 && editInfo != 14);
 					break;
 				case 4:
-					System.out.println("Buscar Cliente: ");
+					System.out.println("Buscar cliente (Digite '0' para voltar ao menu): ");
 					String text2 = sc.nextLine();
 
+					try {
+						int exitSub = Integer.parseInt(text2);
+
+						if (exitSub == 0) {
+							return;
+						}
+					} catch (NumberFormatException ignored) {
+					}
+					
 					List<Client> clients2;
 
 					try {
@@ -456,10 +483,18 @@ public class AdminView {
 					}
 					break;
 				case 2:
-					System.out.print("Buscar Fornecedor: ");
-					;
+					System.out.print("Buscar fornecedor (Digite '0' para voltar ao menu): ");
 					String text = sc.nextLine();
 
+					try {
+						int exitSub = Integer.parseInt(text);
+
+						if (exitSub == 0) {
+							return;
+						}
+					} catch (NumberFormatException ignored) {
+					}
+					
 					List<Supplier> suppliers;
 
 					try {
@@ -474,9 +509,17 @@ public class AdminView {
 					}
 					break;
 				case 3:
-					System.out.print("Buscar Fornecedor: ");
-					;
+					System.out.print("Buscar fornecedor (Digite '0' para voltar ao menu): ");
 					String text1 = sc.nextLine();
+					
+					try {
+						int exitSub = Integer.parseInt(text1);
+
+						if (exitSub == 0) {
+							return;
+						}
+					} catch (NumberFormatException ignored) {
+					}
 
 					List<Supplier> suppliers1;
 
@@ -627,9 +670,17 @@ public class AdminView {
 					} while (editInfo != 0 && editInfo != 12);
 					break;
 				case 4:
-					System.out.print("Buscar Fornecedor: ");
-					;
+					System.out.print("Buscar fornecedor (Digite '0' para voltar ao menu): ");
 					String text2 = sc.nextLine();
+					
+					try {
+						int exitSub = Integer.parseInt(text2);
+
+						if (exitSub == 0) {
+							return;
+						}
+					} catch (NumberFormatException ignored) {
+					}
 
 					List<Supplier> suppliers2;
 
@@ -678,10 +729,19 @@ public class AdminView {
 					break;
 
 				case 5:
-					System.out.print("Buscar Fornecedor: ");
-					;
+					System.out.print("Buscar fornecedor (Digite '0' para voltar ao menu): ");
 					String text3 = sc.nextLine();
 
+					try {
+						int exitSub = Integer.parseInt(text3);
+
+						if (exitSub == 0) {
+							return;
+						}
+					} catch (NumberFormatException ignored) {
+					}
+
+					
 					List<Supplier> suppliers3;
 
 					try {
@@ -736,7 +796,7 @@ public class AdminView {
 		int subOption = -1;
 
 		do{
-			System.out.println("\n\n-----MENU DE GERENCIAMENTO D PRODUTOS-----");
+			System.out.println("\n\n-----MENU DE GERENCIAMENTO DE PRODUTOS-----");
 			System.out.println("1 - Cadastrar Novo Produto");
 			System.out.println("2 - Buscar Produto(s)");
 			System.out.println("3 - Editar Produto");
@@ -903,8 +963,17 @@ public class AdminView {
 	}
 //-------------------------------------------------------------------------------------
 	private void subSearchProductByCodeAndText(Scanner sc) {
-		System.out.print("Buscar Produto: ");
+		System.out.print("Buscar produto (Digite '0' para voltar ao menu): ");
 		String searchText = sc.nextLine();
+
+		try {
+			int exitSub = Integer.parseInt(searchText);
+
+			if (exitSub == 0) {
+				return;
+			}
+		} catch (NumberFormatException ignored) {
+		}
 
 		List<Product> products;
 
@@ -965,8 +1034,18 @@ public class AdminView {
 	private void showProductsBySupplier(Scanner scanner) {
 
 		System.out.println("\n--- Produtos por Fornecedor ---");
-		System.out.print("Digite o nome do fornecedor: ");
+		System.out.print("Digite o nome do fornecedor (Digite '0' para voltar ao menu): ");
 		String name = scanner.nextLine();
+		
+		try {
+			int exitSub = Integer.parseInt(name);
+
+			if (exitSub == 0) {
+				return;
+			}
+		} catch (NumberFormatException ignored) {
+		}
+		
 		List<Supplier> suppliers;
 
 		try {
@@ -1056,9 +1135,18 @@ public class AdminView {
 	}
 //-------------------------------------------------------------------------------------
 	private void subEditProduct(Scanner sc){
-
-		System.out.print("Buscar Produto: ");
+		System.out.print("Buscar produto (Digite '0' para voltar ao menu): ");
 		String text2 = sc.nextLine();
+		
+		try {
+			int exitSub = Integer.parseInt(text2);
+
+			if (exitSub == 0) {
+				return;
+			}
+		} catch (NumberFormatException ignored) {
+		}
+		
 		List<Product> products1;
 
 		try {
@@ -1227,9 +1315,18 @@ public class AdminView {
 	}
 //-------------------------------------------------------------------------------------
 	private void subDeleteProduct(Scanner sc){
-		System.out.print("Buscar Produto: ");
+		System.out.print("Buscar produto (Digite '0' para voltar ao menu): ");
 		String searchText = sc.nextLine();
 
+		try {
+			int exitSub = Integer.parseInt(searchText);
+
+			if (exitSub == 0) {
+				return;
+			}
+		} catch (NumberFormatException ignored) {
+		}
+		
 		List<Product> foundProducts;
 
 		try {
@@ -1313,8 +1410,19 @@ public class AdminView {
 				LocalDate date = null;
 
 				try {
-					System.out.println("Informe a data desejada: ");
-					date = LocalDate.parse(sc.nextLine(), dtf);
+					System.out.println("Informe a data desejada (Digite '0' para voltar ao menu): ");
+					String text = sc.nextLine();
+					
+					try {
+						int exitSub = Integer.parseInt(text);
+
+						if (exitSub == 0) {
+							return;
+						}
+					} catch (NumberFormatException ignored) {
+					}
+					
+					date = LocalDate.parse(text, dtf);
 
 				}catch(DateTimeParseException e) {
 					System.out.println("Data inválida.");
@@ -1327,11 +1435,31 @@ public class AdminView {
 				LocalDate endDate = null;
 
 				try {
-					System.out.println("Data de início: ");
-					startDate = LocalDate.parse(sc.nextLine(), dtf);
+					System.out.println("Data de início (Digite '0' para voltar ao menu): ");
+					String text1 = sc.nextLine();
+					
+					try {
+						int exitSub = Integer.parseInt(text1);
 
-					System.out.println("Data final: ");
-					endDate = LocalDate.parse(sc.nextLine(), dtf);
+						if (exitSub == 0) {
+							return;
+						}
+					} catch (NumberFormatException ignored) {
+					}
+					startDate = LocalDate.parse(text1, dtf);
+
+					System.out.println("Data final (Digite '0' para voltar ao menu): ");
+					String text2 = sc.nextLine();
+					
+					try {
+						int exitSub = Integer.parseInt(text2);
+
+						if (exitSub == 0) {
+							return;
+						}
+					} catch (NumberFormatException ignored) {
+					}
+					endDate = LocalDate.parse(text2, dtf);
 				}catch(DateTimeParseException e) {
 					System.out.println("Data inválida.");
 					return;
@@ -1362,7 +1490,7 @@ public class AdminView {
 
 	private void searchByIdAndText(Scanner sc) {
 
-		System.out.println("Digite o nome do cliente ou o número do pedido: ");
+		System.out.println("Digite o nome do cliente ou o número do pedido ('0' para voltar ao menu): ");
 
 		int id = -1;
 		String text;
@@ -1371,6 +1499,10 @@ public class AdminView {
 
 		try {
 			id = Integer.parseInt(text);
+			
+			if(id == 0) {
+				return;
+			}
 		} catch (NumberFormatException ignored) {
 		}
 

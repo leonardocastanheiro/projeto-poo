@@ -465,10 +465,14 @@ public class ClientView {
 		switch(op) {
 			case 1:
 				int id = -1;
-				System.out.println("Informe o número do pedido: ");
+				System.out.println("Informe o número do pedido (Digite '0' para voltar ao menu): ");
 				try {
 					id = sc.nextInt();
 					sc.nextLine();
+					
+					if(id == 0) {
+						return;
+					}
 				}catch(InputMismatchException e) {
 					System.out.println("Entrada inválida.");
 				}
@@ -488,9 +492,19 @@ public class ClientView {
 				LocalDate date = null;
 				
 				try {
-					System.out.println("Informe a data desejada: ");
-					date = LocalDate.parse(sc.nextLine(), dtf);
+					System.out.println("Informe a data desejada (Digite '0' para voltar ao menu): ");
+					String text = sc.nextLine();
 					
+					try {
+						int exitSub = Integer.parseInt(text);
+
+						if (exitSub == 0) {
+							return;
+						}
+					} catch (NumberFormatException ignored) {
+					}
+					
+					date = LocalDate.parse(text, dtf);
 				}catch(DateTimeParseException e) {
 					System.out.println("Data inválida.");
 					return;
@@ -502,11 +516,31 @@ public class ClientView {
 				LocalDate endDate = null;
 				
 				try {
-					System.out.println("Data de início: ");
-					startDate = LocalDate.parse(sc.nextLine(), dtf);
+					System.out.println("Data de início (Digite '0' para voltar ao menu): ");
+					String text1 = sc.nextLine();
 					
-					System.out.println("Data final: ");
-					endDate = LocalDate.parse(sc.nextLine(), dtf);
+					try {
+						int exitSub = Integer.parseInt(text1);
+
+						if (exitSub == 0) {
+							return;
+						}
+					} catch (NumberFormatException ignored) {
+					}
+					startDate = LocalDate.parse(text1, dtf);
+
+					System.out.println("Data final (Digite '0' para voltar ao menu): ");
+					String text2 = sc.nextLine();
+					
+					try {
+						int exitSub = Integer.parseInt(text2);
+
+						if (exitSub == 0) {
+							return;
+						}
+					} catch (NumberFormatException ignored) {
+					}
+					endDate = LocalDate.parse(text2, dtf);
 				}catch(DateTimeParseException e) {
 					System.out.println("Data inválida.");
 					return;
@@ -531,13 +565,17 @@ public class ClientView {
 		for(Order order: orders) {
 			System.out.println(" - ID do Pedido: "+order.getId()+" | Data do Pedido: "+order.getDateOrder().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))+" | Situação: "+order.getSituation());
 		}
-		System.out.println("Digite o ID do Pedido que deseja acessar: ");
+		System.out.println("Digite o ID do Pedido que deseja acessar (Digite '0' para voltar ao menu): ");
 
 		Integer id = -1;
 
 		do {
 			try {
 				id = sc.nextInt();
+				sc.nextLine();
+				if(id == 0) {
+					return;
+				}
 			} catch (InputMismatchException ignored) {}
 		} while (id == -1);
 
