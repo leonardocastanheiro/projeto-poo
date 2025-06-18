@@ -233,7 +233,7 @@ public class ClientView {
 	public void subCart(Scanner sc) {
 		System.out.println("Carrinho de Compras");
 
-		if (client.getShoppingCart().getProducts() == null) {
+		if (client.getShoppingCart().getProducts().isEmpty()) {
 			System.out.println("Nenhum produto encontrado!");
 			return;
 		}
