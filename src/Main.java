@@ -20,18 +20,19 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        /*
-        Main m = new Main();
-        m.setUserArray();
-        m.setSupplierArray();
-        m.setProductArray();
-
         StoreManager storeManager = new StoreManager();
-        storeManager.save(m.store);
-         */
+        Store store;
 
-        StoreManager storeManager = new StoreManager();
-        Store store = storeManager.read();
+        try {
+            store = storeManager.read();
+        } catch (Exception e) {
+            Main m = new Main();
+            m.setUserArray();
+            m.setSupplierArray();
+            m.setProductArray();
+            storeManager.save(m.store);
+            store = m.store;
+        }
 
     	Scanner sc = new Scanner(System.in);
     	LoginView login = new LoginView(store);

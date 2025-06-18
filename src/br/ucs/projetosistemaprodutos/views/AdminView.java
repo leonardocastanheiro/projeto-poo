@@ -1450,7 +1450,7 @@ public class AdminView {
 				LocalDate date = null;
 
 				try {
-					System.out.println("Informe a data desejada (Digite '0' para voltar ao menu): ");
+					System.out.print("Informe a data desejada (Digite '0' para voltar ao menu): ");
 					String text = sc.nextLine();
 					
 					try {
@@ -1466,7 +1466,7 @@ public class AdminView {
 
 				}catch(DateTimeParseException e) {
 					System.out.println("Data inválida.");
-					return;
+					break;
 				}
 				orders = productController.getOrdersByDate(date, clientController.getAllOrders());
 				break;
@@ -1475,7 +1475,7 @@ public class AdminView {
 				LocalDate endDate = null;
 
 				try {
-					System.out.println("Data de início (Digite '0' para voltar ao menu): ");
+					System.out.print("Data de início (Digite '0' para voltar ao menu): ");
 					String text1 = sc.nextLine();
 					
 					try {
@@ -1488,7 +1488,7 @@ public class AdminView {
 					}
 					startDate = LocalDate.parse(text1, dtf);
 
-					System.out.println("Data final (Digite '0' para voltar ao menu): ");
+					System.out.print("Data final (Digite '0' para voltar ao menu): ");
 					String text2 = sc.nextLine();
 					
 					try {
@@ -1502,12 +1502,12 @@ public class AdminView {
 					endDate = LocalDate.parse(text2, dtf);
 				}catch(DateTimeParseException e) {
 					System.out.println("Data inválida.");
-					return;
+					break;
 				}
 
 				if(startDate.isAfter(endDate)) {
-					System.out.println("Data de início maior e a data final.");
-					return;
+					System.out.print("Data de início maior e a data final.");
+					break;
 				}
 				orders = productController.getOrdersByDate(startDate, endDate, clientController.getAllOrders());
 				break;
@@ -1530,7 +1530,7 @@ public class AdminView {
 
 	private void searchByIdAndText(Scanner sc) {
 
-		System.out.println("Digite o nome do cliente ou o número do pedido ('0' para voltar ao menu): ");
+		System.out.print("Digite o nome do cliente ou o número do pedido ('0' para voltar ao menu): ");
 
 		int id = -1;
 		String text;

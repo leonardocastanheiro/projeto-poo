@@ -465,7 +465,7 @@ public class ClientView {
 		switch(op) {
 			case 1:
 				int id = -1;
-				System.out.println("Informe o número do pedido (Digite '0' para voltar ao menu): ");
+				System.out.print("Informe o número do pedido (Digite '0' para voltar ao menu): ");
 				try {
 					id = sc.nextInt();
 					sc.nextLine();
@@ -492,7 +492,7 @@ public class ClientView {
 				LocalDate date = null;
 				
 				try {
-					System.out.println("Informe a data desejada (Digite '0' para voltar ao menu): ");
+					System.out.print("Informe a data desejada (Digite '0' para voltar ao menu): ");
 					String text = sc.nextLine();
 					
 					try {
@@ -516,7 +516,7 @@ public class ClientView {
 				LocalDate endDate = null;
 				
 				try {
-					System.out.println("Data de início (Digite '0' para voltar ao menu): ");
+					System.out.print("Data de início (Digite '0' para voltar ao menu): ");
 					String text1 = sc.nextLine();
 					
 					try {
@@ -525,11 +525,11 @@ public class ClientView {
 						if (exitSub == 0) {
 							return;
 						}
-					} catch (NumberFormatException ignored) {
-					}
+					} catch (NumberFormatException ignored) {}
+
 					startDate = LocalDate.parse(text1, dtf);
 
-					System.out.println("Data final (Digite '0' para voltar ao menu): ");
+					System.out.print("Data final (Digite '0' para voltar ao menu): ");
 					String text2 = sc.nextLine();
 					
 					try {
@@ -538,9 +538,9 @@ public class ClientView {
 						if (exitSub == 0) {
 							return;
 						}
-					} catch (NumberFormatException ignored) {
-					}
+					} catch (NumberFormatException ignored) {}
 					endDate = LocalDate.parse(text2, dtf);
+
 				}catch(DateTimeParseException e) {
 					System.out.println("Data inválida.");
 					return;
