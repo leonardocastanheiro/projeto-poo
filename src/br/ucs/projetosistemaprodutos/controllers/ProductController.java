@@ -127,6 +127,13 @@ public class ProductController {
 		int currentCartQuantity = client.getShoppingCart().getQuantity(product);
 		int currentStockQuantity = product.getStock().getQuantity();
 
+		if (newQuantity == 0) {
+			changeStock(product, currentCartQuantity);
+			client.getShoppingCart().getProducts().remove(product);
+			storeManager.save(store);
+			return;
+		}
+
 		int delta = newQuantity - currentCartQuantity;
 
 		if (delta > 0 && currentStockQuantity < delta) {

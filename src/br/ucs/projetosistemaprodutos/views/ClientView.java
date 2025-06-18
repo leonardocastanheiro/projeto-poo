@@ -10,6 +10,7 @@ import br.ucs.projetosistemaprodutos.controllers.ProductController;
 import br.ucs.projetosistemaprodutos.models.copies.ClientCopy;
 import br.ucs.projetosistemaprodutos.models.itens.*;
 import br.ucs.projetosistemaprodutos.models.person.Client;
+import br.ucs.projetosistemaprodutos.utils.StoreManager;
 
 public class ClientView {
 
@@ -17,12 +18,14 @@ public class ClientView {
 	private final ClientController clientController;
 	private final ProductController productController;
 	private final Client client;
+	private final StoreManager storeManager;
 
 	public ClientView(Store store, Client client) {
 		this.client = client;
 		this.store = store;
 		this.clientController = new ClientController(store);
 		this.productController = new ProductController(store);
+		this.storeManager = new StoreManager();
 	}
 
 	public void show(Scanner sc) {
@@ -202,14 +205,25 @@ public class ClientView {
 
 						client.getShoppingCart().add(productDetails, maxQuantity);
 
+						try {
+							storeManager.save(store);
+						} catch (Exception e) {
+							System.out.println(e.getMessage());
+							return;
+						}
 						System.out.println("Adicionando " + maxQuantity + " " + productDetails.getName() + " ao carrinho");
 						return;
 					}
 
 					client.getShoppingCart().add(productDetails, quantity);
+					try {
+						storeManager.save(store);
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+						return;
+					}
 
 					System.out.println("Adicionando " + quantity + " " + productDetails.getName() + " ao carrinho");
-
 				}
 			}
 
@@ -291,6 +305,10 @@ public class ClientView {
 
 				Map.Entry<Product, Integer> entry = entries.get(option - 1);
 
+				if(entry.getValue() < 1) {
+					System.out.println("Erro, nenhum produto desse no carrinho.");
+					return;
+				}
 				System.out.println(entry.getKey().getName() + ": " + entry.getValue() + " unidade" + (entry.getValue() > 1 ? "s" : ""));
 
 				System.out.print("Digite a nova quantidade (Caso queira excluir o item, digite '0'): ");
@@ -316,6 +334,7 @@ public class ClientView {
 
 				try {
 					productController.editCartItem(client, entry.getKey(), quantity);
+					storeManager.save(store);
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
 					return;
@@ -323,43 +342,76 @@ public class ClientView {
 
 				return;
 			case 2:
+				Map<Product,Integer> products = client.getShoppingCart().getProducts();
+				Iterator<Map.Entry<Product,Integer>> it = products.entrySet().iterator();
+
 				double value = 0;
 				double valueICMS = 0;
-				for (Map.Entry<Product, Integer> newEntry : client.getShoppingCart().getProducts().entrySet()) {
-					Product product = newEntry.getKey();
-					if(product.getStock().getQuantity() < newEntry.getValue()) {
-						System.out.println("O produto "+product.getName()+" tem apenas "+product.getStock().getQuantity()+
-								" unidade"+(product.getStock().getQuantity() > 1 ? "s" : "")+" no estoque, deseja comprar essa quantidade? ");
 
-						System.out.println("1 - Comprar "+product.getStock().getQuantity()+" unidade"+(product.getStock().getQuantity() > 1 ? "s" : ""));
-						System.out.println("2 - Excluir o produto '"+product.getName()+"' do Carrinho de Compras");
+				while (it.hasNext()) {
+					entry = it.next();
+					Product product = entry.getKey();
+					int desiredQty = entry.getValue();
+					int stockQty = product.getStock().getQuantity();
+
+
+					if (stockQty < desiredQty) {
+
+						if (stockQty < 1) {
+							System.out.println(product.getName() + " sem estoque no momento, prosseguindo a compra sem ele.");
+							try {
+								it.remove();
+								storeManager.save(store);
+							} catch (Exception e) {
+								System.out.println(e.getMessage());
+								return;
+							}
+							continue;
+						}
+
+
+						System.out.println("O produto " + product.getName() +
+								" tem apenas " + stockQty + " unidade" + (stockQty > 1 ? "s" : "") +
+								" no estoque, deseja comprar essa quantidade?");
+						System.out.println("1 - Comprar " + stockQty + " unidade" + (stockQty > 1 ? "s" : ""));
+						System.out.println("2 - Excluir o produto '" + product.getName() + "' do Carrinho de Compras");
 
 						option = -1;
-
 						do {
 							try {
 								option = sc.nextInt();
-							} catch (InputMismatchException ignored) {}
-
-							if(option < 1 || option > 2) {
+							} catch (InputMismatchException ignored) {
+								sc.nextLine();
+							}
+							if (option < 1 || option > 2) {
 								System.out.println("Entrada inválida, digite novamente: ");
 							}
-						}while (option < 1 || option > 2);
+						} while (option < 1 || option > 2);
 
 						switch (option) {
 							case 1:
-								newEntry.setValue(product.getStock().getQuantity());
+								try {
+									productController.editCartItem(client, product, stockQty);
+									entry.setValue(stockQty);
+								} catch (Exception e) {
+									System.out.println(e.getMessage());
+									return;
+								}
 								break;
 							case 2:
-								newEntry.setValue(0);
-								break;
+								try {
+									productController.editCartItem(client, product, 0);
+								} catch (Exception e) {
+									System.out.println(e.getMessage());
+									return;
+								}
+								it.remove();
+								continue;
 						}
 					}
 
-					double valueProduct = newEntry.getKey().getStock().getPrice();
-					Integer newQuantity = newEntry.getValue();
-
-					value += valueProduct * newQuantity;
+					double price = product.getStock().getPrice();
+					value += price * entry.getValue();
 					valueICMS = value * 1.17;
 				}
 
