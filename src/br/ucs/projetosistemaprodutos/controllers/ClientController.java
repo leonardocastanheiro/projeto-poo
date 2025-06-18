@@ -150,9 +150,9 @@ public class ClientController extends UserController{
         storeManager.save(store);
     }
     
-    public void isEmpty(Client client) throws EmptyDataException{
-    	super.isEmpty(client);
-    	if(client.getCreditCard().isEmpty()) {
+    public void isEmpty(Client client, String input) throws EmptyDataException{
+    	super.isEmpty(client, input);
+    	if(input == "creditCard" &&client.getCreditCard().isEmpty()) {
     		throw new EmptyDataException();
     	}
     	

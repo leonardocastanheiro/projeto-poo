@@ -77,14 +77,14 @@ public class UserController {
 
     }
     
-    public void isEmpty(User user) throws EmptyDataException{
-    	if(user.getName().isEmpty()) {
+    public void isEmpty(User user, String input) throws EmptyDataException{
+    	if(input == "name" && user.getName().isEmpty()) {
     		throw new EmptyDataException();
     	}
-    	if(user.getLogin().isEmpty()) {
+    	if(input == "login" && user.getLogin().isEmpty()) {
     		throw new EmptyDataException();
     	}
-    	if(!user.getName().isEmpty() && !user.getLogin().isEmpty() && user.getPassword().isEmpty()) {
+    	if(input == "password" && user.getPassword().isEmpty()) {
     		throw new EmptyDataException();
     	}
     }

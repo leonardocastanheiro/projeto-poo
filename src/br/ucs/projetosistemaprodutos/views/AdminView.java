@@ -118,50 +118,63 @@ public class AdminView {
 					String password = "";
 					String creditCard = "";
 					
-					try {
-						System.out.print("Nome: ");
-						name = sc.nextLine();
-						c.setName(name);
-						clientController.isEmpty(c);
-					}catch(EmptyDataException e) {
-						System.out.println(e.getMessage());		
-						return;
-					}
+					int f = 1;
+					do {
+						try {
+							System.out.print("Nome: ");
+							name = sc.nextLine();
+							c.setName(name);
+							clientController.isEmpty(c, "name");
+							f = 1;
+						}catch(EmptyDataException e) {
+							f = 0;
+							System.out.println(e.getMessage());		
+						}
+					}while(f == 0);
 					
 					System.out.print("Telefone: ");
 					String phone = sc.nextLine();
 					System.out.print("Email: ");
 					String email = sc.nextLine();
 					
-					try {
-						System.out.print("Usuário: ");
-						login = sc.nextLine();
-						c.setLogin(login);
-						clientController.isEmpty(c);
-					}catch(EmptyDataException e) {
-						System.out.println(e.getMessage());		
-						return;
-					}
+					do {
+						try {
+							System.out.print("Usuário: ");
+							login = sc.nextLine();
+							c.setLogin(login);
+							clientController.isEmpty(c, "login");
+							f = 1;
+						}catch(EmptyDataException e) {
+							f = 0;
+							System.out.println(e.getMessage());		
+						}
+					}while(f == 0);
 					
-					try {
-						System.out.print("Senha: ");
-						password = sc.nextLine();
-						c.setPassword(password);
-						clientController.isEmpty(c);
-					}catch(EmptyDataException e) {
-						System.out.println(e.getMessage());		
-						return;
-					}
+					do {
+						try {
+							System.out.print("Senha: ");
+							password = sc.nextLine();
+							c.setPassword(password);
+							clientController.isEmpty(c, "password");
+							f = 1;
+						}catch(EmptyDataException e) {
+							f = 0;
+							System.out.println(e.getMessage());		
+						}
+					}while(f == 0);
 					
-					try {
-						System.out.print("Cartão de crédito: ");
-						creditCard = sc.nextLine();
-						c.setCreditCard(creditCard);
-						clientController.isEmpty(c);
-					}catch(EmptyDataException e) {
-						System.out.println(e.getMessage());		
-						return;
-					}
+					do {
+						try {
+							System.out.print("Cartão de crédito: ");
+							creditCard = sc.nextLine();
+							c.setCreditCard(creditCard);
+							clientController.isEmpty(c, "creditCard");
+							f = 1;
+						}catch(EmptyDataException e) {
+							f = 0;
+							System.out.println(e.getMessage());		
+						}
+					}while(f == 0);
 					
 					System.out.println("ENDEREÇO");
 					System.out.print("Rua: ");
