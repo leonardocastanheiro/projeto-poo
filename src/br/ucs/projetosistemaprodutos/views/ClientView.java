@@ -441,10 +441,12 @@ public class ClientView {
 				}
 
 				List<ItemOrder> itemOrders = new ArrayList<>();
+				
 				Order order = new Order(LocalDate.now(), null, Situation.NEW, client, value, valueICMS);
 				for (Map.Entry<Product, Integer> newEntry : client.getShoppingCart().getProducts().entrySet()) {
 						itemOrders.add(new ItemOrder(newEntry.getValue(), newEntry.getKey().getStock().getPrice(), order, newEntry.getKey()));
 				}
+				Collections.sort(itemOrders);
 				order.setItemOrders(itemOrders);
 				try {
 					clientController.addOrder(order);

@@ -6,7 +6,7 @@ import br.ucs.projetosistemaprodutos.utils.IdManager;
 import java.io.Serial;
 import java.io.Serializable;
 
-public class Product implements Serializable {
+public class Product implements Comparable<Product>, Serializable {
     @Serial
     private static final long serialVersionUID = 1;
 
@@ -111,5 +111,11 @@ public class Product implements Serializable {
 	
 	public String toString() {
 		return "ID: " + this.getId() + " | Produto: " + this.getName();
+	}
+	
+	@Override
+	public int compareTo(Product o) {
+		Product product = (Product) o;
+		return this.id - product.id;
 	}
 }

@@ -1,11 +1,12 @@
 package br.ucs.projetosistemaprodutos.models.person;
 import br.ucs.projetosistemaprodutos.models.address.Address;
+import br.ucs.projetosistemaprodutos.models.itens.Order;
 import br.ucs.projetosistemaprodutos.utils.IdManager;
 
 import java.io.Serial;
 import java.io.Serializable;
 
-public abstract class Person implements Serializable {
+public abstract class Person implements Comparable<Person>, Serializable {
     @Serial
     private static final long serialVersionUID = 1;
 
@@ -89,6 +90,11 @@ public abstract class Person implements Serializable {
     
     public String toString() {
     	return "ID: " +this.getId()+ "| Nome: " + this.getName();
+    }
+    
+    @Override
+    public int compareTo(Person o) {
+        return this.name.compareTo(o.name);
     }
 
 }

@@ -222,7 +222,7 @@ public class AdminView {
 						System.out.println(e.getMessage());
 						return;
 					}
-
+					Collections.sort(clients);
 					for (int i = 0; i < clients.size(); i++) {
 						System.out.println(i + 1 + " - Nome: " + clients.get(i).getName());
 					}
@@ -248,7 +248,8 @@ public class AdminView {
 						System.out.println(e.getMessage());
 						return;
 					}
-
+					
+					Collections.sort(clients1);
 					for (int i = 0; i < clients1.size(); i++) {
 						System.out.println(i + 1 + " - Nome: " + clients1.get(i).getName());
 					}
@@ -424,7 +425,7 @@ public class AdminView {
 						System.out.println(e.getMessage());
 						return;
 					}
-
+					Collections.sort(clients2);
 					for (int i = 0; i < clients2.size(); i++) {
 						System.out.println(i + 1 + " - Nome: " + clients2.get(i).getName());
 					}
@@ -556,7 +557,7 @@ public class AdminView {
 						System.out.println(e.getMessage());
 						return;
 					}
-
+					Collections.sort(suppliers);
 					for (int i = 0; i < suppliers.size(); i++) {
 						System.out.println(i + 1 + " - Nome: " + suppliers.get(i).getName());
 					}
@@ -582,7 +583,7 @@ public class AdminView {
 						System.out.println(e.getMessage());
 						return;
 					}
-
+					Collections.sort(suppliers1);
 					for (int i = 0; i < suppliers1.size(); i++) {
 						System.out.println(i + 1 + " - Nome: " + suppliers1.get(i).getName());
 					}
@@ -743,7 +744,7 @@ public class AdminView {
 						System.out.println(e.getMessage());
 						return;
 					}
-
+					Collections.sort(suppliers2);
 					for (int i = 0; i < suppliers2.size(); i++) {
 						System.out.println(i + 1 + " - Nome: " + suppliers2.get(i).getName());
 					}
@@ -803,7 +804,7 @@ public class AdminView {
 						System.out.println(e.getMessage());
 						return;
 					}
-
+					Collections.sort(suppliers3);
 					for (int i = 0; i < suppliers3.size(); i++) {
 						System.out.println(i + 1 + " - Nome: " + suppliers3.get(i).getName());
 					}
@@ -954,7 +955,7 @@ public class AdminView {
 			System.out.println(e.getMessage());
 			return;
 		}
-
+		Collections.sort(suppliers);
 		for (int i = 0; i < suppliers.size(); i++) {
 			System.out.println(i + 1 + " - Nome: " + suppliers.get(i).getName());
 		}
@@ -1041,7 +1042,7 @@ public class AdminView {
 			System.out.println("Nenhum produto encontrado.");
 			return;
 		}
-
+		Collections.sort(products);
 		int selectedIndex;
 
 		do {
@@ -1113,6 +1114,7 @@ public class AdminView {
 			return;
 		}
 
+		Collections.sort(suppliers);
 		System.out.println("\nFornecedores encontrados:");
 		for (int i = 0; i < suppliers.size(); i++) {
 			System.out.println((i + 1) + ". " + suppliers.get(i).getName());
@@ -1142,7 +1144,7 @@ public class AdminView {
 			System.out.println("Esse fornecedor não possui produtos cadastrados.");
 			return;
 		}
-
+		Collections.sort(produtos);
 		int opcao;
 
 		do {
@@ -1209,6 +1211,7 @@ public class AdminView {
 			return;
 		}
 
+		Collections.sort(products1);
 		for (int i = 0; i < products1.size(); i++) {
 			System.out.println((i + 1) + " - Código: " + products1.get(i).getProductCode() +
 					" - Nome: " + products1.get(i).getName());
@@ -1388,7 +1391,7 @@ public class AdminView {
 			System.out.println(e.getMessage());
 			return;
 		}
-
+		Collections.sort(foundProducts);
 		for (int i = 0; i < foundProducts.size(); i++) {
 			Product product = foundProducts.get(i);
 			System.out.println((i + 1) + " - Código: " + product.getProductCode() + " - Nome: " + product.getName());
@@ -1535,6 +1538,7 @@ public class AdminView {
 		if(orders.isEmpty()) {
 			System.out.println("Nenhum pedido encontrado");
 		}else {
+			Collections.sort(orders);
 			for(Order order : orders) {
 				showCompleteDetailsOrder(order);
 			}
@@ -1582,6 +1586,7 @@ public class AdminView {
 		if (orders.size() == 1) {
 			order = orders.getFirst();
 		} else {
+			Collections.sort(orders);
 			for (Order orderAux : orders) {
 				System.out.println("ID: " + orderAux.getId() + " | Cliente: " + orderAux.getOwner().getName());
 			}

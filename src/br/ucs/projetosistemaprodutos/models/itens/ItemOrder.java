@@ -3,7 +3,7 @@ package br.ucs.projetosistemaprodutos.models.itens;
 import java.io.Serial;
 import java.io.Serializable;
 
-public class ItemOrder implements Serializable {
+public class ItemOrder implements Comparable<ItemOrder>, Serializable {
     @Serial
     private static final long serialVersionUID = 1;
 
@@ -51,4 +51,9 @@ public class ItemOrder implements Serializable {
     public void setProduct(Product product) {
         this.product = product;
     }
+
+	@Override
+	public int compareTo(ItemOrder o) {
+		return this.order.getId().compareTo(o.order.getId());
+	}
 }
