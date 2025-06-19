@@ -19,15 +19,19 @@ public class Store implements Serializable {
     @Serial
     private static final long serialVersionUID = 1;
 
-    private final DynamicProductArray productArray = new DynamicProductArray();
-    private final DynamicStockArray stockArray = new DynamicStockArray();
-    private final DynamicSupplierArray supplierArray = new DynamicSupplierArray();
-    private final DynamicUserArray userArray = new DynamicUserArray();
+    private final DynamicProductArray productArray;
+    private final DynamicStockArray stockArray;
+    private final DynamicSupplierArray supplierArray;
+    private final DynamicUserArray userArray;
     
     private final String name;
 
     public Store(String name) {
         this.name = name;
+        this.productArray = new DynamicProductArray();
+        this.stockArray = new DynamicStockArray();
+        this.supplierArray =  new DynamicSupplierArray();
+        this.userArray = new DynamicUserArray();
     }
     
     public DynamicProductArray getProductArray() {
