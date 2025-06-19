@@ -111,8 +111,6 @@ public class DynamicProductArray implements Serializable {
         return products;
     }
 
-
-
 	public List<Product> getAllProducts() {
         return products;
 	}

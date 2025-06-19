@@ -1,6 +1,7 @@
 package br.ucs.projetosistemaprodutos.controllers;
 
 import br.ucs.projetosistemaprodutos.collections.DynamicProductArray;
+import br.ucs.projetosistemaprodutos.exceptions.InsufficientStockException;
 import br.ucs.projetosistemaprodutos.models.copies.ProductCopy;
 import br.ucs.projetosistemaprodutos.models.itens.Order;
 import br.ucs.projetosistemaprodutos.models.itens.Product;
@@ -183,7 +184,17 @@ public class ProductController {
 		
 		return ordersPeriod;
 	}
-
+	
+    public void emptyStock(Stock stock) throws InsufficientStockException{
+    	if(stock.getQuantity() == 0) {
+    		throw new InsufficientStockException();
+    	}
+    }
+    public void stockQuantity(Stock stock, int quantity) throws InsufficientStockException{
+    	if(stock.getQuantity() < quantity) {
+    		throw new InsufficientStockException();
+    	}
+    }
 	@Override
 	public String toString() {
 		return productArray.toString();

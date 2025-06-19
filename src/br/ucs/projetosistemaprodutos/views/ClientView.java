@@ -7,6 +7,7 @@ import java.util.*;
 
 import br.ucs.projetosistemaprodutos.controllers.ClientController;
 import br.ucs.projetosistemaprodutos.controllers.ProductController;
+import br.ucs.projetosistemaprodutos.exceptions.InsufficientStockException;
 import br.ucs.projetosistemaprodutos.models.copies.ClientCopy;
 import br.ucs.projetosistemaprodutos.models.itens.*;
 import br.ucs.projetosistemaprodutos.models.person.Client;
@@ -145,10 +146,16 @@ public class ClientView {
 				System.out.println("Quantidade em estoque: " + productDetails.getStock().getQuantity());
 				System.out.println("Preço: R$ " + String.format("%.2f", productDetails.getStock().getPrice()));
 				System.out.println("----------          ----------");
+				try {
+					productController.emptyStock(productDetails.getStock());
+				}catch(InsufficientStockException e) {
+					System.out.println(e.getMessage());
+					return;
+				}
 				System.out.println("Escolha o que deseja fazer: ");
 				System.out.println("1. Adicionar ao carrinho");
 				System.out.println("0. Cancelar");
-
+				
 				do {
 					try {
 						add = sc.nextInt();
@@ -164,11 +171,10 @@ public class ClientView {
 				} while (add != 0 && add != 1);
 
 				if (add == 1) {
-					int maxQuantity = productDetails.getStock().getQuantity();
-					if (maxQuantity < 1) {
-						System.out.println("Produto indisponível no momento.");
-						return;
-					}
+					int maxQuantity = productDetails.getStock().getQuantity(); 
+					/*if (maxQuantity <
+					 * 1) { System.out.println("Produto indisponível no momento."); return; }
+					 */
 					System.out.print("Digite quantas unidades deseja adicionar ao carrinho: ");
 					int quantity = sc.nextInt();
 					sc.nextLine();
@@ -178,7 +184,48 @@ public class ClientView {
 						return;
 					}
 
-					if (quantity > maxQuantity) {
+					
+					try {
+						productController.stockQuantity(productDetails.getStock(), quantity);
+					}catch(InsufficientStockException ise) {
+						System.out.println(ise.getMessage());
+						int maxQuantityOp = -1;
+						System.out.println("Adicionar " + maxQuantity + " ao carrinho? ");
+						System.out.println("1 - Sim, continuar");
+						System.out.println("0 - Não, cancelar");
+
+						do {
+							try {
+								maxQuantityOp = sc.nextInt();
+
+								if (maxQuantityOp != 0 && maxQuantityOp != 1) {
+									throw new InputMismatchException("Entrada inválida");
+								}
+
+							} catch (InputMismatchException e) {
+								System.out.print("Entrada inválida, digite novamente: ");
+							}
+							sc.nextLine();
+						} while (maxQuantityOp != 0 && maxQuantityOp != 1);
+
+						if (maxQuantityOp == 0) {
+							System.out.println("Saindo...");
+							return;
+						}
+
+						client.getShoppingCart().add(productDetails, maxQuantity);
+
+						try {
+							storeManager.save(store);
+						} catch (Exception e) {
+							System.out.println(e.getMessage());
+							return;
+						}
+						System.out.println("Adicionando " + maxQuantity + " " + productDetails.getName() + " ao carrinho");
+						return;
+					}
+					
+					/*if (quantity > maxQuantity) {
 						int maxQuantityOp = -1;
 						System.out.println("Não temos essa quantidade disponível no momento. Adicionar " + maxQuantity + " ao carrinho? ");
 						System.out.println("1 - Sim, continuar");
@@ -213,7 +260,7 @@ public class ClientView {
 						}
 						System.out.println("Adicionando " + maxQuantity + " " + productDetails.getName() + " ao carrinho");
 						return;
-					}
+					}*/
 
 					client.getShoppingCart().add(productDetails, quantity);
 					try {

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import br.ucs.projetosistemaprodutos.exceptions.InsufficientStockException;
 import br.ucs.projetosistemaprodutos.models.itens.Stock;
 
 public class DynamicStockArray implements Serializable {
