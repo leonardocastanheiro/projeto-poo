@@ -2,9 +2,7 @@ package br.ucs.projetosistemaprodutos.collections;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import br.ucs.projetosistemaprodutos.models.itens.Product;
 
@@ -107,7 +105,8 @@ public class DynamicProductArray implements Serializable {
 	   if(products.isEmpty()) {
 		   throw new Exception("Nenhum produto existente com essa correspondência");
 	   }
-        
+
+        Collections.sort(products);
         return products;
     }
 

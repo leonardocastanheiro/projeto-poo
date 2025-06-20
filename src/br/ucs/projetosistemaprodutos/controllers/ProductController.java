@@ -11,11 +11,7 @@ import br.ucs.projetosistemaprodutos.models.person.Client;
 import br.ucs.projetosistemaprodutos.utils.StoreManager;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ProductController {
 	private DynamicProductArray productArray;
@@ -168,7 +164,8 @@ public class ProductController {
 				ordersPeriod.add(clientOrder);
 			}
 		}
-		
+
+		Collections.sort(ordersPeriod);
 		return ordersPeriod;
 	}
 	public List<Order> getOrdersByDate(LocalDate date1, LocalDate date2, List<Order> orders){
@@ -181,7 +178,8 @@ public class ProductController {
 				ordersPeriod.add(clientOrder);
 			}
 		}
-		
+
+		Collections.sort(ordersPeriod);
 		return ordersPeriod;
 	}
 	

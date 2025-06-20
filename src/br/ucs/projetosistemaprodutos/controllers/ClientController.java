@@ -142,6 +142,7 @@ public class ClientController extends UserController{
             orders.addAll(client.getOrders());
         }
 
+        Collections.sort(orders);
         return orders;
     }
 

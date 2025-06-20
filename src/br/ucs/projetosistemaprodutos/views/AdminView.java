@@ -1446,14 +1446,14 @@ public class AdminView {
 
 			try {
 				option = sc.nextInt();
-				sc.nextLine();
-
-				System.out.println("--------------------------------------");
 			}catch(InputMismatchException e) {
 				System.out.println("Entrada inválida.");
 			}catch (Exception e) {
 				System.out.println("Erro inesperado: " + e.getMessage());
 			}
+
+			sc.nextLine();
+			System.out.println("--------------------------------------");
 		}while(option < 0 ||option > 3);
 
 
@@ -1699,39 +1699,17 @@ public class AdminView {
 			}
 
 			case FORWARD -> {
-				System.out.println("\n1 - Confirmar Entrega\n0 - Sair");
-				option = -1;
-
-				do {
-					try {
-						option = sc.nextInt();
-
-						if (option < 0 || option > 1) {
-							throw new InputMismatchException("Entrada inválida");
-						}
-
-					} catch (InputMismatchException e) {
-						System.out.print("Entrada inválida, digite novamente: ");
-					}
-					sc.nextLine();
-				} while (option < 0 || option > 1);
-
-				if (option == 0) {
-					break;
-				}
-
-				order.setDateDeliver(LocalDate.now());
-				order.setSituation(Situation.DELIVERED);
+				System.out.println("\nAguardando a confirmação de entrega...");
 				break;
 			}
 
 			case CANCELED -> {
-				System.out.println("\nPedido já cancelado!");
+				System.out.println("\nPedido já cancelado...");
 				break;
 			}
 
 			case DELIVERED -> {
-				System.out.println("\nProduto já entregue!");
+				System.out.println("\nPedido já entregue...");
 				break;
 			}
 		}

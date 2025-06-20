@@ -3,6 +3,7 @@ package br.ucs.projetosistemaprodutos.collections;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -100,6 +101,7 @@ public class DynamicSupplierArray implements Serializable {
             throw new Exception("Nenhum fornecedor existente com essa correspondência");
         }
 
+        Collections.sort(suppliers);
         return suppliers;
     }
 

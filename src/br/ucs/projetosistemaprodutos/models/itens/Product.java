@@ -115,7 +115,6 @@ public class Product implements Comparable<Product>, Serializable {
 	
 	@Override
 	public int compareTo(Product o) {
-		Product product = (Product) o;
-		return this.id - product.id;
+		return this.getName().toLowerCase().compareTo(o.getName().toLowerCase());
 	}
 }
