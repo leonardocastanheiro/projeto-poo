@@ -716,10 +716,19 @@ public class ClientView {
 				if (option == 0) {
 					break;
 				}
-
-				order.setSituation(Situation.CANCELED);
-				order.setDateForward(null);
-				System.out.println("Pedido Cancelado com sucesso!");
+				
+				List<ItemOrder>products = new ArrayList<ItemOrder>(order.getItemOrders());
+				try {
+					for(int i = 0; i < products.size(); i++) {
+						Product p = products.get(i).getProduct();
+						productController.changeStock(p, products.get(i).getQuantity());
+					}
+					order.setSituation(Situation.CANCELED);
+					order.setDateForward(null);
+					System.out.println("Pedido Cancelado com sucesso!");
+				}catch(Exception e) {
+					System.out.println("Erro ao cancelar pedido");
+				}
 			}
 
 			case FORWARD -> {
