@@ -1,7 +1,6 @@
 package br.ucs.projetosistemaprodutos.controllers;
 
 import br.ucs.projetosistemaprodutos.collections.DynamicUserArray;
-import br.ucs.projetosistemaprodutos.exceptions.EmptyDataException;
 import br.ucs.projetosistemaprodutos.models.address.Address;
 import br.ucs.projetosistemaprodutos.models.copies.ClientCopy;
 import br.ucs.projetosistemaprodutos.models.itens.Order;
@@ -149,13 +148,5 @@ public class ClientController extends UserController{
     public void clearCart(Client client) throws Exception {
         client.getShoppingCart().clearCart();
         storeManager.save(store);
-    }
-    
-    public void isEmpty(Client client, String input) throws EmptyDataException{
-    	super.isEmpty(client, input);
-    	if(input == "creditCard" &&client.getCreditCard().isEmpty()) {
-    		throw new EmptyDataException();
-    	}
-    	
     }
 }

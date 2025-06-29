@@ -3,10 +3,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
-import java.util.jar.JarOutputStream;
 
 import br.ucs.projetosistemaprodutos.controllers.*;
-import br.ucs.projetosistemaprodutos.exceptions.EmptyDataException;
 import br.ucs.projetosistemaprodutos.models.address.Address;
 import br.ucs.projetosistemaprodutos.models.copies.ClientCopy;
 import br.ucs.projetosistemaprodutos.models.copies.ProductCopy;
@@ -15,8 +13,6 @@ import br.ucs.projetosistemaprodutos.models.itens.*;
 import br.ucs.projetosistemaprodutos.models.person.Client;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.Supplier;
-import br.ucs.projetosistemaprodutos.models.person.User;
-
 
 public class AdminView {
 
@@ -25,8 +21,6 @@ public class AdminView {
 	private final ClientController clientController;
 	private final SupplierController supplierController;
 	private final ProductController productController;
-	private Order teste;
-
 
 	public AdminView(Store store) {
 		this.store = store;
@@ -118,19 +112,15 @@ public class AdminView {
 					String password = "";
 					String creditCard = "";
 					
-					int f = 1;
 					do {
-						try {
-							System.out.print("Nome: ");
-							name = sc.nextLine();
+						System.out.print("Nome: ");
+						name = sc.nextLine();
+						if(name.isEmpty()) {
+							System.out.println("Esse campo é obrigatório");
+						}else {
 							c.setName(name);
-							clientController.isEmpty(c, "name");
-							f = 1;
-						}catch(EmptyDataException e) {
-							f = 0;
-							System.out.println(e.getMessage());		
 						}
-					}while(f == 0);
+					}while(name.isEmpty());
 					
 					System.out.print("Telefone: ");
 					String phone = sc.nextLine();
@@ -138,43 +128,34 @@ public class AdminView {
 					String email = sc.nextLine();
 					
 					do {
-						try {
-							System.out.print("Usuário: ");
-							login = sc.nextLine();
-							c.setLogin(login);
-							clientController.isEmpty(c, "login");
-							f = 1;
-						}catch(EmptyDataException e) {
-							f = 0;
-							System.out.println(e.getMessage());		
+						System.out.print("Usuário: ");
+						login = sc.nextLine();
+						if(login.isEmpty()) {
+							System.out.println("Esse campo é obrigatório");
+						}else {
+							c.setLogin(login);						
 						}
-					}while(f == 0);
+					}while(login.isEmpty());
 					
 					do {
-						try {
-							System.out.print("Senha: ");
-							password = sc.nextLine();
+						System.out.print("Senha: ");
+						password = sc.nextLine();
+						if(password.isEmpty()) {
+							System.out.println("Esse campo é obrigatório");
+						}else {
 							c.setPassword(password);
-							clientController.isEmpty(c, "password");
-							f = 1;
-						}catch(EmptyDataException e) {
-							f = 0;
-							System.out.println(e.getMessage());		
 						}
-					}while(f == 0);
+					}while(password.isEmpty());
 					
 					do {
-						try {
-							System.out.print("Cartão de crédito: ");
-							creditCard = sc.nextLine();
-							c.setCreditCard(creditCard);
-							clientController.isEmpty(c, "creditCard");
-							f = 1;
-						}catch(EmptyDataException e) {
-							f = 0;
-							System.out.println(e.getMessage());		
+						System.out.print("Cartão de crédito: ");
+						creditCard = sc.nextLine();
+						if(creditCard.isEmpty()) {
+							System.out.println("Esse campo é obrigatório");
+						}else {
+							c.setCreditCard(creditCard);							
 						}
-					}while(f == 0);
+					}while(creditCard.isEmpty());
 					
 					System.out.println("ENDEREÇO");
 					System.out.print("Rua: ");
@@ -315,10 +296,17 @@ public class AdminView {
 
 						switch (editInfo) {
 							case 1:
-								System.out.println("Nome: " + clientCopy.getName());
-								System.out.print("Novo nome: ");
-								String newName = sc.nextLine();
-								clientCopy.setName(newName);
+								String newName;
+								do {
+									System.out.println("Nome: " + clientCopy.getName());
+									System.out.print("Novo nome: ");									
+									newName = sc.nextLine();
+									if(newName.isEmpty()) {
+										System.out.println("Esse campo é obrigatório");
+									}else {
+										clientCopy.setName(newName);
+									}
+								}while(newName.isEmpty());
 								break;
 							case 2:
 								System.out.println("Telefone: " + clientCopy.getPhone());
@@ -333,21 +321,42 @@ public class AdminView {
 								clientCopy.setEmail(newEmail);
 								break;
 							case 4:
-								System.out.println("Usuário: " + clientCopy.getLogin());
-								System.out.print("Novo nome de usuário: ");
-								String newUsername = sc.nextLine();
-								clientCopy.setLogin(newUsername);
+								String newUsername;
+								do {
+									System.out.println("Usuário: " + clientCopy.getLogin());
+									System.out.print("Novo nome de usuário: ");									
+									newUsername = sc.nextLine();
+									if(newUsername.isEmpty()) {
+										System.out.println("Esse campo é obrigatório");
+									}else {
+										clientCopy.setLogin(newUsername);
+									}
+								}while(newUsername.isEmpty());
 								break;
 							case 5:
-								System.out.print("Nova senha: ");
-								String newPassword = sc.nextLine();
-								clientCopy.setPassword(newPassword);
+								String newPassword;
+								do {
+									System.out.print("Nova senha: ");									
+									newPassword = sc.nextLine();
+									if(newPassword.isEmpty()) {
+										System.out.println("Esse campo é obrigatório");
+									}else {
+										clientCopy.setPassword(newPassword);
+									}
+								}while(newPassword.isEmpty());								
 								break;
 							case 6:
-								System.out.println("Cartão de crédito: " + clientCopy.getCreditCard());
-								System.out.print("Novo cartão de crédito: ");
-								String newCreditCard = sc.nextLine();
-								clientCopy.setCreditCard(newCreditCard);
+								String newCreditCard;
+								do {
+									System.out.println("Cartão de crédito: " + clientCopy.getCreditCard());
+									System.out.print("Novo cartão de crédito: ");									
+									newCreditCard = sc.nextLine();
+									if(newCreditCard.isEmpty()) {
+										System.out.println("Esse campo é obrigatório");
+									}else {
+										clientCopy.setCreditCard(newCreditCard);
+									}
+								}while(newCreditCard.isEmpty());	
 								break;
 							case 7:
 								System.out.println("Rua: " + clientCopy.getAddress().getStreet());
