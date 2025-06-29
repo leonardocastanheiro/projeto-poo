@@ -313,28 +313,55 @@ public class ClientView {
 					return;
 				}
 				System.out.println(entry.getKey().getName() + ": " + entry.getValue() + " unidade" + (entry.getValue() > 1 ? "s" : ""));
-
-				System.out.print("Digite a nova quantidade (Caso queira excluir o item, digite '0'): ");
-
+				
+				Stock productStock = entry.getKey().getStock();
+				try {
+					productController.emptyStock(productStock);
+				}catch(InsufficientStockException ise) {
+					System.out.println("Produto indisponível no momento.");
+					return;
+				}
+				
 				int quantity = -1;
-				int quantityInCart = entry.getValue();
-				int stockAvailable = entry.getKey().getStock().getQuantity();
-				int maxAllowed = quantityInCart + stockAvailable;
-
 				do {
+					System.out.print("Digite a nova quantidade (Caso queira excluir o item, digite '0'): ");
 					try {
 						quantity = sc.nextInt();
-
-						if (quantity < 0 || quantity > maxAllowed) {
-							throw new InputMismatchException("Quantidade inválida. Digite um valor entre 0 e " + maxAllowed);
-						}
-
 					} catch (InputMismatchException e) {
-						System.out.println("Quantidade inválida, digite novamente (máximo: " + maxAllowed + "): ");
+						System.out.println("Entrada inválida");
 					}
 					sc.nextLine();
-				} while (quantity < 0 || quantity > maxAllowed);
+				} while (quantity < 0);
 
+				try {
+					productController.stockQuantity(productStock, quantity);
+				}catch(InsufficientStockException e) {
+					System.out.println(e.getMessage());
+					System.out.println("Adicionar " + productStock.getQuantity() + " unidade(s) no carrinho?");					
+					System.out.println("1 - Sim, continuar");
+					System.out.println("0 - Não, cancelar");
+					int maxQuantityOp = -1;
+					do {
+						try {
+							maxQuantityOp = sc.nextInt();
+
+							if (maxQuantityOp != 0 && maxQuantityOp != 1) {
+								System.out.println("Entrada inválida");
+							}
+
+						} catch (InputMismatchException im) {
+							System.out.print("Entrada inválida, digite novamente: ");
+						}
+						sc.nextLine();
+					} while (maxQuantityOp != 0 && maxQuantityOp != 1);
+
+					if (maxQuantityOp == 0) {
+						System.out.println("Saindo...");
+						return;
+					}
+					quantity = productStock.getQuantity();
+				}
+				
 				try {
 					productController.editCartItem(client, entry.getKey(), quantity);
 					storeManager.save(store);
