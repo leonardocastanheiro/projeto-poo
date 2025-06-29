@@ -15,8 +15,27 @@ import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.Supplier;
 
 public class StoreStarter {
+	
+	private Store store = new Store("Amazon");
+	
+	public StoreStarter() {
+		this.setSupplierArray(store);
+		this.setProductArray(store);
+		this.setUserArray(store);
+	}
+	
+	public Store read() {
+		/*
+		 * StoreStarter ss = new StoreStarter();
+		 * 
+		 * ss.setSupplierArray(store); ss.setProductArray(store);
+		 * ss.setUserArray(store);
+		 */
 
-    private static void setSupplierArray(Store store) {
+        return store;
+	}
+	  
+    private void setSupplierArray(Store store) {
         SupplierController supplierController = new SupplierController(store);
 
         Supplier[] suppliers = new Supplier[] {
@@ -35,7 +54,7 @@ public class StoreStarter {
         }
     }
 
-    private static void setProductArray(Store store) {
+    private void setProductArray(Store store) {
         ProductController productController = new ProductController(store);
         DynamicSupplierArray supplierArray = store.getSupplierArray();
         Product[] products;
@@ -66,7 +85,7 @@ public class StoreStarter {
         }
     }
 
-    private static void setUserArray(Store store) {
+    private void setUserArray(Store store) {
         AdminController adminController = new AdminController(store);
         ClientController clientController = new ClientController(store);
 
@@ -98,14 +117,6 @@ public class StoreStarter {
         }
     }
 
-    public static Store read() {
-        Store store = new Store("Amazon");
-
-        StoreStarter.setSupplierArray(store);
-        StoreStarter.setProductArray(store);
-        StoreStarter.setUserArray(store);
-
-        return store;
-    }
+  
 
 }

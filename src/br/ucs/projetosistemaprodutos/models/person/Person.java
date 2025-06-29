@@ -33,14 +33,6 @@ public abstract class Person implements Comparable<Person>, Serializable {
         this.address = address;
     }
 
-    public static IdManager getIdManager() {
-        return idManager;
-    }
-
-    public static void setIdManager(IdManager idManager) {
-        Person.idManager = idManager;
-    }
-
     public String getRoleString() {
     	return role.toString();
     }

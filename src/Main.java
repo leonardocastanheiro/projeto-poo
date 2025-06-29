@@ -20,14 +20,14 @@ import br.ucs.projetosistemaprodutos.views.LoginView;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-
         StoreManager storeManager = new StoreManager();
         Store store;
 
         try {
             store = storeManager.read();
         } catch (Exception e) {
-            store = StoreStarter.read();
+        	StoreStarter ss = new StoreStarter();
+            store = ss.read();
             storeManager.save(store);
         }
 
