@@ -172,21 +172,27 @@ public class ClientView {
 
 				if (add == 1) {
 					int maxQuantity = productDetails.getStock().getQuantity(); 
-					/*if (maxQuantity <
-					 * 1) { System.out.println("Produto indisponível no momento."); return; }
-					 */
-					System.out.print("Digite quantas unidades deseja adicionar ao carrinho: ");
-					int quantity = sc.nextInt();
-					sc.nextLine();
+					int quantity = -1;
+					do {
+						System.out.print("Digite quantas unidades deseja adicionar ao carrinho: ('0' para cancelar)");
+						try {
+							quantity = sc.nextInt();
+							sc.nextLine();
+						}catch(InputMismatchException e) {
+							System.out.println("Entrada inválida ");
+						}
+					}while(quantity < 0);		
 
-					if (quantity < 1) {
+					if (quantity == 0) {
 						System.out.println("Nenhum produto adicionado.");
 						return;
 					}
 
-					
 					try {
 						productController.stockQuantity(productDetails.getStock(), quantity);
+						
+						client.getShoppingCart().add(productDetails, quantity);
+						System.out.println("Adicionando " + quantity + " " + productDetails.getName() + " ao carrinho");
 					}catch(InsufficientStockException ise) {
 						System.out.println(ise.getMessage());
 						int maxQuantityOp = -1;
@@ -199,7 +205,7 @@ public class ClientView {
 								maxQuantityOp = sc.nextInt();
 
 								if (maxQuantityOp != 0 && maxQuantityOp != 1) {
-									throw new InputMismatchException("Entrada inválida");
+									System.out.println("Entrada inválida");
 								}
 
 							} catch (InputMismatchException e) {
@@ -212,65 +218,15 @@ public class ClientView {
 							System.out.println("Saindo...");
 							return;
 						}
-
-						client.getShoppingCart().add(productDetails, maxQuantity);
-
-						try {
-							storeManager.save(store);
-						} catch (Exception e) {
-							System.out.println(e.getMessage());
-							return;
-						}
+						client.getShoppingCart().add(productDetails, maxQuantity);						
 						System.out.println("Adicionando " + maxQuantity + " " + productDetails.getName() + " ao carrinho");
-						return;
 					}
-					
-					/*if (quantity > maxQuantity) {
-						int maxQuantityOp = -1;
-						System.out.println("Não temos essa quantidade disponível no momento. Adicionar " + maxQuantity + " ao carrinho? ");
-						System.out.println("1 - Sim, continuar");
-						System.out.println("0 - Não, cancelar");
-
-						do {
-							try {
-								maxQuantityOp = sc.nextInt();
-
-								if (maxQuantityOp != 0 && maxQuantityOp != 1) {
-									throw new InputMismatchException("Entrada inválida");
-								}
-
-							} catch (InputMismatchException e) {
-								System.out.print("Entrada inválida, digite novamente: ");
-							}
-							sc.nextLine();
-						} while (maxQuantityOp != 0 && maxQuantityOp != 1);
-
-						if (maxQuantityOp == 0) {
-							System.out.println("Saindo...");
-							return;
-						}
-
-						client.getShoppingCart().add(productDetails, maxQuantity);
-
-						try {
-							storeManager.save(store);
-						} catch (Exception e) {
-							System.out.println(e.getMessage());
-							return;
-						}
-						System.out.println("Adicionando " + maxQuantity + " " + productDetails.getName() + " ao carrinho");
-						return;
-					}*/
-
-					client.getShoppingCart().add(productDetails, quantity);
 					try {
 						storeManager.save(store);
 					} catch (Exception e) {
 						System.out.println(e.getMessage());
 						return;
 					}
-
-					System.out.println("Adicionando " + quantity + " " + productDetails.getName() + " ao carrinho");
 				}
 			}
 
