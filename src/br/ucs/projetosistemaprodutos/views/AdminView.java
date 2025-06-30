@@ -567,9 +567,52 @@ public class AdminView {
 						return;
 					}
 					Collections.sort(suppliers);
-					for (int i = 0; i < suppliers.size(); i++) {
-						System.out.println(i + 1 + " - Nome: " + suppliers.get(i).getName());
-					}
+					int selectedIndex = -1;
+					do {
+						System.out.println("\nFornecedores:");
+						for (int i = 0; i < suppliers.size(); i++) {
+							System.out.println(i + 1 + " - Nome: " + suppliers.get(i).getName());
+						}
+						System.out.println("0 - Voltar");
+
+						selectedIndex = -1;
+
+						do {
+							System.out.print("Digite o número do fornecedor para ver mais detalhes (ou 0 para sair): ");
+							try {
+								selectedIndex = sc.nextInt();
+								sc.nextLine();
+
+								if (selectedIndex < 0 || selectedIndex > suppliers.size()) {
+									throw new IllegalArgumentException("Opção inválida. Tente novamente.");
+								}
+
+							} catch (InputMismatchException e) {
+								System.out.println("Erro: Entrada deve ser um número inteiro.");
+								sc.nextLine();
+								selectedIndex = -1;
+							} catch (IllegalArgumentException e) {
+								System.out.println("Erro: " + e.getMessage());
+								selectedIndex = -1;
+							}
+						} while (selectedIndex == -1);
+
+						if (selectedIndex != 0) {
+							Supplier selectedSupplier = suppliers.get(selectedIndex - 1);
+							System.out.println("----- DETALHES DO FORNECEDOR -----");
+							System.out.println("Nome: " + selectedSupplier.getName());
+							System.out.println("Telefone: " + selectedSupplier.getPhone());
+							System.out.println("Email: " + selectedSupplier.getEmail());
+							System.out.println("Descrição: " + selectedSupplier.getDescription());
+							System.out.println("----- PRODUTOS -----");
+							for(int j = 0; j < selectedSupplier.getProducts().size(); j++) {
+								System.out.println(selectedSupplier.getProducts().getAllProducts().get(j).toString());
+							}
+							System.out.println("----- Endereço -----");
+							System.out.println(selectedSupplier.getAddress().toString());
+						}
+
+					} while (selectedIndex != 0);
 					break;
 				case 3:
 					System.out.print("Buscar fornecedor (Digite '0' para voltar ao menu): ");
@@ -864,7 +907,7 @@ public class AdminView {
 			System.out.println("2 - Buscar Produto(s)");
 			System.out.println("3 - Editar Produto");
 			System.out.println("4 - Remover Produto");
-			System.out.println("0 - Sair do Sistema");
+			System.out.println("0 - Sair");
 			System.out.println("Por favor, escolha uma opção: ");
 
 				do {
