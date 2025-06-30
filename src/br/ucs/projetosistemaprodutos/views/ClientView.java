@@ -247,7 +247,7 @@ public class ClientView {
 
 		for (int i = 0; i < entries.size(); i++) {
 			Map.Entry<Product, Integer> entry = entries.get(i);
-			System.out.println((i + 1) + " - " + entry.getKey().getName() + ": " + entry.getValue() + " unidade" + (entry.getValue() > 1 ? "s" : "") + " - Total: R$" + String.format("%.2f", (entry.getKey().getStock().getPrice() * entry.getValue())));
+			System.out.println((i + 1) + " - " + entry.getKey().getName() + ": " + entry.getValue() + " unidade" + (entry.getValue() > 1 ? "s" : "") + " - Preço unitário: R$" + String.format("%.2f", (entry.getKey().getStock().getPrice())) +" - Total: R$" + String.format("%.2f", (entry.getKey().getStock().getPrice() * entry.getValue())));
 		}
 
 		System.out.println("---------------------------------------------");
