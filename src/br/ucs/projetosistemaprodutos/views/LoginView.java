@@ -2,6 +2,7 @@ package br.ucs.projetosistemaprodutos.views;
 import java.util.Scanner;
 
 import br.ucs.projetosistemaprodutos.controllers.UserController;
+import br.ucs.projetosistemaprodutos.exceptions.UserNotFoundException;
 import br.ucs.projetosistemaprodutos.models.itens.Store;
 import br.ucs.projetosistemaprodutos.models.person.Client;
 import br.ucs.projetosistemaprodutos.models.person.Role;
@@ -31,10 +32,10 @@ public class LoginView {
 			
 			try {
 				user = controller.verifyLoginAndPassword(login, password);
-			} catch (Exception e) {
+			}catch (UserNotFoundException e) {
 				System.out.println(e.getMessage());
+				user = null;
 			}
-
 		} while (user == null);
 
 		if (user.getRole() == Role.ADMIN) {

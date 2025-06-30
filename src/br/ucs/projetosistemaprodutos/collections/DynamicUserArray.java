@@ -4,6 +4,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 
+import br.ucs.projetosistemaprodutos.exceptions.UserNotFoundException;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.User;
 
@@ -73,13 +74,13 @@ public class DynamicUserArray implements Serializable {
     }
 
 
-    public User getByLogin(String login) throws Exception {
+    public User getByLogin(String login) throws UserNotFoundException{
         User user = users.get(login);
-
+        
         if(user == null) {
-            throw new Exception("Login de usuário não encontrado.");
+        	throw new UserNotFoundException();
         }
-
+        
         return user;
     }
 
@@ -92,9 +93,8 @@ public class DynamicUserArray implements Serializable {
         }
         throw new Exception("Email não encontrado.");
     }
-
-
-    public boolean isLoginExists(String login, User userLogin) {
+    
+    public boolean isUserLogin(String login, User userLogin) {
         User user = users.get(login);
 
         if(user == null) {

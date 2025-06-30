@@ -1,6 +1,7 @@
 package br.ucs.projetosistemaprodutos.controllers;
 
 import br.ucs.projetosistemaprodutos.collections.DynamicUserArray;
+import br.ucs.projetosistemaprodutos.exceptions.UserNotFoundException;
 import br.ucs.projetosistemaprodutos.models.itens.Store;
 import br.ucs.projetosistemaprodutos.models.person.Role;
 import br.ucs.projetosistemaprodutos.models.person.User;
@@ -46,14 +47,14 @@ public class UserController {
     	userArray.showArray(role);
     }
 
-    public User verifyLoginAndPassword(String login, String password) throws Exception {
-        User user = this.getByLogin(login);
-
+    public User verifyLoginAndPassword(String login, String password) throws UserNotFoundException{
+    	User user = userArray.getByLogin(login);
+        
         if(user.getPassword().equals(password)) {
             return user;
+        }else {
+        	throw new UserNotFoundException();
         }
-
-        return null;
     }
 
     protected List<User> getByText(String text, Role role) throws Exception {

@@ -44,7 +44,7 @@ public class ClientController extends UserController{
     }
 
     public void edit(Client client, ClientCopy copy) throws Exception {
-        if(userArray.isLoginExists(copy.getLogin(), client)) {
+        if(userArray.isUserLogin(copy.getLogin(), client)) {
             throw new Exception("Login já cadastrado");
         }
 
