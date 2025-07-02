@@ -1543,140 +1543,143 @@ public class AdminView {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		List<Order> orders = new ArrayList<>();
 		int option = -1;
-
 		do {
-			System.out.println("\n=== MENU DE PESQUISA DE PEDIDOS ===");
-			System.out.println("1 - Pesquisar por número do pedido ou cliente");
-			System.out.println("2 - Pesquisar por data de realização");
-			System.out.println("3 - Pesquisar por intervalo de data");
-			System.out.println("0 - Voltar");
-			System.out.print("Escolha uma opção: ");
-
-			try {
-				option = sc.nextInt();
-			}catch(InputMismatchException e) {
-				System.out.println("Entrada inválida.");
-			}catch (Exception e) {
-				System.out.println("Erro inesperado: " + e.getMessage());
-			}
-
-			sc.nextLine();
-			System.out.println("--------------------------------------");
-		}while(option < 0 ||option > 3);
-
-
-		switch (option) {
-			case 1:
-				orders = searchByIdAndText(sc);
-				break;
-
-			case 2:
-				LocalDate date = null;
-
-				try {
-					System.out.print("Informe a data desejada (Digite '0' para voltar ao menu): ");
-					String text = sc.nextLine();
-					
-					try {
-						int exitSub = Integer.parseInt(text);
-
-						if (exitSub == 0) {
-							return;
-						}
-					} catch (NumberFormatException ignored) {
-					}
-					
-					date = LocalDate.parse(text, dtf);
-
-				}catch(DateTimeParseException e) {
-					System.out.println("Data inválida.");
-					break;
-				}
-				orders = productController.getOrdersByDate(date, clientController.getAllOrders());
-				break;
-			case 3:
-				LocalDate startDate = null;
-				LocalDate endDate = null;
-
-				try {
-					System.out.print("Data de início (Digite '0' para voltar ao menu): ");
-					String text1 = sc.nextLine();
-					
-					try {
-						int exitSub = Integer.parseInt(text1);
-
-						if (exitSub == 0) {
-							return;
-						}
-					} catch (NumberFormatException ignored) {
-					}
-					startDate = LocalDate.parse(text1, dtf);
-
-					System.out.print("Data final (Digite '0' para voltar ao menu): ");
-					String text2 = sc.nextLine();
-					
-					try {
-						int exitSub = Integer.parseInt(text2);
-
-						if (exitSub == 0) {
-							return;
-						}
-					} catch (NumberFormatException ignored) {
-					}
-					endDate = LocalDate.parse(text2, dtf);
-				}catch(DateTimeParseException e) {
-					System.out.println("Data inválida.");
-					break;
-				}
-
-				if(startDate.isAfter(endDate)) {
-					System.out.print("Data de início maior e a data final.");
-					break;
-				}
-				orders = productController.getOrdersByDate(startDate, endDate, clientController.getAllOrders());
-				break;
-			case 0:
-				System.out.println("Voltando ao menu principal...");
-				break;
-
-			default:
-				System.out.println("Opção inválida! Por favor, escolha entre 0 a 3");
-		}
-
-		if(orders.isEmpty()) {
-			System.out.println("Nenhum pedido encontrado");
-		}else {
-			Collections.sort(orders);		
-			System.out.println("--------------------");
-			for (Order orderAux : orders) {
-				System.out.println("----------  Pedido  ----------");
-				System.out.println("ID: " + orderAux.getId() + " | Cliente: " + orderAux.getOwner().getName());
-				System.out.println("Situação: " + orderAux.getSituation().toString() + " | Data do pedido: " + orderAux.getDateOrder().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-				System.out.println("Valor total do pedido (sem ICMS): R$" + String.format("%.2f", orderAux.getTotalPrice()));
-				System.out.println("Valor total do pedido (com ICMS): R$" + String.format("%.2f", orderAux.getTotalPriceICMS()) + "\n");
-			}
-
-			int id = -1;
-			System.out.println("--------------------");
-			System.out.print("\nDigite o ID do pedido que você deseja acessar: ('0' para voltar)");
 			do {
+				System.out.println("\n=== MENU DE PESQUISA DE PEDIDOS ===");
+				System.out.println("1 - Pesquisar por número do pedido ou cliente");
+				System.out.println("2 - Pesquisar por data de realização");
+				System.out.println("3 - Pesquisar por intervalo de data");
+				System.out.println("0 - Voltar");
+				System.out.print("Escolha uma opção: ");
+	
 				try {
-					id = sc.nextInt();
-				} catch (InputMismatchException ignored) {
+					option = sc.nextInt();
+				}catch(InputMismatchException e) {
+					System.out.println("Entrada inválida.");
+				}catch (Exception e) {
+					System.out.println("Erro inesperado: " + e.getMessage());
 				}
+	
 				sc.nextLine();
-			} while (id < 0);
-			
-			try {
-				Order order = productController.getOrderByList(id, orders);
-				
-				showCompleteDetailsOrder(order);
-				editDetailsOrder(order, sc);
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-				return;
+				System.out.println("--------------------------------------");
+			}while(option < 0 ||option > 3);
+
+
+			switch (option) {
+				case 1:
+					orders = searchByIdAndText(sc);
+					break;
+	
+				case 2:
+					LocalDate date = null;
+	
+					try {
+						System.out.print("Informe a data desejada (Digite '0' para voltar ao menu): ");
+						String text = sc.nextLine();
+						
+						try {
+							int exitSub = Integer.parseInt(text);
+	
+							if (exitSub == 0) {
+								return;
+							}
+						} catch (NumberFormatException ignored) {
+						}
+						
+						date = LocalDate.parse(text, dtf);
+	
+					}catch(DateTimeParseException e) {
+						System.out.println("Data inválida.");
+						break;
+					}
+					orders = productController.getOrdersByDate(date, clientController.getAllOrders());
+					break;
+				case 3:
+					LocalDate startDate = null;
+					LocalDate endDate = null;
+	
+					try {
+						System.out.print("Data de início (Digite '0' para voltar ao menu): ");
+						String text1 = sc.nextLine();
+						
+						try {
+							int exitSub = Integer.parseInt(text1);
+	
+							if (exitSub == 0) {
+								return;
+							}
+						} catch (NumberFormatException ignored) {
+						}
+						startDate = LocalDate.parse(text1, dtf);
+	
+						System.out.print("Data final (Digite '0' para voltar ao menu): ");
+						String text2 = sc.nextLine();
+						
+						try {
+							int exitSub = Integer.parseInt(text2);
+	
+							if (exitSub == 0) {
+								return;
+							}
+						} catch (NumberFormatException ignored) {
+						}
+						endDate = LocalDate.parse(text2, dtf);
+					}catch(DateTimeParseException e) {
+						System.out.println("Data inválida.");
+						break;
+					}
+	
+					if(startDate.isAfter(endDate)) {
+						System.out.print("Data de início maior e a data final.");
+						break;
+					}
+					orders = productController.getOrdersByDate(startDate, endDate, clientController.getAllOrders());
+					break;
+				case 0:
+					System.out.println("Voltando ao menu principal...");
+					break;
+	
+				default:
+					System.out.println("Opção inválida! Por favor, escolha entre 0 a 3");
 			}
-		}
+
+			if(orders.isEmpty() && option != 0) {
+				System.out.println("Nenhum pedido encontrado");
+			}else if(option != 0){
+				Collections.sort(orders);		
+				System.out.println("--------------------");
+				for (Order orderAux : orders) {
+					System.out.println("----------  Pedido  ----------");
+					System.out.println("ID: " + orderAux.getId() + " | Cliente: " + orderAux.getOwner().getName());
+					System.out.println("Situação: " + orderAux.getSituation().toString() + " | Data do pedido: " + orderAux.getDateOrder().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+					System.out.println("Valor total do pedido (sem ICMS): R$" + String.format("%.2f", orderAux.getTotalPrice()));
+					System.out.println("Valor total do pedido (com ICMS): R$" + String.format("%.2f", orderAux.getTotalPriceICMS()) + "\n");
+				}
+	
+				int id = -1;
+				System.out.println("--------------------");
+				System.out.print("\nDigite o ID do pedido que você deseja acessar: ('0' para voltar)");
+				do {
+					try {
+						id = sc.nextInt();
+					} catch (InputMismatchException ignored) {
+					}
+					sc.nextLine();
+				} while (id < 0);
+				
+				if(id != 0) {
+					try {
+						Order order = productController.getOrderByList(id, orders);
+						
+						showCompleteOrder(order);
+						editOrder(order, sc);
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+						return;
+					}
+				}
+			}
+		}while(option != 0);
 	}
 
 	private List<Order> searchByIdAndText(Scanner sc) {
@@ -1712,7 +1715,7 @@ public class AdminView {
 		return orders;
 	}
 
-	private void showCompleteDetailsOrder(Order order) {
+	private void showCompleteOrder(Order order) {
 		System.out.println("----------  Pedido  ----------");
 		System.out.println("ID do Pedido: " + order.getId());
 		System.out.println("Situação: " + order.getSituation().toString());
@@ -1733,7 +1736,7 @@ public class AdminView {
 		System.out.println("----------          ----------\n");
 	}
 
-	private void editDetailsOrder(Order order, Scanner sc) {
+	private void editOrder(Order order, Scanner sc) {
 		System.out.println("1 - Editar Situação\n0 - Sair");
 
 		int option = -1;
@@ -1754,71 +1757,69 @@ public class AdminView {
 
 		} while (option < 0 || option > 1);
 
-		if (option == 0) {
-			return;
-		}
-
-		System.out.println("Situação Atual: " + order.getSituation().toString());
-
-		switch (order.getSituation()) {
-			case NEW -> {
-				System.out.println("\n1 - Cancelar\n2 - Enviar\n0 - Sair");
-				option = -1;
-
-				do {
-					try {
-						option = sc.nextInt();
-
-						if (option < 0 || option > 2) {
-							throw new InputMismatchException("Entrada inválida");
+		if (option == 1) {
+			System.out.println("Situação Atual: " + order.getSituation().toString());
+			switch (order.getSituation()) {
+				case NEW -> {
+					System.out.println("\n1 - Cancelar\n2 - Enviar\n0 - Sair");
+					option = -1;
+	
+					do {
+						try {
+							option = sc.nextInt();
+	
+							if (option < 0 || option > 2) {
+								throw new InputMismatchException("Entrada inválida");
+							}
+	
+						} catch (InputMismatchException e) {
+							System.out.print("Entrada inválida, digite novamente: ");
 						}
-
-					} catch (InputMismatchException e) {
-						System.out.print("Entrada inválida, digite novamente: ");
+						sc.nextLine();
+					} while (option < 0 || option > 2);
+	
+					if (option == 0) {
+						break;
 					}
-					sc.nextLine();
-				} while (option < 0 || option > 2);
-
-				if (option == 0) {
+	
+					switch (option) {
+						case 1:
+							List<ItemOrder>products = new ArrayList<ItemOrder>(order.getItemOrders());
+							try {
+								for(int i = 0; i < products.size(); i++) {
+									Product p = products.get(i).getProduct();
+									productController.changeStock(p, products.get(i).getQuantity());
+								}
+								order.setSituation(Situation.CANCELED);
+								order.setDateForward(null);
+								System.out.println("Pedido Cancelado com sucesso!");
+							}catch(Exception e) {
+								System.out.println("Erro ao cancelar pedido");
+							}
+							break;
+	
+						case 2:
+							order.setSituation(Situation.FORWARD);
+							order.setDateForward(LocalDate.now());
+							System.out.println("Pedido Enviado com sucesso!");
+					}
 					break;
 				}
-
-				switch (option) {
-					case 1:
-						List<ItemOrder>products = new ArrayList<ItemOrder>(order.getItemOrders());
-						try {
-							for(int i = 0; i < products.size(); i++) {
-								Product p = products.get(i).getProduct();
-								productController.changeStock(p, products.get(i).getQuantity());
-							}
-							order.setSituation(Situation.CANCELED);
-							order.setDateForward(null);
-							System.out.println("Pedido Cancelado com sucesso!");
-						}catch(Exception e) {
-							System.out.println("Erro ao cancelar pedido");
-						}
-						break;
-
-					case 2:
-						order.setSituation(Situation.FORWARD);
-						order.setDateForward(LocalDate.now());
-						System.out.println("Pedido Enviado com sucesso!");
+	
+				case FORWARD -> {
+					System.out.println("\nAguardando a confirmação de entrega...");
+					break;
 				}
-			}
-
-			case FORWARD -> {
-				System.out.println("\nAguardando a confirmação de entrega...");
-				break;
-			}
-
-			case CANCELED -> {
-				System.out.println("\nPedido já cancelado...");
-				break;
-			}
-
-			case DELIVERED -> {
-				System.out.println("\nPedido já entregue...");
-				break;
+	
+				case CANCELED -> {
+					System.out.println("\nPedido já cancelado...");
+					break;
+				}
+	
+				case DELIVERED -> {
+					System.out.println("\nPedido já entregue...");
+					break;
+				}
 			}
 		}
 	}
