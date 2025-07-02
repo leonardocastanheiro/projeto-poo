@@ -85,7 +85,7 @@ public class AdminView {
 			System.out.println("------------------");
 			System.out.println("Escolha uma opção:");
 			System.out.println(" 1  - Adicionar cliente");
-			System.out.println(" 2  - Procurar cliente");
+			System.out.println(" 2  - Buscar clientes");
 			System.out.println(" 3  - Atualizar cliente");
 			System.out.println(" 4  - Excluir cliente");
 			System.out.println(" 0  - Sair");
@@ -184,6 +184,7 @@ public class AdminView {
 
 				case 2:
 					System.out.println("Buscar cliente (Digite '0' para voltar ao menu): ");
+					System.out.println("'Enter' para ver todos");
 					String text = sc.nextLine();
 
 					try {
@@ -210,6 +211,7 @@ public class AdminView {
 					break;
 				case 3:
 					System.out.println("Buscar cliente (Digite '0' para voltar ao menu): : ");
+					System.out.println("'Enter' para ver todos");
 					String text1 = sc.nextLine();
 
 					try {
@@ -237,7 +239,7 @@ public class AdminView {
 					System.out.println("0 - Sair");
 
 					System.out.println("--------");
-					System.out.print("Digite o número do cliente: ");
+					System.out.print("Digite o número do cliente ('0' para voltar): ");
 
 					int id = -1;
 					Client client1;
@@ -415,6 +417,7 @@ public class AdminView {
 					break;
 				case 4:
 					System.out.println("Buscar cliente (Digite '0' para voltar ao menu): ");
+					System.out.println("'Enter' para ver todos");
 					String text2 = sc.nextLine();
 
 					try {
@@ -441,7 +444,7 @@ public class AdminView {
 					System.out.println("0 - Sair");
 
 					System.out.println("--------");
-					System.out.print("Digite o número do cliente: ");
+					System.out.print("Digite o número do cliente ('0' para voltar): ");
 
 					int id1 = -1;
 					Client client2;
@@ -456,6 +459,7 @@ public class AdminView {
 							System.out.println(e.getMessage());
 							return;
 						}
+						sc.nextLine();
 					} while (id1 < 0 || id1 > clients2.size());
 
 					if (id1 == 0) {
@@ -548,7 +552,8 @@ public class AdminView {
 					}
 					break;
 				case 2:
-					System.out.print("Buscar fornecedor (Digite '0' para voltar ao menu): ");
+					System.out.println("Buscar fornecedor (Digite '0' para voltar ao menu): ");
+					System.out.println("'Enter' para ver todos");
 					String text = sc.nextLine();
 					subSearch = -1;
 					try {
@@ -631,7 +636,8 @@ public class AdminView {
 					} while (selectedIndex != 0);
 					break;
 				case 3:
-					System.out.print("Buscar fornecedor (Digite '0' para voltar ao menu): ");
+					System.out.println("Buscar fornecedor (Digite '0' para voltar ao menu): ");
+					System.out.println("'Enter' para ver todos");
 					String text1 = sc.nextLine();
 					
 					subSearch = -1;
@@ -806,7 +812,8 @@ public class AdminView {
 					} while (editInfo != 0 && editInfo != 12);
 					break;
 				case 4:
-					System.out.print("Buscar fornecedor (Digite '0' para voltar ao menu): ");
+					System.out.println("Buscar fornecedor (Digite '0' para voltar ao menu): ");
+					System.out.println("'Enter' para ver todos");
 					String text2 = sc.nextLine();
 					subSearch = -1;
 					try {
@@ -879,7 +886,8 @@ public class AdminView {
 					break;
 
 				case 5:
-					System.out.print("Buscar fornecedor (Digite '0' para voltar ao menu): ");
+					System.out.println("Buscar fornecedor (Digite '0' para voltar ao menu): ");
+					System.out.println("'Enter' para ver todos");
 					String text3 = sc.nextLine();
 					subSearch = -1;
 					try {
@@ -1125,7 +1133,8 @@ public class AdminView {
 	}
 //-------------------------------------------------------------------------------------
 	private void subSearchProductByCodeAndText(Scanner sc) {
-		System.out.print("Buscar produto (Digite '0' para voltar ao menu): ");
+		System.out.println("Buscar produto (Digite '0' para voltar ao menu): ");
+		System.out.println("'Enter' para ver todos");
 		String searchText = sc.nextLine();
 
 		try {
@@ -1196,7 +1205,8 @@ public class AdminView {
 	private void showProductsBySupplier(Scanner scanner) {
 
 		System.out.println("\n--- Produtos por Fornecedor ---");
-		System.out.print("Digite o nome do fornecedor (Digite '0' para voltar ao menu): ");
+		System.out.println("Digite o nome do fornecedor (Digite '0' para voltar ao menu): ");
+		System.out.println("'Enter' para ver todos");
 		String name = scanner.nextLine();
 		
 		try {
@@ -1298,7 +1308,8 @@ public class AdminView {
 	}
 //-------------------------------------------------------------------------------------
 	private void subEditProduct(Scanner sc){
-		System.out.print("Buscar produto (Digite '0' para voltar ao menu): ");
+		System.out.println("Buscar produto (Digite '0' para voltar ao menu): ");
+		System.out.println("'Enter' para ver todos");
 		String text2 = sc.nextLine();
 		
 		try {
@@ -1479,7 +1490,8 @@ public class AdminView {
 	}
 //-------------------------------------------------------------------------------------
 	private void subDeleteProduct(Scanner sc){
-		System.out.print("Buscar produto (Digite '0' para voltar ao menu): ");
+		System.out.println("Buscar produto (Digite '0' para voltar ao menu): ");
+		System.out.println("'Enter' para ver todos");
 		String searchText = sc.nextLine();
 
 		try {
@@ -1684,7 +1696,8 @@ public class AdminView {
 
 	private List<Order> searchByIdAndText(Scanner sc) {
 		List<Order> orders = new ArrayList<>();
-		System.out.print("Digite o nome do cliente ou o número do pedido ('0' para voltar ao menu): ");
+		System.out.println("Digite o nome do cliente ou o número do pedido ('0' para voltar ao menu): ");
+		System.out.println("'Enter' para ver todos");
 
 		int id = -1;
 		String text;

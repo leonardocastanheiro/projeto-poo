@@ -80,7 +80,8 @@ public class ClientView {
 
 		do {
 			System.out.println("---------------------------------------------");
-			System.out.print("Buscar produto (Digite '0' para voltar ao menu): ");
+			System.out.println("Buscar produto (Digite '0' para voltar ao menu): ");
+			System.out.println("'Enter' para ver tudo");
 			String text1 = sc.nextLine();
 
 			List<Product> products;
@@ -400,7 +401,7 @@ public class ClientView {
 					try {
 						productController.productAvailable(product);
 					}catch(ProductNotFoundException pnf) {
-						System.out.println(product.getName() + ": "+ pnf + " Prosseguindo a compra sem ele.");
+						System.out.println(product.getName() + ": "+ pnf.getMessage() + " Prosseguindo a compra sem ele.");
 						try {
 							it.remove();
 							storeManager.save(store);
