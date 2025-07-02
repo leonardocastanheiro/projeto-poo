@@ -511,6 +511,7 @@ public class AdminView {
 				sc.nextLine();
 			} while (subOption < 0 || subOption > 5);
 
+			int subSearch = -1;
 			switch (subOption) {
 				case 1:
 					System.out.println("Nome: ");
@@ -549,22 +550,35 @@ public class AdminView {
 				case 2:
 					System.out.print("Buscar fornecedor (Digite '0' para voltar ao menu): ");
 					String text = sc.nextLine();
-
+					subSearch = -1;
 					try {
-						int exitSub = Integer.parseInt(text);
+						subSearch = Integer.parseInt(text);
 
-						if (exitSub == 0) {
+						if (subSearch == 0) {
 							return;
 						}
 					} catch (NumberFormatException ignored) {
 					}
 					
-					List<Supplier> suppliers;
-
-					try {
-						suppliers = supplierController.getByText(text);
-					} catch (Exception e) {
-						System.out.println(e.getMessage());
+					List<Supplier> suppliers = new ArrayList<>();
+					
+					if (subSearch > 0) {
+						Supplier supplierById;
+						try {
+							supplierById = supplierController.getById(subSearch);
+							suppliers.add(supplierById);
+						}catch(Exception ignored) {
+						}
+					} else {
+						try {
+							suppliers = supplierController.getByText(text);
+						} catch (Exception e) {
+							System.out.println(e.getMessage());
+							return;
+						}
+					}
+					if (suppliers.isEmpty()) {
+						System.out.println("Nenhum fornecedor encontrado.");
 						return;
 					}
 					Collections.sort(suppliers);
@@ -601,6 +615,7 @@ public class AdminView {
 						if (selectedIndex != 0) {
 							Supplier selectedSupplier = suppliers.get(selectedIndex - 1);
 							System.out.println("----- DETALHES DO FORNECEDOR -----");
+							System.out.println("Código: " + selectedSupplier.getId());
 							System.out.println("Nome: " + selectedSupplier.getName());
 							System.out.println("Telefone: " + selectedSupplier.getPhone());
 							System.out.println("Email: " + selectedSupplier.getEmail());
@@ -619,21 +634,35 @@ public class AdminView {
 					System.out.print("Buscar fornecedor (Digite '0' para voltar ao menu): ");
 					String text1 = sc.nextLine();
 					
+					subSearch = -1;
 					try {
-						int exitSub = Integer.parseInt(text1);
+						subSearch = Integer.parseInt(text1);
 
-						if (exitSub == 0) {
+						if (subSearch == 0) {
 							return;
 						}
 					} catch (NumberFormatException ignored) {
 					}
-
-					List<Supplier> suppliers1;
-
-					try {
-						suppliers1 = supplierController.getByText(text1);
-					} catch (Exception e) {
-						System.out.println(e.getMessage());
+					
+					List<Supplier> suppliers1 = new ArrayList<>();
+					
+					if (subSearch > 0) {
+						Supplier supplierById;
+						try {
+							supplierById = supplierController.getById(subSearch);
+							suppliers1.add(supplierById);
+						}catch(Exception ignored) {
+						}
+					} else {
+						try {
+							suppliers1 = supplierController.getByText(text1);
+						} catch (Exception e) {
+							System.out.println(e.getMessage());
+							return;
+						}
+					}
+					if (suppliers1.isEmpty()) {
+						System.out.println("Nenhum fornecedor encontrado.");
 						return;
 					}
 					Collections.sort(suppliers1);
@@ -779,22 +808,36 @@ public class AdminView {
 				case 4:
 					System.out.print("Buscar fornecedor (Digite '0' para voltar ao menu): ");
 					String text2 = sc.nextLine();
-					
+					subSearch = -1;
 					try {
-						int exitSub = Integer.parseInt(text2);
+						subSearch = Integer.parseInt(text2);
 
-						if (exitSub == 0) {
+						if (subSearch == 0) {
 							return;
 						}
 					} catch (NumberFormatException ignored) {
 					}
-
-					List<Supplier> suppliers2;
-
-					try {
-						suppliers2 = supplierController.getByText(text2);
-					} catch (Exception e) {
-						System.out.println(e.getMessage());
+					
+					List<Supplier> suppliers2 = new ArrayList<>();
+					
+					if (subSearch > 0) {
+						Supplier supplierById;
+						try {
+							supplierById = supplierController.getById(subSearch);
+							suppliers2.add(supplierById);
+						}catch(Exception ignored) {
+						}
+					} else {
+						try {
+							suppliers2 = supplierController.getByText(text2);
+						} catch (Exception e) {
+							System.out.println(e.getMessage());
+							return;
+						}
+						
+					}
+					if (suppliers2.isEmpty()) {
+						System.out.println("Nenhum fornecedor encontrado.");
 						return;
 					}
 					Collections.sort(suppliers2);
@@ -838,23 +881,35 @@ public class AdminView {
 				case 5:
 					System.out.print("Buscar fornecedor (Digite '0' para voltar ao menu): ");
 					String text3 = sc.nextLine();
-
+					subSearch = -1;
 					try {
-						int exitSub = Integer.parseInt(text3);
+						subSearch = Integer.parseInt(text3);
 
-						if (exitSub == 0) {
+						if (subSearch == 0) {
 							return;
 						}
 					} catch (NumberFormatException ignored) {
 					}
-
 					
-					List<Supplier> suppliers3;
-
-					try {
-						suppliers3 = supplierController.getByText(text3);
-					} catch (Exception e) {
-						System.out.println(e.getMessage());
+					List<Supplier> suppliers3 = new ArrayList<>();
+					
+					if (subSearch > 0) {
+						Supplier supplierById;
+						try {
+							supplierById = supplierController.getById(subSearch);
+							suppliers3.add(supplierById);
+						}catch(Exception ignored) {
+						}
+					} else {
+						try {
+							suppliers3 = supplierController.getByText(text3);
+						} catch (Exception e) {
+							System.out.println(e.getMessage());
+							return;
+						}
+					}
+					if (suppliers3.isEmpty()) {
+						System.out.println("Nenhum fornecedor encontrado.");
 						return;
 					}
 					Collections.sort(suppliers3);

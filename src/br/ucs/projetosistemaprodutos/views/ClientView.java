@@ -275,7 +275,7 @@ public class ClientView {
 				return;
 
 			case 1:
-
+				
 				for (int i = 0; i < entries.size(); i++) {
 					Map.Entry<Product, Integer> entry = entries.get(i);
 					System.out.println((i + 1) + " - " + entry.getKey().getName() + ": " + entry.getValue()
@@ -299,24 +299,27 @@ public class ClientView {
 					sc.nextLine();
 				} while (option < 0 || option > entries.size());
 
-				/*
-				if (option == 0) {
-					System.out.println("Produto removido do carrinho com sucesso.\n");
-					break;
-				}*/
-
 				Map.Entry<Product, Integer> entry = entries.get(option - 1);
 				if(entry.getValue() < 1) {
 					System.out.println("Erro, nenhum produto desse no carrinho.");
 					return;
 				}
 				
+				int c = 0;
 				try {
 					productController.productAvailable(entry.getKey());
 				}catch(ProductNotFoundException pnf) {
 					System.out.println(pnf.getMessage());
-					return;
+					c = 1;
 				}
+				if(c == 1) {
+					try {
+						productController.editCartItem(client, entry.getKey(), 0);
+					}catch(Exception e) {
+						System.out.println(e.getMessage());
+					}
+					return;
+				}				
 				System.out.println(entry.getKey().getName() + ": " + entry.getValue() + " unidade" + (entry.getValue() > 1 ? "s" : ""));
 
 				int quantity = 0;
