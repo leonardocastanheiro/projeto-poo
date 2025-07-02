@@ -110,10 +110,6 @@ public class ProductController {
 
 	public void changeStock(Product product, int delta) throws Exception {
 		int currentStock = product.getStock().getQuantity();
-		System.out.println("[DEBUG] Alterando estoque de " + product.getName() +
-				" | Delta: " + delta +
-				" | Estoque anterior: " + currentStock);
-
 		int updatedStock = currentStock + delta;
 
 		if (updatedStock < 0) {
