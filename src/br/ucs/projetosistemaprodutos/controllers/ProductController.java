@@ -2,6 +2,7 @@ package br.ucs.projetosistemaprodutos.controllers;
 
 import br.ucs.projetosistemaprodutos.collections.DynamicProductArray;
 import br.ucs.projetosistemaprodutos.exceptions.InsufficientStockException;
+import br.ucs.projetosistemaprodutos.exceptions.ProductNotFoundException;
 import br.ucs.projetosistemaprodutos.models.copies.ProductCopy;
 import br.ucs.projetosistemaprodutos.models.itens.Order;
 import br.ucs.projetosistemaprodutos.models.itens.Product;
@@ -107,40 +108,39 @@ public class ProductController {
 		return mapProduct;
 	}
 
-		public void changeStock(Product product, int delta) throws Exception {
-			int currentStock = product.getStock().getQuantity();
-			System.out.println("[DEBUG] Alterando estoque de " + product.getName() +
-					" | Delta: " + delta +
-					" | Estoque anterior: " + currentStock);
+	public void changeStock(Product product, int delta) throws Exception {
+		int currentStock = product.getStock().getQuantity();
+		System.out.println("[DEBUG] Alterando estoque de " + product.getName() +
+				" | Delta: " + delta +
+				" | Estoque anterior: " + currentStock);
 
-			int updatedStock = currentStock + delta;
+		int updatedStock = currentStock + delta;
 
-			if (updatedStock < 0) {
-				throw new IllegalArgumentException("Estoque insuficiente. Estoque atual: " +
-						currentStock + ", tentativa de alteração: " + delta);
-			}
-
-			product.getStock().setQuantity(updatedStock);
-			storeManager.save(store);
+		if (updatedStock < 0) {
+			throw new IllegalArgumentException("Estoque insuficiente. Estoque atual: " +
+					currentStock + ", tentativa de alteração: " + delta);
 		}
 
-		public void addToStock(Product product, int quantity) throws Exception {
-			changeStock(product, +Math.abs(quantity));
-		}
+		product.getStock().setQuantity(updatedStock);
+		storeManager.save(store);
+	}
 
-		public void removeFromStock(Product product, int quantity) throws Exception {
-			changeStock(product, -Math.abs(quantity));
-		}
+	public void addToStock(Product product, int quantity) throws Exception {
+		changeStock(product, +Math.abs(quantity));
+	}
 
-		public void editCartItem(Client client, Product product, int newQuantity) throws Exception {
-			if (newQuantity == 0) {
-				client.getShoppingCart().getProducts().remove(product);
-			} else {
-				client.getShoppingCart().getProducts().put(product, newQuantity);
-			}
-			storeManager.save(store);
-		}
+	public void removeFromStock(Product product, int quantity) throws Exception {
+		changeStock(product, -Math.abs(quantity));
+	}
 
+	public void editCartItem(Client client, Product product, int newQuantity) throws Exception {
+		if (newQuantity == 0) {
+			client.getShoppingCart().getProducts().remove(product);
+		} else {
+			client.getShoppingCart().getProducts().put(product, newQuantity);
+		}
+		storeManager.save(store);
+	}
 
 	public Order getOrderByList(Integer id, List<Order> orders) throws Exception {
 		for(Order order : orders) {
@@ -189,6 +189,18 @@ public class ProductController {
     public void stockQuantity(Stock stock, int quantity) throws InsufficientStockException{
     	if(stock.getQuantity() < quantity) {
     		throw new InsufficientStockException();
+    	}
+    }
+    
+    public void productAvailable(Product product) throws ProductNotFoundException{
+    	int f = 0;
+    	for(Product p : productArray.getAllProducts()) {
+    		if(p.equals(product)) {
+    			f = 1;
+    		}
+    	}
+    	if(f == 0) {
+    		throw new ProductNotFoundException();
     	}
     }
 	@Override

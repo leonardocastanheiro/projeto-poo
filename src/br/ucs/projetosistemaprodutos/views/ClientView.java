@@ -6,6 +6,7 @@ import java.util.*;
 import br.ucs.projetosistemaprodutos.controllers.ClientController;
 import br.ucs.projetosistemaprodutos.controllers.ProductController;
 import br.ucs.projetosistemaprodutos.exceptions.InsufficientStockException;
+import br.ucs.projetosistemaprodutos.exceptions.ProductNotFoundException;
 import br.ucs.projetosistemaprodutos.models.copies.ClientCopy;
 import br.ucs.projetosistemaprodutos.models.itens.*;
 import br.ucs.projetosistemaprodutos.models.person.Client;
@@ -298,17 +299,24 @@ public class ClientView {
 					sc.nextLine();
 				} while (option < 0 || option > entries.size());
 
+				/*
 				if (option == 0) {
 					System.out.println("Produto removido do carrinho com sucesso.\n");
 					break;
-				}
+				}*/
 
 				Map.Entry<Product, Integer> entry = entries.get(option - 1);
 				if(entry.getValue() < 1) {
 					System.out.println("Erro, nenhum produto desse no carrinho.");
 					return;
 				}
-
+				
+				try {
+					productController.productAvailable(entry.getKey());
+				}catch(ProductNotFoundException pnf) {
+					System.out.println(pnf.getMessage());
+					return;
+				}
 				System.out.println(entry.getKey().getName() + ": " + entry.getValue() + " unidade" + (entry.getValue() > 1 ? "s" : ""));
 
 				int quantity = 0;
@@ -386,6 +394,18 @@ public class ClientView {
 				while (it.hasNext()) {
 					entry = it.next();
 					Product product = entry.getKey();
+					try {
+						productController.productAvailable(product);
+					}catch(ProductNotFoundException pnf) {
+						System.out.println(product.getName() + ": "+ pnf + " Prosseguindo a compra sem ele.");
+						try {
+							it.remove();
+							storeManager.save(store);
+						} catch (Exception e) {
+							System.out.println(e.getMessage());
+							return;
+						}
+					}
 					int desiredQty = entry.getValue();
 					int stockQty = product.getStock().getQuantity();
 
