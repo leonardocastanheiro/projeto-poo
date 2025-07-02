@@ -132,7 +132,7 @@ public class ClientController extends UserController{
         return Optional.empty();
     }
 
-    public List<Order> getAllOrderByText(String text) throws Exception {
+    public List<Order> getAllOrdersByText(String text) throws Exception {
         List<Client> clients = this.getByText(text);
 
         List<Order> orders = new ArrayList<>();

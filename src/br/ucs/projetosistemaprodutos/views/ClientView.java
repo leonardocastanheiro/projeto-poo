@@ -1,10 +1,8 @@
 package br.ucs.projetosistemaprodutos.views;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
-
 import br.ucs.projetosistemaprodutos.controllers.ClientController;
 import br.ucs.projetosistemaprodutos.controllers.ProductController;
 import br.ucs.projetosistemaprodutos.exceptions.InsufficientStockException;
@@ -645,7 +643,11 @@ public class ClientView {
 
 		System.out.println("\nLista de Pedidos:");
 		for(Order order: orders) {
-			System.out.println(" - ID do Pedido: "+order.getId()+" | Data: "+order.getDateOrder().format(dtf)+" | Situação: "+order.getSituation());
+			System.out.println("----------  Pedido  ----------");
+			System.out.println("ID: " + order.getId());
+			System.out.println("Situação: " + order.getSituation().toString() + " | Data do pedido: " + order.getDateOrder().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+			System.out.println("Valor total do pedido (sem ICMS): R$" + String.format("%.2f", order.getTotalPrice()));
+			System.out.println("Valor total do pedido (com ICMS): R$" + String.format("%.2f", order.getTotalPriceICMS()) + "\n");
 		}
 		System.out.print("\nDigite o ID do Pedido que deseja acessar (Digite '0' para voltar ao menu): ");
 

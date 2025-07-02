@@ -482,6 +482,7 @@ public class AdminView {
 			}
 		} while (subOption != 0);
 	}
+/*---------------------------------------------------------------------------------------------*/
 
 	public void subSuppliers(Scanner sc, Store store) {
 		int subOption = -1;
@@ -983,7 +984,7 @@ public class AdminView {
 		} while (subOption != 0);
 	}
 
-	//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 	private void subAddProduct(Scanner sc){
 
 		System.out.println("Cadastrando Produto: ");
@@ -1511,7 +1512,7 @@ public class AdminView {
 
 		switch (option) {
 			case 1:
-				searchByIdAndText(sc);
+				orders = searchByIdAndText(sc);
 				break;
 
 			case 2:
@@ -1590,15 +1591,41 @@ public class AdminView {
 		if(orders.isEmpty()) {
 			System.out.println("Nenhum pedido encontrado");
 		}else {
-			Collections.sort(orders);
-			for(Order order : orders) {
+			Collections.sort(orders);		
+			System.out.println("--------------------");
+			for (Order orderAux : orders) {
+				System.out.println("----------  Pedido  ----------");
+				System.out.println("ID: " + orderAux.getId() + " | Cliente: " + orderAux.getOwner().getName());
+				System.out.println("Situação: " + orderAux.getSituation().toString() + " | Data do pedido: " + orderAux.getDateOrder().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+				System.out.println("Valor total do pedido (sem ICMS): R$" + String.format("%.2f", orderAux.getTotalPrice()));
+				System.out.println("Valor total do pedido (com ICMS): R$" + String.format("%.2f", orderAux.getTotalPriceICMS()) + "\n");
+			}
+
+			int id = -1;
+			System.out.println("--------------------");
+			System.out.print("\nDigite o ID do pedido que você deseja acessar: ('0' para voltar)");
+			do {
+				try {
+					id = sc.nextInt();
+				} catch (InputMismatchException ignored) {
+				}
+				sc.nextLine();
+			} while (id < 0);
+			
+			try {
+				Order order = productController.getOrderByList(id, orders);
+				
 				showCompleteDetailsOrder(order);
+				editDetailsOrder(order, sc);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				return;
 			}
 		}
 	}
 
-	private void searchByIdAndText(Scanner sc) {
-
+	private List<Order> searchByIdAndText(Scanner sc) {
+		List<Order> orders = new ArrayList<>();
 		System.out.print("Digite o nome do cliente ou o número do pedido ('0' para voltar ao menu): ");
 
 		int id = -1;
@@ -1610,59 +1637,24 @@ public class AdminView {
 			id = Integer.parseInt(text);
 			
 			if(id == 0) {
-				return;
+				return orders;
 			}
 		} catch (NumberFormatException ignored) {
 		}
 
-		List<Order> orders = new ArrayList<>();
-
-		if (id == -1) {
-			try {
-				orders = new ArrayList<>(clientController.getAllOrderByText(text));
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-				return;
-			}
-		} else {
+		if (id > 0) {
 			Optional<Order> orderOptional = clientController.getOrderById(id);
-			if (orderOptional.isEmpty()) {
-				System.out.println("Nenhum pedido encontrado com esse ID");
-				return;
+			if (!orderOptional.isEmpty()) {
+				orders.add(orderOptional.get());
 			}
-			orders.add(orderOptional.get());
-		}
-
-		Order order;
-
-		if (orders.size() == 1) {
-			order = orders.getFirst();
 		} else {
-			Collections.sort(orders);
-			for (Order orderAux : orders) {
-				System.out.println("ID: " + orderAux.getId() + " | Cliente: " + orderAux.getOwner().getName());
-			}
-
-			id = -1;
-
-			System.out.print("\nDigite o ID do pedido que você deseja acessar: ");
-			do {
-				try {
-					id = sc.nextInt();
-				} catch (InputMismatchException ignored) {
-				}
-				sc.nextLine();
-			} while (id < 1);
 			try {
-				order = productController.getOrderByList(id, orders);
+				orders = new ArrayList<>(clientController.getAllOrdersByText(text));
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
-				return;
 			}
 		}
-
-		showCompleteDetailsOrder(order);
-		editDetailsOrder(order, sc);
+		return orders;
 	}
 
 	private void showCompleteDetailsOrder(Order order) {
